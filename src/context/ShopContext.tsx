@@ -311,6 +311,46 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, [refreshRealBrides]);
 
+  // Dynamically reflect brand logo as favicon immediately across browser tabs
+  useEffect(() => {
+    const logoUrl = siteSettings?.brandLogoImage || '/uploads/lariel_brand_logo_1788970256407.jpg';
+    if (!logoUrl || typeof document === 'undefined') return;
+
+    let iconLink = document.querySelector("link[id='app-favicon']") as HTMLLinkElement | null;
+    if (!iconLink) {
+      iconLink = document.querySelector("link[rel*='icon']") as HTMLLinkElement | null;
+    }
+
+    if (!iconLink) {
+      iconLink = document.createElement('link');
+      iconLink.id = 'app-favicon';
+      iconLink.rel = 'icon';
+      document.head.appendChild(iconLink);
+    }
+
+    const cleanUrl = logoUrl.split('?')[0];
+    iconLink.href = `${cleanUrl}?v=${Date.now()}`;
+
+    if (cleanUrl.endsWith('.svg')) {
+      iconLink.type = 'image/svg+xml';
+    } else if (cleanUrl.endsWith('.png')) {
+      iconLink.type = 'image/png';
+    } else if (cleanUrl.endsWith('.ico')) {
+      iconLink.type = 'image/x-icon';
+    } else {
+      iconLink.type = 'image/jpeg';
+    }
+
+    // Also update apple-touch-icon for mobile homescreens and Safari
+    let appleLink = document.querySelector("link[rel='apple-touch-icon']") as HTMLLinkElement | null;
+    if (!appleLink) {
+      appleLink = document.createElement('link');
+      appleLink.rel = 'apple-touch-icon';
+      document.head.appendChild(appleLink);
+    }
+    appleLink.href = cleanUrl;
+  }, [siteSettings?.brandLogoImage]);
+
   // Initial load & legacy cache cleanup
   useEffect(() => {
     try {

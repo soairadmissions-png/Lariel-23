@@ -8,7 +8,6 @@ import {
   ChevronDown,
   Globe,
   MessageCircle,
-  ShieldCheck,
 } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import { Currency } from '../types';
@@ -21,7 +20,6 @@ export const Header: React.FC = () => {
     activeView,
     setActiveView,
     navigateToCategory,
-    navigateToAdmin,
     selectedWorldTab,
     setSelectedWorldTab,
     setSelectedInfoTab,
@@ -245,16 +243,6 @@ export const Header: React.FC = () => {
               )}
             </button>
 
-            {/* Admin Portal CMS Link */}
-            <button
-              onClick={() => navigateToAdmin()}
-              className="hidden sm:flex items-center space-x-1.5 px-2.5 py-1.5 rounded-full border border-[#D8CEBF]/80 bg-[#F5EFE6] hover:bg-[#181614] hover:text-[#C5A880] text-[#181614] transition-all text-xs font-medium"
-              title="Admin CMS Dashboard"
-            >
-              <ShieldCheck className="w-3.5 h-3.5 text-[#C5A880]" />
-              <span className="text-[11px] tracking-wider uppercase font-semibold">CMS</span>
-            </button>
-
           </div>
 
         </div>
@@ -271,16 +259,6 @@ export const Header: React.FC = () => {
                 className="block w-full text-left text-sm font-semibold tracking-wide py-2 text-[#181614] hover:text-[#C5A880] font-sans"
               >
                 Shop
-              </button>
-              <button
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  navigateToAdmin();
-                }}
-                className="block w-full text-left text-sm font-semibold tracking-wide py-2 text-[#A68962] hover:text-[#181614] font-sans flex items-center justify-between"
-              >
-                <span>Admin CMS Dashboard</span>
-                <ShieldCheck className="w-4 h-4 text-[#C5A880]" />
               </button>
               <button
                 onClick={() => handleNavClick('the-lariel-world', undefined, 'story')}
