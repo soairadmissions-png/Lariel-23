@@ -115,7 +115,7 @@ export const PersonalisedRobesFeature: React.FC = () => {
                       embroideryStyle === 'serif' ? 'bg-[#3A2920] text-[#C5A880]' : 'text-[#8E8072]'
                     }`}
                   >
-                    Runethia Script
+                    Playfair Serif
                   </button>
                   <button
                     onClick={() => setEmbroideryStyle('script')}

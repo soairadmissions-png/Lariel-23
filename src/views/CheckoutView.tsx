@@ -100,7 +100,7 @@ export const CheckoutView: React.FC = () => {
   };
 
   const generateWhatsAppOrderTranscript = (generatedOrderNum: string, customMethodTitle?: string) => {
-    let msg = `✨ *LARIEL ESSENTIALS BRIDAL ORDER CONFIRMATION* ✨\n`;
+    let msg = `✨ *Lariel Essentials Bridal Order Confirmation* ✨\n`;
     msg += `Order Reference: #${generatedOrderNum}\n\n`;
     msg += `*Client Details:*\n`;
     msg += `Name: ${firstName} ${lastName}\n`;
@@ -108,7 +108,7 @@ export const CheckoutView: React.FC = () => {
     msg += `Phone: ${phone}\n`;
     msg += `Destination: ${address}, ${city}, ${country} (${postalCode})\n`;
     if (weddingDate) msg += `Wedding Date: ${weddingDate}\n`;
-    msg += `\n*PAYMENT METHOD & GATEWAY:*\n`;
+    msg += `\n*Payment Method & Gateway:*\n`;
     msg += `Method: ${customMethodTitle || (
       paymentMethod === 'remittance'
         ? `International Remittance (${activeRemittanceConfig.name}) → ${selectedBankDestination}`
@@ -121,11 +121,11 @@ export const CheckoutView: React.FC = () => {
     msg += `Selected Currency: ${currentCurrencyConfig.code} (${currentCurrencyConfig.symbol})\n`;
     if (transferReference) msg += `Transfer Reference / Code: ${transferReference}\n`;
     if (senderAccountName) msg += `Sender Name: ${senderAccountName}\n`;
-    msg += `\n*BENEFICIARY ACCOUNT:*\n`;
+    msg += `\n*Beneficiary Account:*\n`;
     msg += `Beneficiary: Lariel Bridal Essential\n`;
-    msg += `POLARIS Bank: 4091455814\n`;
+    msg += `Polaris Bank: 4091455814\n`;
     msg += `United Bank for Africa (UBA): 1024663880\n`;
-    msg += `\n*ORDER ITEMS:*\n`;
+    msg += `\n*Order Items:*\n`;
     cart.forEach((item, idx) => {
       msg += `${idx + 1}. ${item.product.name} (Qty: ${item.quantity})\n`;
       msg += `   - Shade: ${item.selectedColor.name}\n`;
@@ -136,7 +136,7 @@ export const CheckoutView: React.FC = () => {
       msg += `   - Price: ${formatPrice(item.product.priceUSD * item.quantity)}\n`;
     });
     msg += `\nSubtotal: ${formatPrice(cartSubtotalUSD)}\n`;
-    msg += `Worldwide Priority Delivery: ${shippingFeeUSD === 0 ? 'COMPLIMENTARY' : formatPrice(shippingFeeUSD)}\n`;
+    msg += `Worldwide Priority Delivery: ${shippingFeeUSD === 0 ? 'Complimentary' : formatPrice(shippingFeeUSD)}\n`;
     msg += `Total Amount: ${formatPrice(totalAmountUSD)} (${currentCurrencyConfig.code})\n`;
     if (orderNotes) msg += `\nClient Notes: ${orderNotes}\n`;
     msg += `\nI have submitted my bridal order through the Lariel Essentials platform. Please confirm receipt and queue my handcrafted production!`;
@@ -270,7 +270,7 @@ export const CheckoutView: React.FC = () => {
                 <div className="p-3.5 bg-white border border-[#D9CEBF] space-y-1">
                   <div className="flex justify-between items-center">
                     <span className="font-bold text-neutral-900 uppercase tracking-wide text-[11px]">
-                      POLARIS BANK
+                      Polaris Bank
                     </span>
                     <button
                       onClick={() => handleCopyText('4091455814', 'polaris_complete')}
@@ -301,7 +301,7 @@ export const CheckoutView: React.FC = () => {
                 <div className="p-3.5 bg-white border border-[#D9CEBF] space-y-1">
                   <div className="flex justify-between items-center">
                     <span className="font-bold text-neutral-900 uppercase tracking-wide text-[11px]">
-                      UNITED BANK FOR AFRICA (UBA)
+                      United Bank for Africa (UBA)
                     </span>
                     <button
                       onClick={() => handleCopyText('1024663880', 'uba_complete')}
@@ -710,16 +710,16 @@ export const CheckoutView: React.FC = () => {
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                           {/* Polaris Bank */}
                           <div
-                            onClick={() => setSelectedBankDestination('POLARIS Bank')}
+                            onClick={() => setSelectedBankDestination('Polaris Bank')}
                             className={`p-3.5 border cursor-pointer transition-all ${
-                              selectedBankDestination === 'POLARIS Bank'
+                              selectedBankDestination === 'Polaris Bank'
                                 ? 'bg-white border-neutral-900 ring-1 ring-neutral-900'
                                 : 'bg-[#FAF8F5] border-[#D9CEBF] hover:bg-white'
                             }`}
                           >
                             <div className="flex justify-between items-center mb-1">
                               <span className="font-bold text-neutral-900 text-[11px] uppercase tracking-wide">
-                                POLARIS BANK
+                                Polaris Bank
                               </span>
                               <button
                                 type="button"
@@ -761,7 +761,7 @@ export const CheckoutView: React.FC = () => {
                           >
                             <div className="flex justify-between items-center mb-1">
                               <span className="font-bold text-neutral-900 text-[11px] uppercase tracking-wide">
-                                UNITED BANK FOR AFRICA (UBA)
+                                United Bank for Africa (UBA)
                               </span>
                               <button
                                 type="button"
@@ -892,7 +892,7 @@ export const CheckoutView: React.FC = () => {
                         <div className="p-3.5 bg-white border border-[#D9CEBF] space-y-1">
                           <div className="flex justify-between items-center">
                             <span className="font-bold text-neutral-900 uppercase text-[11px]">
-                              POLARIS BANK
+                              Polaris Bank
                             </span>
                             <button
                               type="button"
@@ -924,7 +924,7 @@ export const CheckoutView: React.FC = () => {
                         <div className="p-3.5 bg-white border border-[#D9CEBF] space-y-1">
                           <div className="flex justify-between items-center">
                             <span className="font-bold text-neutral-900 uppercase text-[11px]">
-                              UNITED BANK FOR AFRICA (UBA)
+                              United Bank for Africa (UBA)
                             </span>
                             <button
                               type="button"
@@ -1205,11 +1205,11 @@ export const CheckoutView: React.FC = () => {
               </div>
               <div className="text-[11px] text-neutral-600 space-y-1">
                 <div className="flex justify-between">
-                  <span>POLARIS Bank:</span>
+                  <span>Polaris Bank:</span>
                   <span className="font-mono font-semibold text-neutral-900">4091455814</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>UBA Bank:</span>
+                  <span>United Bank for Africa (UBA):</span>
                   <span className="font-mono font-semibold text-neutral-900">1024663880</span>
                 </div>
                 <div className="flex justify-between pt-1 border-t border-neutral-100 text-[10px]">

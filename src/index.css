@@ -9,20 +9,20 @@
 }
 
 @theme {
-  --font-serif: 'Runethia', cursive, serif;
-  --font-display: 'Runethia', cursive, serif;
-  --font-runethia: 'Runethia', cursive;
-  --font-pinyon: 'Runethia', cursive;
-  --font-calligraphy: 'Runethia', cursive;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-runethia: 'Playfair Display', Georgia, serif;
+  --font-pinyon: 'Playfair Display', Georgia, serif;
+  --font-calligraphy: 'Playfair Display', Georgia, serif;
 }
 
 @layer base {
   :root {
-    --font-serif: 'Runethia', cursive, serif;
-    --font-display: 'Runethia', cursive, serif;
-    --font-runethia: 'Runethia', cursive;
-    --font-pinyon: 'Runethia', cursive;
-    --font-calligraphy: 'Runethia', cursive;
+    --font-serif: 'Playfair Display', Georgia, serif;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-runethia: 'Playfair Display', Georgia, serif;
+    --font-pinyon: 'Playfair Display', Georgia, serif;
+    --font-calligraphy: 'Playfair Display', Georgia, serif;
     --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   }
 
@@ -46,18 +46,18 @@
 .font-calligraphy,
 .font-serif,
 .font-display {
-  font-family: 'Runethia', cursive !important;
-  font-weight: 400 !important;
+  font-family: 'Playfair Display', Georgia, serif !important;
 }
 
 /* Instead of all caps, display only the first letter of each word capitalized */
 .uppercase,
+[class*="uppercase"],
 .font-serif.uppercase,
 .font-display.uppercase,
 .font-runethia.uppercase,
 .font-pinyon.uppercase {
   text-transform: capitalize !important;
-  letter-spacing: normal !important;
+  letter-spacing: 0.02em !important;
 }
 
 /* Custom luxury scrollbar */

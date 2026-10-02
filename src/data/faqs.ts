@@ -43,17 +43,17 @@ export const FAQ_DATA: FAQItem[] = [
   {
     category: 'International Orders',
     question: 'How do I pay if I am ordering from outside Nigeria?',
-    answer: 'International clients can select their preferred global currency (USD, GBP, EUR, CAD, AUD, AED, NGN) at checkout and complete payment via Remitly, WorldRemit, Sendwave, or LemFi directly to our official corporate accounts: POLARIS Bank (4091455814) or United Bank for Africa / UBA (1024663880), both registered under "Lariel Bridal Essential". (Note: These financial institutions are well secured and trusted with over 1000 clients on this platform). Payments can also be made via international cards or coordinated directly through our WhatsApp concierge (+234 818 030 6073).',
+    answer: 'International clients can select their preferred global currency (USD, GBP, EUR, CAD, AUD, AED, NGN) at checkout and complete payment via Remitly, WorldRemit, Sendwave, or LemFi directly to our official corporate accounts: Polaris Bank (4091455814) or United Bank for Africa / UBA (1024663880), both registered under "Lariel Bridal Essential". (Note: These financial institutions are well secured and trusted with over 1000 clients on this platform). Payments can also be made via international cards or coordinated directly through our WhatsApp concierge (+234 818 030 6073).',
   },
 ];
 
 export const BRAND_CONTACT = {
-  name: 'LARIEL ESSENTIALS',
-  descriptor: 'THE GLOBAL BRIDAL HOUSE',
+  name: 'Lariel Essentials',
+  descriptor: 'The Global Bridal House',
   tagline: 'The Art of the Bridal Morning',
-  established: 'EST. 2016',
+  established: 'Est. 2016',
   founder: 'Laide',
-  stats: '2,000+ BRIDES | 15+ COUNTRIES',
+  stats: '2,000+ Brides | 15+ Countries',
   press: 'Featured on BellaNaija Weddings',
   phone: '+234 818 030 6073',
   phoneFormatted: '+234 818 030 6073',

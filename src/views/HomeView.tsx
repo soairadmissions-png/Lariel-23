@@ -69,13 +69,11 @@ export const HomeView: React.FC = () => {
 
               {/* Headline with responsive fluid typography */}
               <h1
-                style={{ fontFamily: "'Runethia', cursive" }}
-                className="font-runethia font-normal text-[clamp(1.35rem,3.8vw,4.25rem)] text-[#1E1B18] leading-[1.18] sm:leading-[1.25] tracking-normal"
+                className="font-serif font-normal text-[clamp(1.35rem,3.8vw,4.25rem)] text-[#1E1B18] leading-[1.18] sm:leading-[1.25] tracking-normal"
               >
                 The Art of the <br className="inline" />
                 <span
-                  style={{ fontFamily: "'Runethia', cursive" }}
-                  className="text-[#A8885D] font-runethia font-normal"
+                  className="text-[#A8885D] font-serif italic font-normal"
                 >
                   Bridal Morning.
                 </span>

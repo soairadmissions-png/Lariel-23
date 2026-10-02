@@ -107,7 +107,7 @@ export const FounderStorySection: React.FC = () => {
             {/* Signature Block */}
             <div className="pt-2 border-t border-[#EAE2D5] flex flex-wrap items-center justify-between gap-3 sm:gap-6">
               <div className="flex flex-col">
-                <span className="font-['Runethia',cursive] font-runethia text-2xl xs:text-3xl sm:text-4xl text-[#A68962] leading-none">
+                <span className="font-serif italic text-2xl xs:text-3xl sm:text-4xl text-[#A68962] leading-none">
                   With love, Laide
                 </span>
                 <span className="text-[9px] xs:text-[10px] sm:text-[11px] tracking-wider uppercase font-semibold text-[#8C7A65] mt-1 font-sans">

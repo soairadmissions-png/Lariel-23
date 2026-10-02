@@ -16,7 +16,7 @@ export const FloatingWhatsApp: React.FC = () => {
             <X className="w-3.5 h-3.5" />
           </button>
           <p className="text-[10px] tracking-[0.2em] uppercase font-bold text-[#A68962]">
-            LARIEL BRIDAL CONCIERGE
+            Lariel Bridal Concierge
           </p>
           <p className="text-xs text-neutral-700 mt-1 font-sans">
             Need help with party sizes, custom palette dyes, or express delivery dates?
