@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Runethia';
+  src: url('/fonts/Runethia.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-serif: 'Runethia', cursive, serif;
+  --font-display: 'Runethia', cursive, serif;
+  --font-runethia: 'Runethia', cursive;
+  --font-pinyon: 'Runethia', cursive;
+  --font-calligraphy: 'Runethia', cursive;
+}
+
+@layer base {
+  :root {
+    --font-serif: 'Runethia', cursive, serif;
+    --font-display: 'Runethia', cursive, serif;
+    --font-runethia: 'Runethia', cursive;
+    --font-pinyon: 'Runethia', cursive;
+    --font-calligraphy: 'Runethia', cursive;
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #FAF8F5;
+    color: #111111;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-serif, .font-display {
+    font-family: var(--font-serif);
+  }
+
+  .font-sans {
+    font-family: var(--font-sans);
+  }
+}
+
+.font-runethia,
+.font-pinyon,
+.font-calligraphy,
+.font-serif,
+.font-display {
+  font-family: 'Runethia', cursive !important;
+  font-weight: 400 !important;
+}
+
+/* Instead of all caps, display only the first letter of each word capitalized */
+.uppercase,
+.font-serif.uppercase,
+.font-display.uppercase,
+.font-runethia.uppercase,
+.font-pinyon.uppercase {
+  text-transform: capitalize !important;
+  letter-spacing: normal !important;
+}
+
+/* Custom luxury scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF8F5;
+}
+::-webkit-scrollbar-thumb {
+  background: #D9D2C7;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C5A880;
+}
+
+/* Luxury animations and smooth transitions */
+.editorial-shadow {
+  box-shadow: 0 20px 40px -15px rgba(24, 20, 16, 0.07);
+}
+
+.luxury-card-hover {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 48px -12px rgba(24, 20, 16, 0.12);
+}
+
+/* Hide scrollbar for clean horizontal scrolling carousels and tabs */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Fluid responsive typography helper classes */
+.fluid-hero-title {
+  font-size: clamp(1.4rem, 4.2vw, 4.25rem);
+  line-height: 1.2;
+}
+
+.fluid-section-title {
+  font-size: clamp(1.2rem, 3.2vw, 3rem);
+  line-height: 1.25;
+}
+
+.fluid-sub-title {
+  font-size: clamp(0.95rem, 2vw, 1.35rem);
+  line-height: 1.35;
+}
