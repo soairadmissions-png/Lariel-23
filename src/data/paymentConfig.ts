@@ -23,7 +23,7 @@ export interface RemittanceApp {
 
 export const OFFICIAL_BANK_ACCOUNTS: BankAccount[] = [
   {
-    bankName: 'POLARIS Bank',
+    bankName: 'Polaris Bank',
     accountNumber: '4091455814',
     accountName: 'Lariel Bridal Essential',
     currency: 'NGN / Global Remittance',
@@ -52,7 +52,7 @@ export const REMITTANCE_APPS: RemittanceApp[] = [
       'Open the Remitly App or website and select "Nigeria" as the recipient country.',
       'Enter the amount matching your bridal order converted to NGN or USD.',
       'Select delivery method: "Bank Deposit".',
-      'Choose either POLARIS Bank (Account: 4091455814) or United Bank for Africa (UBA) (Account: 1024663880).',
+      'Choose either Polaris Bank (Account: 4091455814) or United Bank for Africa (UBA) (Account: 1024663880).',
       'Recipient Name: Lariel Bridal Essential.',
       'Submit payment and send your transfer receipt to our bridal concierge on WhatsApp.',
     ],
@@ -67,7 +67,7 @@ export const REMITTANCE_APPS: RemittanceApp[] = [
     instructions: [
       'Log into WorldRemit and select send to "Nigeria".',
       'Select "Bank Transfer" as the receive option.',
-      'Choose POLARIS Bank (4091455814) or United Bank for Africa / UBA (1024663880).',
+      'Choose Polaris Bank (4091455814) or United Bank for Africa / UBA (1024663880).',
       'Recipient Name: Lariel Bridal Essential.',
       'Review exchange rate, pay with your local card or bank, and keep your transfer reference.',
     ],
@@ -82,7 +82,7 @@ export const REMITTANCE_APPS: RemittanceApp[] = [
     instructions: [
       'Open the Sendwave App and choose Nigeria as the destination.',
       'Tap "Send to a Bank Account".',
-      'Select POLARIS Bank or United Bank for Africa (UBA).',
+      'Select Polaris Bank or United Bank for Africa (UBA).',
       'Input account number 4091455814 (Polaris) or 1024663880 (UBA). Account Name: Lariel Bridal Essential.',
       'Confirm send and share the transaction code with our team.',
     ],
@@ -96,7 +96,7 @@ export const REMITTANCE_APPS: RemittanceApp[] = [
     speed: 'Instant deposit to Nigerian banks',
     instructions: [
       'Open LemFi and choose "Send to Nigeria".',
-      'Enter recipient bank details: POLARIS Bank (4091455814) or United Bank for Africa - UBA (1024663880).',
+      'Enter recipient bank details: Polaris Bank (4091455814) or United Bank for Africa - UBA (1024663880).',
       'Recipient name will automatically verify as "Lariel Bridal Essential".',
       'Complete transfer instantly and notify concierge.',
     ],

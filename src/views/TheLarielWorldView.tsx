@@ -552,7 +552,7 @@ export const TheLarielWorldView: React.FC = () => {
               <div className="p-4 bg-white border border-[#DDD3C5] space-y-1.5 shadow-2xs">
                 <div className="flex justify-between items-center">
                   <span className="font-bold text-neutral-900 text-[11px] uppercase tracking-wide">
-                    POLARIS BANK
+                    Polaris Bank
                   </span>
                   <span className="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-medium">Primary</span>
                 </div>
@@ -568,7 +568,7 @@ export const TheLarielWorldView: React.FC = () => {
               <div className="p-4 bg-white border border-[#DDD3C5] space-y-1.5 shadow-2xs">
                 <div className="flex justify-between items-center">
                   <span className="font-bold text-neutral-900 text-[11px] uppercase tracking-wide">
-                    UNITED BANK FOR AFRICA (UBA)
+                    United Bank for Africa (UBA)
                   </span>
                   <span className="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-medium">Commercial</span>
                 </div>

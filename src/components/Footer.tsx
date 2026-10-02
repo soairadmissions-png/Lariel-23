@@ -287,7 +287,7 @@ export const Footer: React.FC = () => {
         {/* Bottom Bar */}
         <div className="border-t border-[#2C231D] mt-16 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-[#8E8378] space-y-4 sm:space-y-0">
           <div>
-            © {new Date().getFullYear()} LARIEL. All rights reserved.
+            © {new Date().getFullYear()} Lariel Essentials. All rights reserved.
           </div>
           <div className="flex flex-wrap items-center space-x-6 text-[11px]">
             <button onClick={() => handleInfoLink('faqs')} className="hover:text-[#FAF8F5] transition-colors">
