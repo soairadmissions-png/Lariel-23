@@ -524,6 +524,97 @@ export const TheLarielWorldView: React.FC = () => {
             })}
           </div>
 
+          {/* Official Payment Gateway & International Banking Box */}
+          <div className="bg-[#FAF6F0] border border-[#E3D9CC] p-6 sm:p-8 space-y-5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#E3D9CC] pb-4">
+              <div>
+                <span className="text-[10px] tracking-widest uppercase font-bold text-[#A68962] font-sans block">
+                  Global Client Settlement
+                </span>
+                <h3 className="font-serif text-xl sm:text-2xl text-neutral-900 font-normal">
+                  Payment Gateway & Official Bank Accounts
+                </h3>
+              </div>
+              <span className="text-xs bg-[#2F6147]/10 text-[#2F6147] font-semibold px-3 py-1 rounded-full border border-[#2F6147]/30 self-start sm:self-auto">
+                Verified Global Gateway
+              </span>
+            </div>
+
+            <p className="text-xs text-neutral-600 font-sans leading-relaxed">
+              International clients can select their preferred global currency and make payment via <strong>Remitly</strong>, <strong>WorldRemit</strong>, <strong>Sendwave</strong>, or <strong>LemFi</strong> financial apps directly into our corporate accounts in Nigeria.
+            </p>
+
+            <div className="p-3 bg-[#F2ECE4] border border-[#E0D7CC] rounded text-[11px] text-neutral-700 italic font-sans">
+              (Note: These financial institutions are well secured and trusted with over 1000 clients on this platform)
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-sans">
+              <div className="p-4 bg-white border border-[#DDD3C5] space-y-1.5 shadow-2xs">
+                <div className="flex justify-between items-center">
+                  <span className="font-bold text-neutral-900 text-[11px] uppercase tracking-wide">
+                    POLARIS BANK
+                  </span>
+                  <span className="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-medium">Primary</span>
+                </div>
+                <div className="font-mono text-lg font-bold text-neutral-950 tracking-wider">
+                  4091455814
+                </div>
+                <p className="text-neutral-600">
+                  Beneficiary: <strong className="text-neutral-900">Lariel Bridal Essential</strong>
+                </p>
+                <p className="text-[10px] text-neutral-500">Destination Country: Nigeria</p>
+              </div>
+
+              <div className="p-4 bg-white border border-[#DDD3C5] space-y-1.5 shadow-2xs">
+                <div className="flex justify-between items-center">
+                  <span className="font-bold text-neutral-900 text-[11px] uppercase tracking-wide">
+                    UNITED BANK FOR AFRICA (UBA)
+                  </span>
+                  <span className="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-medium">Commercial</span>
+                </div>
+                <div className="font-mono text-lg font-bold text-neutral-950 tracking-wider">
+                  1024663880
+                </div>
+                <p className="text-neutral-600">
+                  Beneficiary: <strong className="text-neutral-900">Lariel Bridal Essential</strong>
+                </p>
+                <p className="text-[10px] text-neutral-500">Destination Country: Nigeria</p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-between gap-3 pt-2 text-xs font-sans text-neutral-600 border-t border-[#E8DFCFC]">
+              <span>Follow our official bridal journeys:</span>
+              <div className="flex items-center space-x-4">
+                <a
+                  href="https://www.instagram.com/larielessentials?stkn=bmtiaXV5MzBjdG4x&utm_source=qr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-neutral-900 hover:text-[#C5A880] font-semibold"
+                >
+                  Instagram
+                </a>
+                <span>·</span>
+                <a
+                  href="https://www.tiktok.com/@larielessentials?_r=1&_t=ZS-99wUtSkIX49"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-neutral-900 hover:text-[#C5A880] font-semibold"
+                >
+                  TikTok
+                </a>
+                <span>·</span>
+                <a
+                  href="https://pin.it/7mAKSzGAM"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-neutral-900 hover:text-[#C5A880] font-semibold"
+                >
+                  Pinterest
+                </a>
+              </div>
+            </div>
+          </div>
+
           {/* Need More Assistance Banner */}
           <div className="bg-[#FAF6F0] border border-[#E3D9CC] p-8 text-center space-y-3">
             <h3 className="font-serif text-xl text-neutral-900 font-medium">Still have questions for our bridal concierge?</h3>

@@ -5,7 +5,6 @@ import { useShop } from '../context/ShopContext';
 export const Footer: React.FC = () => {
   const {
     navigateToCategory,
-    navigateToAdmin,
     setActiveView,
     setSelectedWorldTab,
     setSelectedInfoTab,
@@ -239,7 +238,7 @@ export const Footer: React.FC = () => {
             <ul className="space-y-2.5 text-xs text-[#B8AEA3]">
               <li>
                 <a
-                  href="https://instagram.com/larielessentials"
+                  href="https://www.instagram.com/larielessentials?stkn=bmtiaXV5MzBjdG4x&utm_source=qr"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-[#C5A880] transition-colors flex items-center space-x-2"
@@ -250,7 +249,7 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <a
-                  href="https://tiktok.com/@larielessentials"
+                  href="https://www.tiktok.com/@larielessentials?_r=1&_t=ZS-99wUtSkIX49"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-[#C5A880] transition-colors flex items-center space-x-2"
@@ -261,18 +260,7 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <a
-                  href="https://facebook.com/larielessentials"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-[#C5A880] transition-colors flex items-center space-x-2"
-                >
-                  <span className="w-3.5 h-3.5 flex items-center justify-center font-bold text-[10px] text-[#C5A880]">FB</span>
-                  <span>Facebook</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://pinterest.com/larielessentials"
+                  href="https://pin.it/7mAKSzGAM"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-[#C5A880] transition-colors flex items-center space-x-2"
@@ -310,12 +298,6 @@ export const Footer: React.FC = () => {
             </button>
             <button onClick={() => handleInfoLink('shipping')} className="hover:text-[#FAF8F5] transition-colors">
               Shipping Policy
-            </button>
-            <button
-              onClick={() => navigateToAdmin()}
-              className="hover:text-[#C5A880] transition-colors text-[#A58860] font-medium flex items-center space-x-1"
-            >
-              <span>Admin CMS</span>
             </button>
           </div>
         </div>

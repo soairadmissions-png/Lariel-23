@@ -43,7 +43,7 @@ export const FAQ_DATA: FAQItem[] = [
   {
     category: 'International Orders',
     question: 'How do I pay if I am ordering from outside Nigeria?',
-    answer: 'International brides can select their preferred global currency (USD, GBP, EUR, CAD, AUD, AED) at checkout. Invoices are payable securely via international card, bank transfer, or coordinated via our WhatsApp concierge (+234 818 030 6073).',
+    answer: 'International clients can select their preferred global currency (USD, GBP, EUR, CAD, AUD, AED, NGN) at checkout and complete payment via Remitly, WorldRemit, Sendwave, or LemFi directly to our official corporate accounts: POLARIS Bank (4091455814) or United Bank for Africa / UBA (1024663880), both registered under "Lariel Bridal Essential". (Note: These financial institutions are well secured and trusted with over 1000 clients on this platform). Payments can also be made via international cards or coordinated directly through our WhatsApp concierge (+234 818 030 6073).',
   },
 ];
 
@@ -62,9 +62,11 @@ export const BRAND_CONTACT = {
   complaintsEmail: 'larielessentials@gmail.com',
   whatsappUrl: 'https://wa.me/2348180306073?text=Hello%20Lariel%20Essentials,%20I%20am%20inquiring%20about%20a%20luxury%20bridal%20order',
   instagram: 'larielessentials',
-  instagramUrl: 'https://instagram.com/larielessentials',
+  instagramUrl: 'https://www.instagram.com/larielessentials?stkn=bmtiaXV5MzBjdG4x&utm_source=qr',
   tiktok: 'larielessentials',
-  tiktokUrl: 'https://tiktok.com/@larielessentials',
+  tiktokUrl: 'https://www.tiktok.com/@larielessentials?_r=1&_t=ZS-99wUtSkIX49',
+  pinterest: 'larielessentials',
+  pinterestUrl: 'https://pin.it/7mAKSzGAM',
   address: 'Block 1, FAAN Beesam Complex, Ikeja Airport Road, Lagos, Nigeria',
   headquarters: 'Block 1, FAAN Beesam Complex, Ikeja Airport Road, Lagos, Nigeria • Serving Brides Worldwide',
 };
