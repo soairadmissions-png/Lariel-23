@@ -116,6 +116,8 @@ export interface DBSiteSettings {
   homeHeroTitle?: string;
   homeHeroSubtitle?: string;
   announcement?: string;
+  laidePortraitImage?: string;
+  brandLogoImage?: string;
 }
 
 export interface DBRealBride {

@@ -41,7 +41,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
   children,
   onOpenStorefrontPreview,
 }) => {
-  const { adminUser, adminLogout, setActiveView, products, categories, orders, toastMessage, showToast } = useShop();
+  const { adminUser, adminLogout, setActiveView, products, categories, orders, toastMessage, showToast, siteSettings } = useShop();
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [isActivityOpen, setIsActivityOpen] = useState(false);
 
@@ -91,9 +91,19 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
         <div>
           {/* Brand Monogram Header */}
           <div className="p-6 border-b border-[#2C2723] flex items-center space-x-3 text-left">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#C5A880] to-[#9C7F58] flex items-center justify-center text-[#141210] font-serif font-bold text-lg shadow-md">
-              L
-            </div>
+            {siteSettings?.brandLogoImage ? (
+              <div className="w-10 h-10 rounded-xl bg-white/10 border border-[#C5A880]/30 flex items-center justify-center p-1 overflow-hidden shrink-0 shadow-md">
+                <img
+                  src={siteSettings.brandLogoImage}
+                  alt="Lariel Logo"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            ) : (
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#C5A880] to-[#9C7F58] flex items-center justify-center text-[#141210] font-serif font-bold text-lg shadow-md shrink-0">
+                L
+              </div>
+            )}
             <div>
               <div className="font-serif text-lg tracking-wide font-normal text-white">
                 Lariel CMS
@@ -164,16 +174,12 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           <div className="flex items-center justify-between p-2.5 rounded-xl bg-white/5">
             <div className="flex items-center space-x-2.5 min-w-0">
               <div className="w-8 h-8 rounded-full bg-[#C5A880]/30 border border-[#C5A880] text-[#C5A880] flex items-center justify-center font-bold text-xs shrink-0 overflow-hidden">
-                {adminUser?.avatar ? (
-                  <img
-                    src={adminUser.avatar}
-                    alt="Admin"
-                    onError={(e) => handleImageError(e, CANONICAL_DEFAULTS.ADMIN_AVATAR)}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <span>L</span>
-                )}
+                <img
+                  src={siteSettings?.laidePortraitImage || adminUser?.avatar || CANONICAL_DEFAULTS.ADMIN_AVATAR}
+                  alt="Admin"
+                  onError={(e) => handleImageError(e, CANONICAL_DEFAULTS.ADMIN_AVATAR)}
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div className="min-w-0">
                 <div className="text-xs font-medium text-white truncate">

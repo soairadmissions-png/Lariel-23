@@ -32,6 +32,7 @@ export const Header: React.FC = () => {
     wishlist,
     setIsWishlistOpen,
     setIsSearchOpen,
+    siteSettings,
   } = useShop();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -91,7 +92,7 @@ export const Header: React.FC = () => {
               onClick={() => handleNavClick('home')}
             >
               <img
-                src={larielLogoSvg || CANONICAL_DEFAULTS.LOGO_WORDMARK}
+                src={siteSettings?.brandLogoImage || larielLogoSvg || CANONICAL_DEFAULTS.LOGO_WORDMARK}
                 alt="Lariel Essentials Bridal"
                 onError={(e) => handleImageError(e, CANONICAL_DEFAULTS.LOGO_WORDMARK)}
                 className="h-7 xs:h-8 sm:h-10 md:h-12 w-auto object-contain group-hover:scale-[1.02] group-hover:opacity-95 transition-all duration-300"

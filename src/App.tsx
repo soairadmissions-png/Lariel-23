@@ -8,6 +8,7 @@ import { SearchModal } from './components/SearchModal';
 import { QuickViewModal } from './components/QuickViewModal';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { ToastNotification } from './components/ToastNotification';
+import { ArrowLeft, Sparkles, ShieldCheck } from 'lucide-react';
 
 import { HomeView } from './views/HomeView';
 import { CollectionView } from './views/CollectionView';
@@ -19,7 +20,7 @@ import { CheckoutView } from './views/CheckoutView';
 import { AdminView } from './admin/AdminView';
 
 const MainAppContent: React.FC = () => {
-  const { activeView } = useShop();
+  const { activeView, setActiveView, isAdminAuthenticated, adminUser } = useShop();
 
   if (activeView === 'admin') {
     return (
@@ -31,6 +32,28 @@ const MainAppContent: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-[#111111] font-sans antialiased selection:bg-[#C5A880] selection:text-white">
+      {/* Admin Storefront Preview Floating Banner */}
+      {isAdminAuthenticated && (
+        <aside aria-label="Admin Storefront Preview Bar" className="bg-[#141210] text-[#FAF8F5] px-4 py-2 text-xs flex items-center justify-between border-b border-[#C5A880]/30 sticky top-0 z-50 shadow-md">
+          <div className="flex items-center space-x-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="font-serif tracking-wide text-[#C5A880] uppercase text-[10px] font-semibold">
+              Live Storefront Preview
+            </span>
+            <span className="text-neutral-400 hidden sm:inline">
+              · Signed in as {adminUser?.name || 'Administrator'}
+            </span>
+          </div>
+          <button
+            onClick={() => setActiveView('admin')}
+            className="px-3 py-1 bg-[#C5A880] hover:bg-[#d4b78e] text-[#141210] font-semibold text-xs rounded-lg transition-colors flex items-center space-x-1.5 cursor-pointer shadow-2xs"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Return to Admin CMS</span>
+          </button>
+        </aside>
+      )}
+
       {/* Sticky Header & Mega Menu */}
       <Header />
 

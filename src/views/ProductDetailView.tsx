@@ -35,15 +35,67 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ previewPro
     navigateToProduct,
   } = useShop();
 
-  const product = useMemo(() => {
+  const rawProduct = useMemo(() => {
     if (previewProduct) return previewProduct;
     return products.find((p) => p.id === selectedProductId || p.slug === selectedProductId) || products[0];
   }, [selectedProductId, previewProduct, products]);
 
+  const product = useMemo(() => {
+    const p = rawProduct || ({} as Partial<Product>);
+    return {
+      ...p,
+      id: p.id || 'preview-product',
+      name: p.name || 'Signature Bridal Robe',
+      slug: p.slug || 'signature-bridal-robe',
+      subtitle: p.subtitle || 'Bespoke Luxury Morning Robe',
+      priceUSD: typeof p.priceUSD === 'number' && !isNaN(p.priceUSD) ? p.priceUSD : 195,
+      compareAtPriceUSD: p.compareAtPriceUSD,
+      category: p.category || 'bridal',
+      style: p.style || 'Silk',
+      collectionName: p.collectionName || 'Signature',
+      description: p.description || 'Exquisitely crafted luxury bridal robe for unforgettable wedding mornings.',
+      details: Array.isArray(p.details) && p.details.length > 0 ? p.details : ['100% Pure Mulberry liquid silk', 'Hand-stitched finish', 'French illusion detailing'],
+      materials: p.materials || (p as any).fabric || '100% Pure Mulberry Silk',
+      sizingInfo: p.sizingInfo || (p as any).sizingNotes || 'Standard bridal fit. Consult size guide.',
+      productionTime: p.productionTime || 'Handcrafted in 7–14 working days.',
+      shippingInfo: p.shippingInfo || (p as any).shippingNotes || 'Complimentary worldwide express shipping (DHL 3–5 days).',
+      careInstructions: p.careInstructions || (p as any).careNotes || 'Dry clean only. Gentle low-heat steam.',
+      images: Array.isArray(p.images) && p.images.filter(Boolean).length > 0 ? p.images.filter(Boolean) : [CANONICAL_DEFAULTS.PRODUCT],
+      colors: Array.isArray(p.colors) && p.colors.length > 0 ? p.colors : [{ name: 'Ivory', hex: '#FFFFF0' }],
+      sizes: Array.isArray(p.sizes) && p.sizes.length > 0 ? p.sizes : ['S (UK 6/8)', 'M (UK 10/12)', 'L (UK 14/16)', 'XL (UK 18)'],
+      reviewsCount: typeof p.reviewsCount === 'number' ? p.reviewsCount : (typeof (p as any).reviewCount === 'number' ? (p as any).reviewCount : 12),
+      rating: typeof p.rating === 'number' ? p.rating : 5,
+      crossSellIds: Array.isArray(p.crossSellIds) ? p.crossSellIds : [],
+      status: p.status || 'published',
+      stockQuantity: typeof p.stockQuantity === 'number' ? p.stockQuantity : 25,
+      stockStatus: p.stockStatus || 'in_stock',
+      sku: p.sku || 'LE-SIG-001',
+    } as Product;
+  }, [rawProduct]);
+
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [selectedColor, setSelectedColor] = useState<ProductColor>(product?.colors?.[0] || { name: 'Ivory', hex: '#FFFFF0' });
-  const [selectedSize, setSelectedSize] = useState<string>(product?.sizes?.[0] || 'Standard');
+  const [selectedColor, setSelectedColor] = useState<ProductColor>(() => (
+    product.colors && product.colors.length > 0 ? product.colors[0] : { name: 'Ivory', hex: '#FFFFF0' }
+  ));
+  const [selectedSize, setSelectedSize] = useState<string>(() => (
+    product.sizes && product.sizes.length > 0 ? product.sizes[0] : 'S (UK 6/8)'
+  ));
   const [quantity, setQuantity] = useState(1);
+
+  // Sync color, size, and image index when product or previewProduct changes
+  React.useEffect(() => {
+    if (product.colors && product.colors.length > 0) {
+      setSelectedColor(product.colors[0]);
+    } else {
+      setSelectedColor({ name: 'Ivory', hex: '#FFFFF0' });
+    }
+    if (product.sizes && product.sizes.length > 0) {
+      setSelectedSize(product.sizes[0]);
+    } else {
+      setSelectedSize('S (UK 6/8)');
+    }
+    setSelectedImageIndex(0);
+  }, [product.id, previewProduct, product.colors, product.sizes]);
 
   // Personalisation states
   const [enablePersonalisation, setEnablePersonalisation] = useState(false);
@@ -91,7 +143,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ previewPro
 
   const generateWhatsAppInquiry = () => {
     let msg = `Hello Lariel Essentials! I am inquiring about the ${product.name}.\n\n`;
-    msg += `Color: ${selectedColor.name}\nSize: ${selectedSize}\nQuantity: ${quantity}\n`;
+    msg += `Color: ${selectedColor?.name || 'Standard'}\nSize: ${selectedSize || 'Standard'}\nQuantity: ${quantity}\n`;
     if (enablePersonalisation && personalisationText.trim()) {
       msg += `Embroidery: "${personalisationText.trim()}" (${personalisationRole}, Placement: ${placement}, Font: ${fontStyle})\n`;
     }
@@ -248,7 +300,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ previewPro
             <div className="space-y-1.5 sm:space-y-2">
               <div className="flex justify-between items-center text-[10px] sm:text-xs">
                 <span className="font-medium tracking-wider uppercase text-neutral-800">
-                  COLOUR: <span className="font-semibold text-black">{selectedColor.name}</span>
+                  COLOUR: <span className="font-semibold text-black">{selectedColor?.name || 'Standard'}</span>
                 </span>
                 <span className="text-[10px] sm:text-[11px] text-[#A68962] hidden xs:inline">{product.colors.length} Luxury Shades</span>
               </div>
@@ -258,7 +310,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ previewPro
                     key={c.name}
                     onClick={() => setSelectedColor(c)}
                     className={`w-5 h-5 xs:w-6 xs:h-6 sm:w-7 sm:h-7 rounded-full border transition-all ${
-                      selectedColor.name === c.name
+                      selectedColor?.name === c.name
                         ? 'ring-2 ring-offset-1 sm:ring-offset-2 ring-neutral-900 scale-110'
                         : 'border-neutral-300 hover:scale-105'
                     }`}

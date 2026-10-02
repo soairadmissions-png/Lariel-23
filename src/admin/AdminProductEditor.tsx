@@ -607,8 +607,28 @@ export const AdminProductEditor: React.FC<AdminProductEditorProps> = ({
 
           {/* Storefront Preview Button */}
           <button
-            onClick={() => onPreview(formData)}
-            className="px-3.5 py-2 bg-white hover:bg-[#F2ECE4] border border-[#DCD1BF] text-neutral-800 text-xs font-medium rounded-xl transition-colors flex items-center space-x-1.5"
+            type="button"
+            onClick={() =>
+              onPreview({
+                ...formData,
+                name: formData.name?.trim() || 'Signature Bridal Robe',
+                subtitle: formData.subtitle?.trim() || 'Bespoke Luxury Morning Robe',
+                priceUSD: typeof formData.priceUSD === 'number' && !isNaN(formData.priceUSD) ? formData.priceUSD : 195,
+                images:
+                  formData.images && formData.images.filter(Boolean).length > 0
+                    ? formData.images.filter(Boolean)
+                    : [CANONICAL_DEFAULTS.PRODUCT],
+                colors:
+                  formData.colors && formData.colors.length > 0
+                    ? formData.colors
+                    : [{ name: 'Ivory', hex: '#FFFFF0' }],
+                sizes:
+                  formData.sizes && formData.sizes.length > 0
+                    ? formData.sizes
+                    : ['S (UK 6/8)', 'M (UK 10/12)', 'L (UK 14/16)', 'XL (UK 18)'],
+              })
+            }
+            className="px-3.5 py-2 bg-white hover:bg-[#F2ECE4] border border-[#DCD1BF] text-neutral-800 text-xs font-medium rounded-xl transition-colors flex items-center space-x-1.5 cursor-pointer"
           >
             <Eye className="w-3.5 h-3.5 text-[#C5A880]" />
             <span className="hidden sm:inline">Preview Storefront</span>

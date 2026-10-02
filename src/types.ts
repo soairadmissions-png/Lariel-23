@@ -197,6 +197,8 @@ export interface SiteSettings {
   homeHeroTitle?: string;
   homeHeroSubtitle?: string;
   announcement?: string;
+  laidePortraitImage?: string;
+  brandLogoImage?: string;
 }
 
 declare global {

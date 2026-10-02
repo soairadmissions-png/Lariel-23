@@ -17,6 +17,8 @@ import {
   Heart,
   X,
   CheckCircle2,
+  User,
+  RotateCcw,
 } from 'lucide-react';
 import { useShop, triggerStoreSync } from '../context/ShopContext';
 import { api } from '../services/api';
@@ -56,11 +58,15 @@ export const AdminMediaLibrary: React.FC = () => {
   const [serverMedia, setServerMedia] = useState<ServerMediaItem[]>([]);
   const [isLoadingMedia, setIsLoadingMedia] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [isUploadingLaide, setIsUploadingLaide] = useState(false);
+  const [isUploadingLogo, setIsUploadingLogo] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const laideFileInputRef = useRef<HTMLInputElement>(null);
+  const logoFileInputRef = useRef<HTMLInputElement>(null);
 
   // "Use in Store" Apply Modal State
   const [applyModalItem, setApplyModalItem] = useState<MediaItem | null>(null);
-  const [applyTab, setApplyTab] = useState<'product' | 'category' | 'home' | 'real-bride'>('product');
+  const [applyTab, setApplyTab] = useState<'product' | 'category' | 'home' | 'real-bride' | 'laide' | 'logo'>('product');
   const [isApplying, setIsApplying] = useState(false);
 
   // Apply to Product state
@@ -299,6 +305,115 @@ export const AdminMediaLibrary: React.FC = () => {
     }
   };
 
+  // 5. Direct Upload for Laide's Founder Portrait
+  const handleUploadLaide = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      showToast('Please select a valid image file');
+      return;
+    }
+    setIsUploadingLaide(true);
+    try {
+      const res = await api.uploadFile(file);
+      if (res && res.url) {
+        await api.updateSettings({ laidePortraitImage: res.url });
+        await refreshSiteSettings();
+        triggerStoreSync();
+        fetchServerMedia();
+        showToast("Founder portrait for Laide uploaded and updated live across the house!");
+      }
+    } catch (err: any) {
+      showToast(err.message || 'Failed to upload founder photo');
+    } finally {
+      setIsUploadingLaide(false);
+      if (e.target) e.target.value = '';
+    }
+  };
+
+  // 6. Direct Upload for Brand Logo
+  const handleUploadLogo = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      showToast('Please select a valid image file (SVG, PNG, JPG, WebP)');
+      return;
+    }
+    setIsUploadingLogo(true);
+    try {
+      const res = await api.uploadFile(file);
+      if (res && res.url) {
+        await api.updateSettings({ brandLogoImage: res.url });
+        await refreshSiteSettings();
+        triggerStoreSync();
+        fetchServerMedia();
+        showToast("Brand logo uploaded and updated live in the header and navigation!");
+      }
+    } catch (err: any) {
+      showToast(err.message || 'Failed to upload brand logo');
+    } finally {
+      setIsUploadingLogo(false);
+      if (e.target) e.target.value = '';
+    }
+  };
+
+  // 7. Reset Handlers
+  const handleResetLaide = async () => {
+    try {
+      await api.updateSettings({ laidePortraitImage: '' });
+      await refreshSiteSettings();
+      triggerStoreSync();
+      showToast("Founder portrait reset to default atelier photo");
+    } catch (err: any) {
+      showToast(err.message || 'Failed to reset photo');
+    }
+  };
+
+  const handleResetLogo = async () => {
+    try {
+      await api.updateSettings({ brandLogoImage: '' });
+      await refreshSiteSettings();
+      triggerStoreSync();
+      showToast("Brand logo reset to default SVG");
+    } catch (err: any) {
+      showToast(err.message || 'Failed to reset logo');
+    }
+  };
+
+  // 8. Apply to Laide Portrait (from Media Modal)
+  const handleApplyToLaidePortrait = async () => {
+    if (!applyModalItem) return;
+    setIsApplying(true);
+    try {
+      await api.updateSettings({ laidePortraitImage: applyModalItem.url });
+      await refreshSiteSettings();
+      triggerStoreSync();
+      showToast("Set as Founder Portrait for Laide across the store!");
+      setApplyModalItem(null);
+    } catch (err: any) {
+      showToast(err.message || 'Failed to update founder photo');
+    } finally {
+      setIsApplying(false);
+    }
+  };
+
+  // 9. Apply to Brand Logo (from Media Modal)
+  const handleApplyToBrandLogo = async () => {
+    if (!applyModalItem) return;
+    setIsApplying(true);
+    try {
+      await api.updateSettings({ brandLogoImage: applyModalItem.url });
+      await refreshSiteSettings();
+      triggerStoreSync();
+      showToast("Set as Brand Logo across the store and header!");
+      setApplyModalItem(null);
+    } catch (err: any) {
+      showToast(err.message || 'Failed to update brand logo');
+    } finally {
+      setIsApplying(false);
+    }
+  };
+
   return (
     <div className="space-y-6 text-left">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -307,11 +422,12 @@ export const AdminMediaLibrary: React.FC = () => {
             Media & Photography Library
           </h1>
           <p className="text-xs sm:text-sm text-neutral-600 mt-0.5">
-            Upload high-resolution photography and apply assets directly to Products, Categories, Homepage Hero, or Real Bride stories.
+            Upload high-resolution photography and apply assets directly to Products, Categories, Homepage Hero, Founder Story, or Brand Logo.
           </p>
         </div>
 
         <div className="flex items-center space-x-3">
+          {/* Main Media Upload File Input */}
           <input
             type="file"
             ref={fileInputRef}
@@ -319,6 +435,23 @@ export const AdminMediaLibrary: React.FC = () => {
             accept="image/*"
             className="hidden"
           />
+          {/* Dedicated Laide Founder Photo File Input */}
+          <input
+            type="file"
+            ref={laideFileInputRef}
+            onChange={handleUploadLaide}
+            accept="image/*"
+            className="hidden"
+          />
+          {/* Dedicated Brand Logo File Input */}
+          <input
+            type="file"
+            ref={logoFileInputRef}
+            onChange={handleUploadLogo}
+            accept="image/*,.svg"
+            className="hidden"
+          />
+
           <button
             onClick={() => fileInputRef.current?.click()}
             disabled={isUploading}
@@ -336,6 +469,193 @@ export const AdminMediaLibrary: React.FC = () => {
               </>
             )}
           </button>
+        </div>
+      </div>
+
+      {/* Brand & Founder Identity Assets Panel */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Card 1: Founder Portrait (Laide) */}
+        <div className="bg-[#FAF8F5] border border-[#E0D5C3] rounded-2xl p-4 sm:p-5 shadow-2xs flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center space-x-2">
+                <div className="p-1.5 rounded-lg bg-[#C5A880]/20 text-[#A58860]">
+                  <User className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="font-serif text-sm sm:text-base text-[#181614] font-medium">
+                    Founder Portrait (Laide)
+                  </h3>
+                  <p className="text-[11px] text-neutral-500">
+                    Displayed in “Meet Laide” on Homepage and The Lariel World.
+                  </p>
+                </div>
+              </div>
+              <span
+                className={`text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full ${
+                  siteSettings?.laidePortraitImage && !siteSettings.laidePortraitImage.includes('laide_founder_portrait_1789650582034')
+                    ? 'bg-emerald-100 text-emerald-800'
+                    : 'bg-neutral-200 text-neutral-700'
+                }`}
+              >
+                {siteSettings?.laidePortraitImage && !siteSettings.laidePortraitImage.includes('laide_founder_portrait_1789650582034')
+                  ? 'Custom Upload'
+                  : 'Atelier Default'}
+              </span>
+            </div>
+
+            <div className="flex items-center space-x-4 my-3">
+              <div className="w-20 h-24 rounded-xl overflow-hidden border border-[#DCD1BF] bg-[#ECE5DB] shrink-0 shadow-xs relative">
+                <img
+                  src={siteSettings?.laidePortraitImage || CANONICAL_DEFAULTS.FOUNDER_PORTRAIT}
+                  alt="Founder Laide"
+                  onError={(e) => handleImageError(e, CANONICAL_DEFAULTS.FOUNDER_PORTRAIT)}
+                  className="w-full h-full object-cover object-top"
+                />
+              </div>
+              <div className="space-y-1 text-xs text-neutral-600 min-w-0">
+                <p className="text-[11px] font-medium text-neutral-800">
+                  Current Portrait URL:
+                </p>
+                <p className="text-[10px] font-mono text-neutral-500 truncate max-w-xs sm:max-w-sm">
+                  {siteSettings?.laidePortraitImage || CANONICAL_DEFAULTS.FOUNDER_PORTRAIT}
+                </p>
+                <p className="text-[10px] text-neutral-400">
+                  Auto-compressed in browser & hosted on Vercel public Blob.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center space-x-2 pt-2 border-t border-[#EAE2D5]">
+            <button
+              type="button"
+              onClick={() => laideFileInputRef.current?.click()}
+              disabled={isUploadingLaide}
+              className="flex-1 py-2 px-3 bg-[#181614] hover:bg-[#C5A880] hover:text-[#181614] text-white rounded-xl text-xs font-medium transition-colors flex items-center justify-center space-x-1.5 cursor-pointer disabled:opacity-50 shadow-2xs"
+            >
+              {isUploadingLaide ? (
+                <>
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  <span>Uploading...</span>
+                </>
+              ) : (
+                <>
+                  <Upload className="w-3.5 h-3.5" />
+                  <span>Upload Laide Photo</span>
+                </>
+              )}
+            </button>
+            {siteSettings?.laidePortraitImage && (
+              <button
+                type="button"
+                onClick={handleResetLaide}
+                className="py-2 px-3 bg-white hover:bg-[#F2ECE4] border border-[#DCD1BF] text-neutral-700 rounded-xl text-xs font-medium transition-colors flex items-center space-x-1 cursor-pointer"
+                title="Reset to default portrait"
+              >
+                <RotateCcw className="w-3.5 h-3.5 text-neutral-500" />
+                <span className="hidden sm:inline">Reset</span>
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Card 2: Brand Logo & Wordmark */}
+        <div className="bg-[#FAF8F5] border border-[#E0D5C3] rounded-2xl p-4 sm:p-5 shadow-2xs flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center space-x-2">
+                <div className="p-1.5 rounded-lg bg-[#C5A880]/20 text-[#A58860]">
+                  <Sparkles className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="font-serif text-sm sm:text-base text-[#181614] font-medium">
+                    Brand Logo & Wordmark
+                  </h3>
+                  <p className="text-[11px] text-neutral-500">
+                    Displayed in sticky header, mobile navigation, and CMS.
+                  </p>
+                </div>
+              </div>
+              <span
+                className={`text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full ${
+                  siteSettings?.brandLogoImage && !siteSettings.brandLogoImage.includes('lariel_brand_logo_1788970256407')
+                    ? 'bg-emerald-100 text-emerald-800'
+                    : 'bg-neutral-200 text-neutral-700'
+                }`}
+              >
+                {siteSettings?.brandLogoImage && !siteSettings.brandLogoImage.includes('lariel_brand_logo_1788970256407')
+                  ? 'Custom Upload'
+                  : 'Atelier Default'}
+              </span>
+            </div>
+
+            <div className="flex items-center space-x-4 my-3">
+              <div className="flex space-x-2">
+                {/* Preview on Light Backdrop */}
+                <div className="w-20 h-16 rounded-xl overflow-hidden border border-[#DCD1BF] bg-[#FAF8F5] flex items-center justify-center p-2 shrink-0 shadow-2xs" title="Preview on light background">
+                  <img
+                    src={siteSettings?.brandLogoImage || CANONICAL_DEFAULTS.LOGO_WORDMARK}
+                    alt="Brand Logo Light"
+                    onError={(e) => handleImageError(e, CANONICAL_DEFAULTS.LOGO_WORDMARK)}
+                    className="max-h-full max-w-full object-contain"
+                  />
+                </div>
+                {/* Preview on Dark Backdrop */}
+                <div className="w-16 h-16 rounded-xl overflow-hidden border border-[#3C342C] bg-[#141210] flex items-center justify-center p-2 shrink-0 shadow-2xs" title="Preview on dark header">
+                  <img
+                    src={siteSettings?.brandLogoImage || CANONICAL_DEFAULTS.LOGO_WORDMARK}
+                    alt="Brand Logo Dark"
+                    onError={(e) => handleImageError(e, CANONICAL_DEFAULTS.LOGO_WORDMARK)}
+                    className="max-h-full max-w-full object-contain"
+                  />
+                </div>
+              </div>
+              <div className="space-y-1 text-xs text-neutral-600 min-w-0">
+                <p className="text-[11px] font-medium text-neutral-800">
+                  Current Logo URL:
+                </p>
+                <p className="text-[10px] font-mono text-neutral-500 truncate max-w-xs sm:max-w-sm">
+                  {siteSettings?.brandLogoImage || CANONICAL_DEFAULTS.LOGO_WORDMARK}
+                </p>
+                <p className="text-[10px] text-neutral-400">
+                  Supports transparent SVG, PNG, WebP, or high-res JPG.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center space-x-2 pt-2 border-t border-[#EAE2D5]">
+            <button
+              type="button"
+              onClick={() => logoFileInputRef.current?.click()}
+              disabled={isUploadingLogo}
+              className="flex-1 py-2 px-3 bg-[#181614] hover:bg-[#C5A880] hover:text-[#181614] text-white rounded-xl text-xs font-medium transition-colors flex items-center justify-center space-x-1.5 cursor-pointer disabled:opacity-50 shadow-2xs"
+            >
+              {isUploadingLogo ? (
+                <>
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  <span>Uploading...</span>
+                </>
+              ) : (
+                <>
+                  <Upload className="w-3.5 h-3.5" />
+                  <span>Upload Brand Logo</span>
+                </>
+              )}
+            </button>
+            {siteSettings?.brandLogoImage && (
+              <button
+                type="button"
+                onClick={handleResetLogo}
+                className="py-2 px-3 bg-white hover:bg-[#F2ECE4] border border-[#DCD1BF] text-neutral-700 rounded-xl text-xs font-medium transition-colors flex items-center space-x-1 cursor-pointer"
+                title="Reset to default logo"
+              >
+                <RotateCcw className="w-3.5 h-3.5 text-neutral-500" />
+                <span className="hidden sm:inline">Reset</span>
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
@@ -549,6 +869,32 @@ export const AdminMediaLibrary: React.FC = () => {
               >
                 <Heart className="w-3.5 h-3.5 text-[#C5A880]" />
                 <span>Real Bride</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setApplyTab('laide')}
+                className={`px-3 py-2 text-xs font-medium rounded-t-xl transition-colors flex items-center space-x-1.5 whitespace-nowrap ${
+                  applyTab === 'laide'
+                    ? 'bg-white text-neutral-900 border-t border-x border-[#E0D5C3]'
+                    : 'text-neutral-600 hover:text-neutral-900'
+                }`}
+              >
+                <User className="w-3.5 h-3.5 text-[#C5A880]" />
+                <span>Founder (Laide)</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setApplyTab('logo')}
+                className={`px-3 py-2 text-xs font-medium rounded-t-xl transition-colors flex items-center space-x-1.5 whitespace-nowrap ${
+                  applyTab === 'logo'
+                    ? 'bg-white text-neutral-900 border-t border-x border-[#E0D5C3]'
+                    : 'text-neutral-600 hover:text-neutral-900'
+                }`}
+              >
+                <Sparkles className="w-3.5 h-3.5 text-[#C5A880]" />
+                <span>Brand Logo</span>
               </button>
             </div>
 
@@ -808,6 +1154,80 @@ export const AdminMediaLibrary: React.FC = () => {
                       className="w-full py-2.5 px-4 bg-[#181614] hover:bg-[#C5A880] hover:text-[#181614] text-white text-xs font-semibold uppercase tracking-wider rounded-xl transition-all shadow-md disabled:opacity-50 cursor-pointer"
                     >
                       {isApplying ? 'Publishing Story...' : 'Publish to Real Brides in The Lariel World'}
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 5: LAIDE FOUNDER PORTRAIT */}
+              {applyTab === 'laide' && (
+                <div className="space-y-4">
+                  <p className="text-xs text-neutral-600">
+                    Set this photography as the authoritative founder portrait for Laide across the storefront (featured in “Meet the Founder” and The Lariel World).
+                  </p>
+
+                  <div className="rounded-xl overflow-hidden border border-[#DCD1BF] h-48 bg-[#FAF8F5] flex justify-center items-center p-2 relative">
+                    <img
+                      src={applyModalItem.url}
+                      alt="Laide portrait preview"
+                      onError={(e) => handleImageError(e, CANONICAL_DEFAULTS.FOUNDER_PORTRAIT)}
+                      className="max-h-full max-w-full object-contain rounded-lg"
+                    />
+                    <div className="absolute bottom-2 left-2 bg-black/70 text-white text-[10px] px-2 py-0.5 rounded">
+                      Laide Editorial Preview
+                    </div>
+                  </div>
+
+                  <div className="pt-2">
+                    <button
+                      type="button"
+                      onClick={handleApplyToLaidePortrait}
+                      disabled={isApplying}
+                      className="w-full py-2.5 px-4 bg-[#181614] hover:bg-[#C5A880] hover:text-[#181614] text-white text-xs font-semibold uppercase tracking-wider rounded-xl transition-all shadow-md disabled:opacity-50 cursor-pointer"
+                    >
+                      {isApplying ? 'Updating Portrait...' : 'Set as Founder Portrait for Laide'}
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 6: BRAND LOGO */}
+              {applyTab === 'logo' && (
+                <div className="space-y-4">
+                  <p className="text-xs text-neutral-600">
+                    Set this visual asset as the official brand logo across the sticky header, navigation, and mobile drawer menu.
+                  </p>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="rounded-xl overflow-hidden border border-[#DCD1BF] h-32 bg-[#FAF8F5] flex flex-col justify-center items-center p-3 text-center">
+                      <img
+                        src={applyModalItem.url}
+                        alt="Logo Light Preview"
+                        onError={(e) => handleImageError(e, CANONICAL_DEFAULTS.LOGO_WORDMARK)}
+                        className="max-h-16 max-w-full object-contain mb-2"
+                      />
+                      <span className="text-[10px] text-neutral-500 font-medium">Light Header Preview</span>
+                    </div>
+
+                    <div className="rounded-xl overflow-hidden border border-[#3C342C] h-32 bg-[#141210] flex flex-col justify-center items-center p-3 text-center">
+                      <img
+                        src={applyModalItem.url}
+                        alt="Logo Dark Preview"
+                        onError={(e) => handleImageError(e, CANONICAL_DEFAULTS.LOGO_WORDMARK)}
+                        className="max-h-16 max-w-full object-contain mb-2"
+                      />
+                      <span className="text-[10px] text-[#C5A880] font-medium">Dark Header Preview</span>
+                    </div>
+                  </div>
+
+                  <div className="pt-2">
+                    <button
+                      type="button"
+                      onClick={handleApplyToBrandLogo}
+                      disabled={isApplying}
+                      className="w-full py-2.5 px-4 bg-[#181614] hover:bg-[#C5A880] hover:text-[#181614] text-white text-xs font-semibold uppercase tracking-wider rounded-xl transition-all shadow-md disabled:opacity-50 cursor-pointer"
+                    >
+                      {isApplying ? 'Updating Brand Logo...' : 'Set as Main Brand Logo'}
                     </button>
                   </div>
                 </div>

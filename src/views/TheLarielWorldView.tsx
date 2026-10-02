@@ -9,7 +9,7 @@ import laidePortraitImg from '../assets/images/laide_founder_portrait_1789650582
 import { CANONICAL_DEFAULTS, handleImageError } from '../constants/imageDefaults';
 
 export const TheLarielWorldView: React.FC = () => {
-  const { selectedWorldTab, setSelectedWorldTab, navigateToCategory, setActiveView, realBrides } = useShop();
+  const { selectedWorldTab, setSelectedWorldTab, navigateToCategory, setActiveView, realBrides, siteSettings } = useShop();
 
   const [activeBrideCategory, setActiveBrideCategory] = useState<string>('All');
   const [selectedArticle, setSelectedArticle] = useState<JournalArticle | null>(null);
@@ -107,7 +107,7 @@ export const TheLarielWorldView: React.FC = () => {
                 <div className="relative w-full max-w-[340px]">
                   <div className="rounded-xl sm:rounded-2xl overflow-hidden shadow-xl border border-[#E0D5C3] bg-white">
                     <img
-                      src={laidePortraitImg || CANONICAL_DEFAULTS.FOUNDER_PORTRAIT}
+                      src={siteSettings?.laidePortraitImage || laidePortraitImg || CANONICAL_DEFAULTS.FOUNDER_PORTRAIT}
                       alt="Laide, Founder of Lariel Essentials"
                       onError={(e) => handleImageError(e, CANONICAL_DEFAULTS.FOUNDER_PORTRAIT)}
                       referrerPolicy="no-referrer"

@@ -5,7 +5,7 @@ import laidePortraitImg from '../assets/images/laide_founder_portrait_1789650582
 import { CANONICAL_DEFAULTS, handleImageError } from '../constants/imageDefaults';
 
 export const FounderStorySection: React.FC = () => {
-  const { setActiveView, setSelectedWorldTab, navigateToCategory } = useShop();
+  const { setActiveView, setSelectedWorldTab, navigateToCategory, siteSettings } = useShop();
 
   const handleReadFullStory = () => {
     setSelectedWorldTab('story');
@@ -32,7 +32,7 @@ export const FounderStorySection: React.FC = () => {
               {/* Main portrait container */}
               <div className="relative rounded-xl sm:rounded-2xl overflow-hidden shadow-[0_12px_35px_rgba(40,32,24,0.12)] bg-[#F4EDE2] border border-[#E5DDD0]">
                 <img
-                  src={laidePortraitImg || CANONICAL_DEFAULTS.FOUNDER_PORTRAIT}
+                  src={siteSettings?.laidePortraitImage || laidePortraitImg || CANONICAL_DEFAULTS.FOUNDER_PORTRAIT}
                   alt="Laide, Founder and Creative Director of Lariel Essentials"
                   onError={(e) => handleImageError(e, CANONICAL_DEFAULTS.FOUNDER_PORTRAIT)}
                   referrerPolicy="no-referrer"

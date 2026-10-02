@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   ShoppingBag,
   AlertTriangle,
@@ -14,8 +14,12 @@ import {
   Edit,
   Eye,
   CheckCircle,
+  User,
+  Upload,
+  Loader2,
+  Image as ImageIcon,
 } from 'lucide-react';
-import { useShop } from '../context/ShopContext';
+import { useShop, triggerStoreSync } from '../context/ShopContext';
 import { api } from '../services/api';
 import { DashboardStats, Product } from '../types';
 import { CANONICAL_DEFAULTS, handleImageError } from '../constants/imageDefaults';
@@ -29,9 +33,53 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   onNavigateTab,
   onPreviewProduct,
 }) => {
-  const { products, formatPrice, showToast, refreshProducts } = useShop();
+  const { products, formatPrice, showToast, refreshProducts, siteSettings, refreshSiteSettings } = useShop();
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isUploadingLaide, setIsUploadingLaide] = useState(false);
+  const [isUploadingLogo, setIsUploadingLogo] = useState(false);
+  const laideInputRef = useRef<HTMLInputElement>(null);
+  const logoInputRef = useRef<HTMLInputElement>(null);
+
+  const handleUploadLaide = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setIsUploadingLaide(true);
+    try {
+      const res = await api.uploadFile(file);
+      if (res && res.url) {
+        await api.updateSettings({ laidePortraitImage: res.url });
+        await refreshSiteSettings();
+        triggerStoreSync();
+        showToast("Founder portrait for Laide uploaded and updated live across the house!");
+      }
+    } catch (err: any) {
+      showToast(err.message || 'Failed to upload founder photo');
+    } finally {
+      setIsUploadingLaide(false);
+      if (e.target) e.target.value = '';
+    }
+  };
+
+  const handleUploadLogo = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setIsUploadingLogo(true);
+    try {
+      const res = await api.uploadFile(file);
+      if (res && res.url) {
+        await api.updateSettings({ brandLogoImage: res.url });
+        await refreshSiteSettings();
+        triggerStoreSync();
+        showToast("Brand logo uploaded and updated live in the header and navigation!");
+      }
+    } catch (err: any) {
+      showToast(err.message || 'Failed to upload brand logo');
+    } finally {
+      setIsUploadingLogo(false);
+      if (e.target) e.target.value = '';
+    }
+  };
 
   const loadStats = async () => {
     setIsLoading(true);
@@ -353,6 +401,103 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   </div>
                 );
               })}
+            </div>
+          </div>
+
+          {/* Brand & Founder Identity Quick Management */}
+          <div className="bg-[#FAF8F5] border border-[#E0D5C3] rounded-2xl p-6 shadow-2xs space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2 text-xs font-semibold uppercase tracking-wider text-neutral-500">
+                <Sparkles className="w-3.5 h-3.5 text-[#C5A880]" />
+                <span>Brand & Founder Identity</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => onNavigateTab('media')}
+                className="text-[11px] text-[#A58860] hover:underline cursor-pointer"
+              >
+                Open Media Library →
+              </button>
+            </div>
+
+            {/* Hidden File Inputs */}
+            <input
+              type="file"
+              ref={laideInputRef}
+              onChange={handleUploadLaide}
+              accept="image/*"
+              className="hidden"
+            />
+            <input
+              type="file"
+              ref={logoInputRef}
+              onChange={handleUploadLogo}
+              accept="image/*,.svg"
+              className="hidden"
+            />
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {/* Founder Photo */}
+              <div className="p-3 bg-white border border-[#E0D5C3] rounded-xl flex items-center justify-between shadow-2xs">
+                <div className="flex items-center space-x-3 min-w-0">
+                  <div className="w-12 h-14 rounded-lg overflow-hidden border border-[#DCD1BF] bg-[#F4EDE2] shrink-0">
+                    <img
+                      src={siteSettings?.laidePortraitImage || CANONICAL_DEFAULTS.FOUNDER_PORTRAIT}
+                      alt="Laide Founder"
+                      onError={(e) => handleImageError(e, CANONICAL_DEFAULTS.FOUNDER_PORTRAIT)}
+                      className="w-full h-full object-cover object-top"
+                    />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-xs font-semibold text-neutral-800 truncate">Laide Portrait</div>
+                    <div className="text-[10px] text-neutral-500">Founder Story Photo</div>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => laideInputRef.current?.click()}
+                  disabled={isUploadingLaide}
+                  className="px-2.5 py-1.5 bg-[#181614] hover:bg-[#C5A880] hover:text-[#181614] text-white text-[11px] font-medium rounded-lg transition-colors flex items-center space-x-1 cursor-pointer disabled:opacity-50 shrink-0 ml-2"
+                >
+                  {isUploadingLaide ? (
+                    <Loader2 className="w-3 h-3 animate-spin" />
+                  ) : (
+                    <Upload className="w-3 h-3" />
+                  )}
+                  <span>{isUploadingLaide ? '...' : 'Upload'}</span>
+                </button>
+              </div>
+
+              {/* Brand Logo */}
+              <div className="p-3 bg-white border border-[#E0D5C3] rounded-xl flex items-center justify-between shadow-2xs">
+                <div className="flex items-center space-x-3 min-w-0">
+                  <div className="w-12 h-14 rounded-lg overflow-hidden border border-[#DCD1BF] bg-[#FAF8F5] shrink-0 flex items-center justify-center p-1">
+                    <img
+                      src={siteSettings?.brandLogoImage || CANONICAL_DEFAULTS.LOGO_WORDMARK}
+                      alt="Brand Logo"
+                      onError={(e) => handleImageError(e, CANONICAL_DEFAULTS.LOGO_WORDMARK)}
+                      className="max-h-full max-w-full object-contain"
+                    />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-xs font-semibold text-neutral-800 truncate">Brand Logo</div>
+                    <div className="text-[10px] text-neutral-500">Header & Menu Wordmark</div>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => logoInputRef.current?.click()}
+                  disabled={isUploadingLogo}
+                  className="px-2.5 py-1.5 bg-[#181614] hover:bg-[#C5A880] hover:text-[#181614] text-white text-[11px] font-medium rounded-lg transition-colors flex items-center space-x-1 cursor-pointer disabled:opacity-50 shrink-0 ml-2"
+                >
+                  {isUploadingLogo ? (
+                    <Loader2 className="w-3 h-3 animate-spin" />
+                  ) : (
+                    <Upload className="w-3 h-3" />
+                  )}
+                  <span>{isUploadingLogo ? '...' : 'Upload'}</span>
+                </button>
+              </div>
             </div>
           </div>
 
