@@ -3809,6 +3809,36 @@
   ],
   "activityLogs": [
     {
+      "id": "log-1791553326075",
+      "action": "Uploaded media file [local]: test_auth_check_1791553326075.jpg",
+      "adminName": "Admin",
+      "timestamp": "2026-10-09T13:42:06.075Z"
+    },
+    {
+      "id": "log-1791553326060",
+      "action": "Admin logged in: Laide (admin@larielextravaganza.com)",
+      "adminName": "Laide",
+      "timestamp": "2026-10-09T13:42:06.060Z"
+    },
+    {
+      "id": "log-1791553310043",
+      "action": "Admin logged in: Laide (admin@larielextravaganza.com)",
+      "adminName": "Laide",
+      "timestamp": "2026-10-09T13:41:50.043Z"
+    },
+    {
+      "id": "log-1791553290956",
+      "action": "Admin logged in: Laide (admin@larielextravaganza.com)",
+      "adminName": "Laide",
+      "timestamp": "2026-10-09T13:41:30.956Z"
+    },
+    {
+      "id": "log-1791552003126",
+      "action": "Uploaded media file locally: 1791552003125_test_queen_robe_1791552003125.jpg",
+      "adminName": "Admin",
+      "timestamp": "2026-10-09T13:20:03.126Z"
+    },
+    {
       "id": "log-1790875625606",
       "action": "Updated product \"Amanda 3D Robe\"",
       "adminName": "Admin",

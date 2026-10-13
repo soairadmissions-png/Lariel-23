@@ -2,7 +2,6 @@ import express from 'express';
 import type { Request, Response, NextFunction } from 'express';
 import fs from 'fs';
 import path from 'path';
-import { put } from '@vercel/blob';
 import {
   getDatabase,
   getDatabaseAsync,
@@ -18,7 +17,22 @@ import {
   uploadPersistentMedia,
   deletePersistentMedia,
   listPersistentMedia,
+  getStorageProvider,
+  getStorageDiagnostics,
 } from './storage.ts';
+import {
+  getR2Config,
+  getPresignedUploadUrl,
+  validateImageBuffer,
+  getR2Object,
+  PERMITTED_FOLDERS,
+  MAX_FILE_SIZE_BYTES,
+} from './r2.ts';
+import {
+  requireAdmin,
+  generateAdminSessionToken,
+  verifyAdminCredentials,
+} from './auth.ts';
 
 const router = express.Router();
 
@@ -58,79 +72,40 @@ router.use((_req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-// Auth token verification helper
-const AUTH_TOKEN = 'lariel_super_admin_sec_token_2026';
-
-function requireAdmin(req: Request, res: Response, next: NextFunction) {
-  const authHeader = req.headers.authorization;
-  const token = authHeader ? authHeader.replace(/^Bearer\s+/i, '').trim() : '';
-
-  // In dev / preview mode or with valid token, allow admin access
-  if (
-    token === AUTH_TOKEN ||
-    token === 'demo-admin-token' ||
-    token === 'lariel_super_admin_sec_token_2026' ||
-    process.env.NODE_ENV !== 'production'
-  ) {
-    return next();
-  }
-
-  return res.status(401).json({ error: 'Unauthorized. Admin authorization token required.' });
-}
-
 // -------------------------------------------------------------
-// AUTH ENDPOINTS
+// AUTH ENDPOINTS (SECURED SERVER-SIDE AUTHENTICATION)
 // -------------------------------------------------------------
-
-const DEMO_ADMIN = {
-  email: 'admin@larielextravaganza.com',
-  password: 'admin123',
-};
-const DEMO_ADMIN_ALT_EMAIL = 'admin@larielessentials.com';
 
 router.post('/auth/login', async (req: Request, res: Response) => {
-  const { email, password } = req.body;
-  const db = getDatabase();
-  const admin = db.admins[0] || {
-    id: 'admin-1',
-    name: 'Laide',
-    email: DEMO_ADMIN.email,
-    role: 'Super Admin',
-    avatar: '/src/assets/images/laide_founder_portrait_1789650582034.jpg',
-    token: AUTH_TOKEN,
-  };
+  const { email, password } = req.body || {};
 
-  // Allow standard hardcoded demo credentials or matching admin email
-  if (
-    (email === DEMO_ADMIN.email && password === DEMO_ADMIN.password) ||
-    (email === DEMO_ADMIN_ALT_EMAIL && password === DEMO_ADMIN.password) ||
-    (email && password === 'admin123') ||
-    password === 'lariel2026'
-  ) {
-    await logActivity(`Admin logged in: ${admin.name} (${admin.email})`, admin.name);
-    return res.json({
-      success: true,
-      token: AUTH_TOKEN,
-      user: {
-        id: admin.id,
-        name: admin.name,
-        email: admin.email,
-        role: admin.role,
-        avatar: admin.avatar,
-      },
+  const verification = verifyAdminCredentials(email, password);
+  if (!verification.success || !verification.admin) {
+    return res.status(401).json({
+      error: verification.error || 'Invalid administrator email or password.',
     });
   }
 
-  return res.status(401).json({ error: 'Invalid email or password. Use demo credentials (admin@larielextravaganza.com / admin123).' });
+  const admin = verification.admin;
+  const token = generateAdminSessionToken(admin);
+
+  await logActivity(`Admin logged in: ${admin.name} (${admin.email})`, admin.name);
+
+  return res.json({
+    success: true,
+    token,
+    user: {
+      id: admin.id,
+      name: admin.name,
+      email: admin.email,
+      role: admin.role,
+      avatar: admin.avatar,
+    },
+  });
 });
 
-router.get('/auth/me', (req: Request, res: Response) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader) {
-    return res.status(401).json({ error: 'No token provided' });
-  }
-  const db = getDatabase();
-  const admin = db.admins[0];
+router.get('/auth/me', requireAdmin, (req: Request, res: Response) => {
+  const admin = (req as any).adminUser;
   res.json({
     user: {
       id: admin.id,
@@ -140,6 +115,15 @@ router.get('/auth/me', (req: Request, res: Response) => {
       avatar: admin.avatar,
     },
   });
+});
+
+// -------------------------------------------------------------
+// STORAGE DIAGNOSTICS (ADMIN-ONLY)
+// -------------------------------------------------------------
+
+router.get(['/admin/storage/diagnostics', '/storage/diagnostics'], requireAdmin, (_req: Request, res: Response) => {
+  const diagnostics = getStorageDiagnostics();
+  res.json(diagnostics);
 });
 
 // -------------------------------------------------------------
@@ -282,6 +266,39 @@ router.post('/products', requireAdmin, async (req: Request, res: Response) => {
   res.status(201).json(newProduct);
 });
 
+// Helper to determine if an image is referenced anywhere in the CMS database
+function isImageReferencedInDb(db: any, url: string, currentProductId?: string): boolean {
+  if (!url) return false;
+  if (db.products?.some((p: any) => p.id !== currentProductId && p.images?.includes(url))) {
+    return true;
+  }
+  if (db.categories?.some((c: any) => c.heroImage === url)) {
+    return true;
+  }
+  if (db.settings) {
+    if (
+      db.settings.homeHeroImage === url ||
+      db.settings.laidePortraitImage === url ||
+      db.settings.brandLogoImage === url
+    ) {
+      return true;
+    }
+  }
+  if (db.realBrides?.some((b: any) => b.image === url)) {
+    return true;
+  }
+  return false;
+}
+
+function isDeletableMediaUrl(url: string): boolean {
+  if (typeof url !== 'string') return false;
+  const r2 = getR2Config();
+  if (r2.publicBaseUrl && url.startsWith(r2.publicBaseUrl)) return true;
+  if (url.includes('r2.cloudflarestorage.com') || url.includes('.r2.dev') || url.startsWith('/api/media/file/')) return true;
+  if (url.includes('blob.vercel-storage.com')) return true;
+  return false;
+}
+
 // PUT /api/products/:id
 router.put('/products/:id', requireAdmin, async (req: Request, res: Response) => {
   const db = getDatabase();
@@ -339,10 +356,11 @@ router.put('/products/:id', requireAdmin, async (req: Request, res: Response) =>
   await logActivity(`Updated product "${updatedProduct.name}"`);
 
   // Cleanup replaced persistent remote images only after product update has successfully saved
+  // and only if not shared by other products/categories
   if (existing.images && Array.isArray(existing.images)) {
     for (const oldImg of existing.images) {
-      if (typeof oldImg === 'string' && oldImg.includes('blob.vercel-storage.com') && !finalImages.includes(oldImg)) {
-        const isReferencedElsewhere = db.products.some((p) => p.id !== existing.id && p.images?.includes(oldImg));
+      if (isDeletableMediaUrl(oldImg) && !finalImages.includes(oldImg)) {
+        const isReferencedElsewhere = isImageReferencedInDb(db, oldImg, existing.id);
         if (!isReferencedElsewhere) {
           deletePersistentMedia(oldImg).catch(() => {});
         }
@@ -362,11 +380,11 @@ router.delete('/products/:id', requireAdmin, async (req: Request, res: Response)
     return res.status(404).json({ error: 'Product not found.' });
   }
 
-  // Cleanup persistent remote images if deleted
+  // Cleanup persistent remote images if not referenced elsewhere in the catalog
   if (product.images && Array.isArray(product.images)) {
     for (const img of product.images) {
-      if (typeof img === 'string' && img.includes('blob.vercel-storage.com')) {
-        const isReferencedElsewhere = db.products.some((p) => p.id !== product.id && p.images?.includes(img));
+      if (isDeletableMediaUrl(img)) {
+        const isReferencedElsewhere = isImageReferencedInDb(db, img, product.id);
         if (!isReferencedElsewhere) {
           deletePersistentMedia(img).catch(() => {});
         }
@@ -655,21 +673,65 @@ router.get('/dashboard/stats', requireAdmin, (req: Request, res: Response) => {
 });
 
 // -------------------------------------------------------------
-// MEDIA UPLOAD (VERCEL BLOB INTEGRATION)
+// MEDIA UPLOAD & CLOUDFLARE R2 INTEGRATION
 // -------------------------------------------------------------
 
-router.post(['/upload', '/upload-raw'], async (req: Request, res: Response) => {
+// POST /api/upload/presign - Generate short-lived presigned upload URL for direct R2 uploads
+router.post('/upload/presign', requireAdmin, async (req: Request, res: Response) => {
   res.setHeader('Content-Type', 'application/json');
   try {
-    const rawFilename = (req.query.filename as string) || (req.headers['x-filename'] as string) || req.body?.filename || req.body?.name || `product_${Date.now()}.jpg`;
+    const { filename, contentType, folder, size } = req.body || {};
+
+    if (!filename || typeof filename !== 'string') {
+      return res.status(400).json({ error: 'Filename is required for presigned upload.' });
+    }
+
+    if (!contentType || typeof contentType !== 'string') {
+      return res.status(400).json({ error: 'Content-Type is required for presigned upload.' });
+    }
+
+    if (size && Number(size) > MAX_FILE_SIZE_BYTES) {
+      return res.status(400).json({
+        error: `File size exceeds maximum permitted limit of ${Math.round(MAX_FILE_SIZE_BYTES / (1024 * 1024))}MB.`,
+      });
+    }
+
+    const safeFolder = (folder && PERMITTED_FOLDERS.includes(folder.toLowerCase()))
+      ? folder.toLowerCase()
+      : 'products';
+
+    const presigned = await getPresignedUploadUrl(filename, contentType, safeFolder, 300);
+    await logActivity(`Generated presigned R2 upload URL for ${filename}`);
+
+    return res.status(200).json(presigned);
+  } catch (err: any) {
+    console.error('Presigned upload generation error:', err);
+    return res.status(500).json({ error: err?.message || 'Failed to generate presigned upload URL.' });
+  }
+});
+
+// POST /api/upload - Authenticated, validated server-side media upload
+router.post(['/upload', '/upload-raw'], requireAdmin, async (req: Request, res: Response) => {
+  res.setHeader('Content-Type', 'application/json');
+  try {
+    const rawFilename =
+      (req.query.filename as string) ||
+      (req.headers['x-filename'] as string) ||
+      req.body?.filename ||
+      req.body?.name ||
+      `media_${Date.now()}.jpg`;
+
     let decodedFilename = 'image.jpg';
     try {
       decodedFilename = decodeURIComponent(rawFilename);
     } catch {
       decodedFilename = rawFilename;
     }
-    const cleanFilename = path.basename(decodedFilename).replace(/[^a-zA-Z0-9._-]/g, '_') || `product_${Date.now()}.jpg`;
-    const blobPath = `products/${Date.now()}_${cleanFilename}`;
+    const cleanFilename = path.basename(decodedFilename).replace(/[^a-zA-Z0-9._-]/g, '_') || `media_${Date.now()}.jpg`;
+
+    const folderParam = (req.query.folder as string) || (req.headers['x-folder'] as string) || req.body?.folder || 'products';
+    const safeFolder = PERMITTED_FOLDERS.includes(folderParam.toLowerCase() as any) ? folderParam.toLowerCase() : 'products';
+
     let contentType = (req.headers['content-type'] as string) || 'image/jpeg';
     let fileBuffer: Buffer | null = null;
 
@@ -696,48 +758,70 @@ router.post(['/upload', '/upload-raw'], async (req: Request, res: Response) => {
       }
     }
 
-    // 2. Validate that a file was provided
+    // 2. Validate that a file buffer was provided
     if (!fileBuffer || fileBuffer.length === 0) {
       return res.status(400).json({ error: 'No image file provided for upload.' });
     }
 
-    // 3. Upload the file to Vercel Blob at "products/<Date.now()>_<filename>" with access: 'public' and addRandomSuffix: true
-    if (process.env.BLOB_READ_WRITE_TOKEN) {
-      const blob = await put(blobPath, fileBuffer, {
-        access: 'public',
-        contentType,
-        addRandomSuffix: true,
-        token: process.env.BLOB_READ_WRITE_TOKEN,
-      });
-
-      await logActivity(`Uploaded persistent image to Vercel Blob: ${blob.url}`);
-
-      // 4. Return the Blob result as JSON providing permanent blob.url
-      return res.status(200).json({
-        url: blob.url,
-        downloadUrl: blob.downloadUrl,
-        pathname: blob.pathname,
-        contentType: blob.contentType,
-        fileName: cleanFilename,
-        size: fileBuffer.length,
-        blob,
-      });
+    // 3. Inspect magic bytes and validate permitted MIME types
+    const validation = validateImageBuffer(fileBuffer, contentType);
+    if (!validation.valid) {
+      return res.status(400).json({ error: validation.error || 'Invalid or unsupported image file.' });
     }
+    const validatedMime = validation.detectedMime || contentType || 'image/jpeg';
 
-    // Fallback for development / offline environments without BLOB_READ_WRITE_TOKEN
-    const result = await uploadPersistentMedia(fileBuffer, `${Date.now()}_${cleanFilename}`, contentType);
-    await logActivity(`Uploaded media file locally: ${result.fileName}`);
+    // 4. Upload to persistent media storage (Cloudflare R2 primary, or safe local fallback)
+    const result = await uploadPersistentMedia(
+      fileBuffer,
+      cleanFilename,
+      validatedMime,
+      safeFolder
+    );
+
+    const provider = getStorageProvider();
+    await logActivity(`Uploaded media file [${provider}]: ${result.fileName}`);
 
     return res.status(200).json({
       url: result.url,
       fileName: result.fileName,
       size: result.size,
-      blob: { url: result.url },
+      key: result.key,
+      blob: { url: result.url }, // Backward-compatibility
     });
   } catch (err: any) {
-    console.error('Upload to Vercel Blob error:', err);
+    console.error('Upload error:', err);
     res.setHeader('Content-Type', 'application/json');
-    return res.status(500).json({ error: err?.message || 'Image upload to Vercel Blob failed.' });
+    return res.status(500).json({ error: err?.message || 'Image upload failed.' });
+  }
+});
+
+// GET /api/media/file/:key(*) - Stream media directly from Cloudflare R2 if accessed via proxy
+router.get('/media/file/:key(*)', async (req: Request, res: Response) => {
+  const key = req.params.key;
+  if (!key) {
+    return res.status(400).json({ error: 'Media object key required.' });
+  }
+
+  try {
+    const obj = await getR2Object(key);
+    if (!obj || !obj.Body) {
+      return res.status(404).json({ error: 'Object not found in Cloudflare R2.' });
+    }
+
+    if (obj.ContentType) res.setHeader('Content-Type', obj.ContentType);
+    if (obj.ContentLength) res.setHeader('Content-Length', obj.ContentLength);
+    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+
+    // obj.Body is a readable stream in Node.js AWS SDK
+    if (typeof (obj.Body as any).pipe === 'function') {
+      (obj.Body as any).pipe(res);
+    } else {
+      const bytes = await (obj.Body as any).transformToByteArray();
+      res.end(Buffer.from(bytes));
+    }
+  } catch (err: any) {
+    console.error(`Error streaming R2 media [${key}]:`, err);
+    return res.status(404).json({ error: 'Failed to retrieve media file.' });
   }
 });
 
@@ -748,6 +832,33 @@ router.get('/media', async (_req: Request, res: Response) => {
   } catch (err: any) {
     console.error('Fetch media error:', err);
     res.status(500).json({ error: 'Failed to read media library' });
+  }
+});
+
+router.delete('/media', requireAdmin, async (req: Request, res: Response) => {
+  try {
+    const targetUrl = (req.body?.url || req.query.url || req.body?.key || req.query.key) as string;
+    if (!targetUrl || typeof targetUrl !== 'string') {
+      return res.status(400).json({ error: 'Target media URL or key is required for deletion.' });
+    }
+
+    const db = getDatabase();
+    // Safety check: verify if the image is currently referenced in active catalog
+    const isReferenced = isImageReferencedInDb(db, targetUrl);
+    if (isReferenced) {
+      return res.status(409).json({
+        error: 'Cannot delete media: asset is currently referenced by products or site settings.',
+      });
+    }
+
+    await deletePersistentMedia(targetUrl);
+    const adminUser = (req as any).adminUser;
+    await logActivity(`Deleted media asset: ${path.basename(targetUrl)}`, adminUser?.name);
+
+    return res.status(200).json({ success: true, deleted: targetUrl });
+  } catch (err: any) {
+    console.error('Delete media error:', err);
+    return res.status(500).json({ error: err?.message || 'Failed to delete media asset.' });
   }
 });
 

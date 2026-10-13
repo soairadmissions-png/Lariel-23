@@ -3,8 +3,7 @@ import express2 from "express";
 
 // server/api.ts
 import express from "express";
-import path3 from "path";
-import { put as put2 } from "@vercel/blob";
+import path4 from "path";
 
 // server/db.ts
 import fs from "fs";
@@ -133,8 +132,8 @@ async function saveDatabase(data) {
   }
   if (process.env.BLOB_READ_WRITE_TOKEN) {
     try {
-      const { put: put3 } = await import("@vercel/blob");
-      await put3("database/db.json", JSON.stringify(data, null, 2), {
+      const { put: put2 } = await import("@vercel/blob");
+      await put2("database/db.json", JSON.stringify(data, null, 2), {
         access: "public",
         addRandomSuffix: false,
         allowOverwrite: true,
@@ -160,9 +159,287 @@ async function logActivity(action, adminName = "Admin") {
 
 // server/storage.ts
 import fs2 from "fs";
+import path3 from "path";
+import { put, list } from "@vercel/blob";
+
+// server/r2.ts
+import {
+  S3Client,
+  PutObjectCommand,
+  DeleteObjectCommand,
+  ListObjectsV2Command,
+  HeadObjectCommand,
+  GetObjectCommand
+} from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import crypto from "crypto";
 import path2 from "path";
-import { put, del, list } from "@vercel/blob";
+function getR2Config() {
+  const accountId = (process.env.CLOUDFLARE_ACCOUNT_ID || "").trim();
+  const accessKeyId = (process.env.R2_ACCESS_KEY_ID || "").trim();
+  const secretAccessKey = (process.env.R2_SECRET_ACCESS_KEY || "").trim();
+  const bucketName = (process.env.R2_BUCKET_NAME || "").trim();
+  const endpoint = (process.env.R2_ENDPOINT || "").trim() || (accountId ? `https://${accountId}.r2.cloudflarestorage.com` : "");
+  const publicBaseUrl = (process.env.R2_PUBLIC_BASE_URL || "").trim();
+  const isConfigured = Boolean(
+    accessKeyId && secretAccessKey && bucketName && (endpoint || accountId)
+  );
+  return {
+    accountId,
+    accessKeyId,
+    secretAccessKey,
+    bucketName,
+    endpoint,
+    publicBaseUrl,
+    isConfigured
+  };
+}
+var cachedS3Client = null;
+var lastClientEndpoint = "";
+function getR2Client() {
+  const config = getR2Config();
+  if (!config.isConfigured) return null;
+  if (!cachedS3Client || lastClientEndpoint !== config.endpoint) {
+    cachedS3Client = new S3Client({
+      region: "auto",
+      endpoint: config.endpoint,
+      credentials: {
+        accessKeyId: config.accessKeyId,
+        secretAccessKey: config.secretAccessKey
+      }
+    });
+    lastClientEndpoint = config.endpoint;
+  }
+  return cachedS3Client;
+}
+var PERMITTED_FOLDERS = [
+  "products",
+  "collections",
+  "banners",
+  "gallery",
+  "editorial"
+];
+var PERMITTED_MIME_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/avif",
+  "image/gif"
+];
+var MAX_FILE_SIZE_BYTES = Number(process.env.MAX_FILE_SIZE_BYTES) || 15 * 1024 * 1024;
+function validateImageBuffer(buffer, declaredMime) {
+  if (!buffer || buffer.length === 0) {
+    return { valid: false, error: "Empty file buffer provided." };
+  }
+  if (buffer.length > MAX_FILE_SIZE_BYTES) {
+    const maxMb = Math.round(MAX_FILE_SIZE_BYTES / (1024 * 1024));
+    return {
+      valid: false,
+      error: `File size (${(buffer.length / (1024 * 1024)).toFixed(1)}MB) exceeds maximum permitted limit of ${maxMb}MB.`
+    };
+  }
+  const headerText = buffer.slice(0, 1024).toString("utf8").toLowerCase();
+  if (headerText.includes("<script") || headerText.includes("<?php") || headerText.includes("<html") || headerText.includes("<!doctype") || headerText.includes("<svg")) {
+    return {
+      valid: false,
+      error: "Unsafe file format detected. HTML, scripts, and SVG files are not permitted for security reasons."
+    };
+  }
+  if (buffer.length >= 3 && buffer[0] === 255 && buffer[1] === 216 && buffer[2] === 255) {
+    return { valid: true, detectedMime: "image/jpeg", detectedExt: "jpg" };
+  }
+  if (buffer.length >= 8 && buffer[0] === 137 && buffer[1] === 80 && buffer[2] === 78 && buffer[3] === 71 && buffer[4] === 13 && buffer[5] === 10 && buffer[6] === 26 && buffer[7] === 10) {
+    return { valid: true, detectedMime: "image/png", detectedExt: "png" };
+  }
+  if (buffer.length >= 6 && buffer[0] === 71 && buffer[1] === 73 && buffer[2] === 70 && buffer[3] === 56 && (buffer[4] === 55 || buffer[4] === 57) && buffer[5] === 97) {
+    return { valid: true, detectedMime: "image/gif", detectedExt: "gif" };
+  }
+  if (buffer.length >= 12 && buffer.slice(0, 4).toString("ascii") === "RIFF" && buffer.slice(8, 12).toString("ascii") === "WEBP") {
+    return { valid: true, detectedMime: "image/webp", detectedExt: "webp" };
+  }
+  if (buffer.length >= 12) {
+    const ftyp = buffer.slice(4, 12).toString("ascii");
+    if (ftyp.includes("ftypavif") || ftyp.includes("ftypavis")) {
+      return { valid: true, detectedMime: "image/avif", detectedExt: "avif" };
+    }
+  }
+  return {
+    valid: false,
+    error: "Unsupported image format. Only JPEG, PNG, WebP, AVIF, and GIF formats are allowed."
+  };
+}
+function getPublicUrl(key) {
+  const config = getR2Config();
+  const cleanKey = key.replace(/^\//, "");
+  if (config.publicBaseUrl) {
+    return `${config.publicBaseUrl.replace(/\/$/, "")}/${cleanKey}`;
+  }
+  if (config.bucketName && config.accountId) {
+    return `https://${config.bucketName}.${config.accountId}.r2.dev/${cleanKey}`;
+  }
+  return `/api/media/file/${cleanKey}`;
+}
+function generateObjectKey(originalFilename, folder = "products", forcedExt, contentHash) {
+  const safeFolder = PERMITTED_FOLDERS.includes(folder.toLowerCase()) ? folder.toLowerCase() : "products";
+  const rawExt = forcedExt || path2.extname(originalFilename).replace(".", "").toLowerCase() || "jpg";
+  const ext = rawExt === "jpeg" ? "jpg" : rawExt;
+  const baseName = path2.basename(originalFilename, path2.extname(originalFilename));
+  const cleanName = baseName.toLowerCase().replace(/[^a-z0-9]+/g, "_").slice(0, 30) || "media";
+  const suffix = contentHash ? contentHash.slice(0, 10) : `${Date.now()}_${crypto.randomBytes(4).toString("hex")}`;
+  return `${safeFolder}/${cleanName}_${suffix}.${ext}`;
+}
+async function uploadToR2(buffer, originalFilename, contentType, folder = "products") {
+  const client = getR2Client();
+  const config = getR2Config();
+  if (!client || !config.isConfigured) {
+    throw new Error(
+      "Cloudflare R2 is not configured. Please set CLOUDFLARE_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, and R2_BUCKET_NAME."
+    );
+  }
+  const validation = validateImageBuffer(buffer, contentType);
+  if (!validation.valid) {
+    throw new Error(validation.error || "Invalid image buffer.");
+  }
+  const mime = validation.detectedMime || contentType || "image/jpeg";
+  const ext = validation.detectedExt || "jpg";
+  const fileSha256 = crypto.createHash("sha256").update(buffer).digest("hex");
+  const objectKey = generateObjectKey(originalFilename, folder, ext, fileSha256);
+  const cleanOriginalName = path2.basename(originalFilename).replace(/[^a-zA-Z0-9._-]/g, "_");
+  const command = new PutObjectCommand({
+    Bucket: config.bucketName,
+    Key: objectKey,
+    Body: buffer,
+    ContentType: mime,
+    Metadata: {
+      originalName: cleanOriginalName,
+      uploadedAt: (/* @__PURE__ */ new Date()).toISOString(),
+      sha256: fileSha256,
+      sourceSha256: fileSha256
+    }
+  });
+  await client.send(command);
+  const url = getPublicUrl(objectKey);
+  return {
+    url,
+    key: objectKey,
+    fileName: path2.basename(objectKey),
+    size: buffer.length,
+    contentType: mime,
+    sha256: fileSha256
+  };
+}
+async function getPresignedUploadUrl(filename, contentType, folder = "products", expiresInSeconds = 300) {
+  const client = getR2Client();
+  const config = getR2Config();
+  if (!client || !config.isConfigured) {
+    throw new Error("Cloudflare R2 is not configured.");
+  }
+  if (!PERMITTED_MIME_TYPES.includes(contentType)) {
+    throw new Error(
+      `Unsupported MIME type "${contentType}". Only JPEG, PNG, WebP, AVIF, and GIF are allowed.`
+    );
+  }
+  const objectKey = generateObjectKey(filename, folder);
+  const cleanOriginalName = path2.basename(filename).replace(/[^a-zA-Z0-9._-]/g, "_");
+  const command = new PutObjectCommand({
+    Bucket: config.bucketName,
+    Key: objectKey,
+    ContentType: contentType,
+    Metadata: {
+      originalName: cleanOriginalName,
+      uploadedAt: (/* @__PURE__ */ new Date()).toISOString()
+    }
+  });
+  const uploadUrl = await getSignedUrl(client, command, {
+    expiresIn: expiresInSeconds
+  });
+  const publicUrl = getPublicUrl(objectKey);
+  return {
+    uploadUrl,
+    publicUrl,
+    key: objectKey,
+    expiresIn: expiresInSeconds
+  };
+}
+async function deleteFromR2(keyOrUrl) {
+  const client = getR2Client();
+  const config = getR2Config();
+  if (!client || !config.isConfigured || !keyOrUrl) return false;
+  let key = keyOrUrl;
+  if (keyOrUrl.startsWith("http://") || keyOrUrl.startsWith("https://")) {
+    try {
+      const u = new URL(keyOrUrl);
+      key = u.pathname.replace(/^\//, "");
+    } catch {
+      key = keyOrUrl;
+    }
+  }
+  try {
+    await client.send(
+      new DeleteObjectCommand({
+        Bucket: config.bucketName,
+        Key: key
+      })
+    );
+    return true;
+  } catch (err) {
+    console.warn(`Could not delete object "${key}" from Cloudflare R2:`, err);
+    return false;
+  }
+}
+async function listR2Objects(prefix = "") {
+  const client = getR2Client();
+  const config = getR2Config();
+  if (!client || !config.isConfigured) return [];
+  try {
+    const command = new ListObjectsV2Command({
+      Bucket: config.bucketName,
+      Prefix: prefix || void 0,
+      MaxKeys: 1e3
+    });
+    const res = await client.send(command);
+    const results = [];
+    if (res.Contents) {
+      for (const obj of res.Contents) {
+        if (!obj.Key) continue;
+        results.push({
+          url: getPublicUrl(obj.Key),
+          fileName: path2.basename(obj.Key),
+          size: obj.Size || 0,
+          createdAt: obj.LastModified?.toISOString() || (/* @__PURE__ */ new Date()).toISOString(),
+          key: obj.Key
+        });
+      }
+    }
+    return results;
+  } catch (err) {
+    console.error("Failed to list objects from Cloudflare R2:", err);
+    return [];
+  }
+}
+async function getR2Object(key) {
+  const client = getR2Client();
+  const config = getR2Config();
+  if (!client || !config.isConfigured) return null;
+  try {
+    const command = new GetObjectCommand({
+      Bucket: config.bucketName,
+      Key: key
+    });
+    return await client.send(command);
+  } catch (err) {
+    if (err.name === "NotFound" || err.$metadata?.httpStatusCode === 404) {
+      return null;
+    }
+    throw err;
+  }
+}
+
+// server/storage.ts
 function getStorageProvider() {
+  if (getR2Config().isConfigured || process.env.STORAGE_PROVIDER === "cloudflare-r2") {
+    return "cloudflare-r2";
+  }
   if (process.env.BLOB_READ_WRITE_TOKEN) {
     return "vercel-blob";
   }
@@ -171,17 +448,38 @@ function getStorageProvider() {
   }
   return "local";
 }
-async function uploadPersistentMedia(buffer, originalFilename, contentType) {
+async function uploadPersistentMedia(buffer, originalFilename, contentType, folder = "products") {
   const provider = getStorageProvider();
-  const rawExt = path2.extname(originalFilename).replace(".", "").toLowerCase() || "jpg";
+  const isProduction = process.env.NODE_ENV === "production" || process.env.VERCEL === "1" || process.env.STORAGE_PROVIDER === "cloudflare-r2";
+  if (provider === "cloudflare-r2") {
+    try {
+      const res = await uploadToR2(buffer, originalFilename, contentType, folder);
+      return {
+        url: res.url,
+        fileName: res.fileName,
+        size: res.size,
+        key: res.key,
+        sha256: res.sha256
+      };
+    } catch (err) {
+      console.error("Cloudflare R2 upload failed:", err);
+      throw new Error(`Cloudflare R2 upload error: ${err.message || err}`);
+    }
+  }
+  if (isProduction) {
+    throw new Error(
+      "Production configuration error: Cloudflare R2 is required as the exclusive production upload destination, but R2 is not configured. Please configure CLOUDFLARE_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, and R2_BUCKET_NAME."
+    );
+  }
+  const rawExt = path3.extname(originalFilename).replace(".", "").toLowerCase() || "jpg";
   const ext = rawExt === "jpeg" ? "jpg" : rawExt;
-  const baseName = path2.basename(originalFilename, path2.extname(originalFilename));
+  const baseName = path3.basename(originalFilename, path3.extname(originalFilename));
   const cleanName = baseName.toLowerCase().replace(/[^a-z0-9]+/g, "_").slice(0, 30) || "image";
   const fileName = `${cleanName}_${Date.now()}.${ext}`;
   const mime = contentType || (ext === "png" ? "image/png" : ext === "webp" ? "image/webp" : ext === "gif" ? "image/gif" : "image/jpeg");
-  if (provider === "vercel-blob") {
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
     try {
-      const blobPath = `products/${fileName}`;
+      const blobPath = `${folder}/${fileName}`;
       const blob = await put(blobPath, buffer, {
         access: "public",
         contentType: mime,
@@ -193,10 +491,10 @@ async function uploadPersistentMedia(buffer, originalFilename, contentType) {
         size: buffer.length
       };
     } catch (err) {
-      console.error("Vercel Blob upload failed, falling back to safe local write:", err);
+      console.error("Vercel Blob upload failed:", err);
     }
   }
-  if (provider === "cloudinary") {
+  if (process.env.CLOUDINARY_URL || process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY) {
     try {
       const cloudName = process.env.CLOUDINARY_CLOUD_NAME || process.env.CLOUDINARY_URL?.split("@")?.[1];
       const uploadPreset = process.env.CLOUDINARY_UPLOAD_PRESET || "unsigned_lariel";
@@ -207,7 +505,7 @@ async function uploadPersistentMedia(buffer, originalFilename, contentType) {
         body: JSON.stringify({
           file: base64Data,
           upload_preset: uploadPreset,
-          public_id: `products/${cleanName}_${Date.now()}`
+          public_id: `${folder}/${cleanName}_${Date.now()}`
         })
       });
       if (res.ok) {
@@ -219,16 +517,16 @@ async function uploadPersistentMedia(buffer, originalFilename, contentType) {
         };
       }
     } catch (err) {
-      console.error("Cloudinary upload failed, falling back to safe local write:", err);
+      console.error("Cloudinary upload failed:", err);
     }
   }
-  let targetDir = path2.join(process.cwd(), "public", "uploads");
+  let targetDir = path3.join(process.cwd(), "public", "uploads");
   try {
     if (!fs2.existsSync(targetDir)) {
       fs2.mkdirSync(targetDir, { recursive: true });
     }
   } catch {
-    targetDir = path2.join("/tmp", "uploads");
+    targetDir = path3.join("/tmp", "uploads");
     if (!fs2.existsSync(targetDir)) {
       try {
         fs2.mkdirSync(targetDir, { recursive: true });
@@ -236,7 +534,7 @@ async function uploadPersistentMedia(buffer, originalFilename, contentType) {
       }
     }
   }
-  const filePath = path2.join(targetDir, fileName);
+  const filePath = path3.join(targetDir, fileName);
   try {
     fs2.writeFileSync(filePath, buffer);
   } catch (writeErr) {
@@ -250,56 +548,100 @@ async function uploadPersistentMedia(buffer, originalFilename, contentType) {
 }
 async function deletePersistentMedia(url) {
   if (!url) return;
-  if (url.includes("blob.vercel-storage.com") && process.env.BLOB_READ_WRITE_TOKEN) {
-    try {
-      await del(url, { token: process.env.BLOB_READ_WRITE_TOKEN });
-    } catch (err) {
-      console.warn("Could not delete old asset from Vercel Blob:", err);
+  const r2Config = getR2Config();
+  const isR2Url = r2Config.publicBaseUrl && url.startsWith(r2Config.publicBaseUrl) || url.includes("r2.cloudflarestorage.com") || url.includes("r2.dev") || url.startsWith("/api/media/file/");
+  if (isR2Url && r2Config.isConfigured) {
+    let key = url;
+    if (url.startsWith("/api/media/file/")) {
+      key = url.replace("/api/media/file/", "");
+    } else {
+      try {
+        const u = new URL(url);
+        key = u.pathname.replace(/^\//, "");
+      } catch {
+      }
     }
+    await deleteFromR2(key);
     return;
   }
-  if (url.startsWith("/uploads/")) {
-    const filename = path2.basename(url);
-    const pubPath = path2.join(process.cwd(), "public", "uploads", filename);
-    const tmpPath = path2.join("/tmp", "uploads", filename);
-    try {
-      if (fs2.existsSync(pubPath)) fs2.unlinkSync(pubPath);
-    } catch {
-    }
-    try {
-      if (fs2.existsSync(tmpPath)) fs2.unlinkSync(tmpPath);
-    } catch {
-    }
-  }
+}
+function getStorageDiagnostics() {
+  const provider = getStorageProvider();
+  const r2Config = getR2Config();
+  const isProduction = process.env.NODE_ENV === "production" || process.env.VERCEL === "1" || process.env.STORAGE_PROVIDER === "cloudflare-r2";
+  return {
+    activeProvider: provider,
+    isProduction,
+    exclusiveDestination: isProduction ? "cloudflare-r2" : provider,
+    r2: {
+      isConfigured: r2Config.isConfigured,
+      bucketName: r2Config.bucketName || null,
+      endpointConfigured: Boolean(r2Config.endpoint),
+      endpointHost: r2Config.endpoint ? new URL(r2Config.endpoint).host : null,
+      publicBaseUrl: r2Config.publicBaseUrl || null,
+      hasAccountId: Boolean(r2Config.accountId),
+      hasAccessKeyId: Boolean(r2Config.accessKeyId),
+      hasSecretAccessKey: Boolean(r2Config.secretAccessKey)
+    },
+    legacy: {
+      vercelBlobConfigured: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
+      cloudinaryConfigured: Boolean(
+        process.env.CLOUDINARY_URL || process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY
+      )
+    },
+    timestamp: (/* @__PURE__ */ new Date()).toISOString()
+  };
 }
 async function listPersistentMedia() {
   const provider = getStorageProvider();
-  if (provider === "vercel-blob" && process.env.BLOB_READ_WRITE_TOKEN) {
+  const results = [];
+  const seenUrls = /* @__PURE__ */ new Set();
+  if (provider === "cloudflare-r2" || getR2Config().isConfigured) {
+    try {
+      const r2Items = await listR2Objects();
+      for (const item of r2Items) {
+        if (!seenUrls.has(item.url)) {
+          seenUrls.add(item.url);
+          results.push({
+            ...item,
+            source: "cloudflare-r2"
+          });
+        }
+      }
+    } catch (err) {
+      console.warn("Could not list media from Cloudflare R2:", err);
+    }
+  }
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
     try {
       const response = await list({
-        prefix: "products/",
         token: process.env.BLOB_READ_WRITE_TOKEN
       });
-      return response.blobs.map((blob) => ({
-        url: blob.url,
-        fileName: path2.basename(blob.pathname),
-        size: blob.size,
-        createdAt: blob.uploadedAt.toISOString()
-      }));
+      for (const blob of response.blobs) {
+        if (!seenUrls.has(blob.url)) {
+          seenUrls.add(blob.url);
+          results.push({
+            url: blob.url,
+            fileName: path3.basename(blob.pathname),
+            size: blob.size,
+            createdAt: blob.uploadedAt.toISOString(),
+            source: "vercel-blob"
+          });
+        }
+      }
     } catch (err) {
       console.warn("Could not list media from Vercel Blob:", err);
     }
   }
-  const results = [];
-  const seen = /* @__PURE__ */ new Set();
   const scanDir = (dir) => {
     if (fs2.existsSync(dir)) {
       try {
         const files = fs2.readdirSync(dir);
         for (const file of files) {
-          if (!seen.has(file) && /\.(jpg|jpeg|png|webp|gif|avif)$/i.test(file)) {
-            seen.add(file);
-            const fullPath = path2.join(dir, file);
+          const url = `/uploads/${file}`;
+          if (!seenUrls.has(url) && /\.(jpg|jpeg|png|webp|gif|avif)$/i.test(file)) {
+            seenUrls.add(url);
+            const fullPath = path3.join(dir, file);
             let size = 0;
             let mtime = (/* @__PURE__ */ new Date()).toISOString();
             try {
@@ -309,10 +651,11 @@ async function listPersistentMedia() {
             } catch {
             }
             results.push({
-              url: `/uploads/${file}`,
+              url,
               fileName: file,
               size,
-              createdAt: mtime
+              createdAt: mtime,
+              source: "local"
             });
           }
         }
@@ -320,10 +663,119 @@ async function listPersistentMedia() {
       }
     }
   };
-  scanDir(path2.join(process.cwd(), "public", "uploads"));
-  scanDir(path2.join(process.cwd(), "src", "assets", "images"));
-  scanDir(path2.join("/tmp", "uploads"));
+  scanDir(path3.join(process.cwd(), "public", "uploads"));
+  scanDir(path3.join(process.cwd(), "src", "assets", "images"));
+  scanDir(path3.join("/tmp", "uploads"));
   return results;
+}
+
+// server/auth.ts
+import crypto2 from "crypto";
+var SESSION_SECRET = (process.env.ADMIN_SESSION_SECRET || process.env.SESSION_SECRET || "").trim() || "lariel_bridal_prod_session_secret_2026_secured";
+var TOKEN_TTL_MS = 24 * 60 * 60 * 1e3;
+var REVOKED_LEGACY_TOKENS = /* @__PURE__ */ new Set([
+  "lariel_super_admin_sec_token_2026",
+  "demo-admin-token",
+  "admin-token",
+  "token123"
+]);
+function generateAdminSessionToken(admin) {
+  const now = Date.now();
+  const payload = {
+    sub: admin.id,
+    email: admin.email,
+    role: admin.role,
+    iat: now,
+    exp: now + TOKEN_TTL_MS
+  };
+  const payloadBase64 = Buffer.from(JSON.stringify(payload)).toString("base64url");
+  const signature = crypto2.createHmac("sha256", SESSION_SECRET).update(payloadBase64).digest("base64url");
+  return `${payloadBase64}.${signature}`;
+}
+function verifyAdminSessionToken(token) {
+  if (!token || typeof token !== "string") {
+    return { valid: false, error: "Authorization token missing." };
+  }
+  if (REVOKED_LEGACY_TOKENS.has(token.trim())) {
+    return { valid: false, error: "Legacy token has been revoked. Re-authentication required." };
+  }
+  const parts = token.trim().split(".");
+  if (parts.length !== 2) {
+    return { valid: false, error: "Invalid token format." };
+  }
+  const [payloadBase64, signature] = parts;
+  const expectedSignature = crypto2.createHmac("sha256", SESSION_SECRET).update(payloadBase64).digest("base64url");
+  const sigBuffer = Buffer.from(signature);
+  const expectedBuffer = Buffer.from(expectedSignature);
+  if (sigBuffer.length !== expectedBuffer.length || !crypto2.timingSafeEqual(sigBuffer, expectedBuffer)) {
+    return { valid: false, error: "Invalid token signature." };
+  }
+  try {
+    const payloadJson = Buffer.from(payloadBase64, "base64url").toString("utf8");
+    const payload = JSON.parse(payloadJson);
+    if (!payload.sub || !payload.exp) {
+      return { valid: false, error: "Malformed token payload." };
+    }
+    if (Date.now() > payload.exp) {
+      return { valid: false, error: "Token has expired. Please log in again." };
+    }
+    return { valid: true, adminId: payload.sub, payload };
+  } catch {
+    return { valid: false, error: "Failed to decode token payload." };
+  }
+}
+function verifyAdminCredentials(email, pass) {
+  if (!email || !pass) {
+    return { success: false, error: "Email and password are required." };
+  }
+  const cleanEmail = email.trim().toLowerCase();
+  const db = getDatabase();
+  const admins = db.admins || [];
+  const admin = admins.find(
+    (a) => a.email.toLowerCase() === cleanEmail || cleanEmail === "admin@larielessentials.com" && a.email.toLowerCase() === "admin@larielextravaganza.com"
+  );
+  if (!admin) {
+    return { success: false, error: "Administrator account not found." };
+  }
+  const envPassword = (process.env.ADMIN_PASSWORD || "").trim();
+  if (envPassword && pass === envPassword) {
+    return { success: true, admin };
+  }
+  if (admin.passwordHash && admin.passwordSalt) {
+    const calculatedHash = crypto2.pbkdf2Sync(pass, admin.passwordSalt, 1e4, 64, "sha512").toString("hex");
+    if (calculatedHash === admin.passwordHash) {
+      return { success: true, admin };
+    }
+    return { success: false, error: "Invalid password." };
+  }
+  const acceptedInitialPasswords = ["admin123", "lariel2026"];
+  if (acceptedInitialPasswords.includes(pass)) {
+    return { success: true, admin };
+  }
+  return { success: false, error: "Invalid credentials." };
+}
+function requireAdmin(req, res, next) {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return res.status(401).json({ error: "Unauthorized: Authorization header required." });
+  }
+  const match = authHeader.match(/^Bearer\s+(.+)$/i);
+  if (!match || !match[1]) {
+    return res.status(401).json({ error: "Unauthorized: Bearer token format required." });
+  }
+  const token = match[1].trim();
+  const verification = verifyAdminSessionToken(token);
+  if (!verification.valid || !verification.adminId) {
+    return res.status(401).json({ error: `Unauthorized: ${verification.error || "Invalid session token."}` });
+  }
+  const db = getDatabase();
+  const admins = db.admins || [];
+  const admin = admins.find((a) => a.id === verification.adminId);
+  if (!admin) {
+    return res.status(403).json({ error: "Forbidden: Admin user record not found." });
+  }
+  req.adminUser = admin;
+  return next();
 }
 
 // server/api.ts
@@ -356,54 +808,31 @@ router.use((_req, res, next) => {
   res.setHeader("Expires", "0");
   next();
 });
-var AUTH_TOKEN = "lariel_super_admin_sec_token_2026";
-function requireAdmin(req, res, next) {
-  const authHeader = req.headers.authorization;
-  const token = authHeader ? authHeader.replace(/^Bearer\s+/i, "").trim() : "";
-  if (token === AUTH_TOKEN || token === "demo-admin-token" || token === "lariel_super_admin_sec_token_2026" || process.env.NODE_ENV !== "production") {
-    return next();
-  }
-  return res.status(401).json({ error: "Unauthorized. Admin authorization token required." });
-}
-var DEMO_ADMIN = {
-  email: "admin@larielextravaganza.com",
-  password: "admin123"
-};
-var DEMO_ADMIN_ALT_EMAIL = "admin@larielessentials.com";
 router.post("/auth/login", async (req, res) => {
-  const { email, password } = req.body;
-  const db = getDatabase();
-  const admin = db.admins[0] || {
-    id: "admin-1",
-    name: "Laide",
-    email: DEMO_ADMIN.email,
-    role: "Super Admin",
-    avatar: "/src/assets/images/laide_founder_portrait_1789650582034.jpg",
-    token: AUTH_TOKEN
-  };
-  if (email === DEMO_ADMIN.email && password === DEMO_ADMIN.password || email === DEMO_ADMIN_ALT_EMAIL && password === DEMO_ADMIN.password || email && password === "admin123" || password === "lariel2026") {
-    await logActivity(`Admin logged in: ${admin.name} (${admin.email})`, admin.name);
-    return res.json({
-      success: true,
-      token: AUTH_TOKEN,
-      user: {
-        id: admin.id,
-        name: admin.name,
-        email: admin.email,
-        role: admin.role,
-        avatar: admin.avatar
-      }
+  const { email, password } = req.body || {};
+  const verification = verifyAdminCredentials(email, password);
+  if (!verification.success || !verification.admin) {
+    return res.status(401).json({
+      error: verification.error || "Invalid administrator email or password."
     });
   }
-  return res.status(401).json({ error: "Invalid email or password. Use demo credentials (admin@larielextravaganza.com / admin123)." });
+  const admin = verification.admin;
+  const token = generateAdminSessionToken(admin);
+  await logActivity(`Admin logged in: ${admin.name} (${admin.email})`, admin.name);
+  return res.json({
+    success: true,
+    token,
+    user: {
+      id: admin.id,
+      name: admin.name,
+      email: admin.email,
+      role: admin.role,
+      avatar: admin.avatar
+    }
+  });
 });
-router.get("/auth/me", (req, res) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader) {
-    return res.status(401).json({ error: "No token provided" });
-  }
-  const db = getDatabase();
-  const admin = db.admins[0];
+router.get("/auth/me", requireAdmin, (req, res) => {
+  const admin = req.adminUser;
   res.json({
     user: {
       id: admin.id,
@@ -413,6 +842,10 @@ router.get("/auth/me", (req, res) => {
       avatar: admin.avatar
     }
   });
+});
+router.get(["/admin/storage/diagnostics", "/storage/diagnostics"], requireAdmin, (_req, res) => {
+  const diagnostics = getStorageDiagnostics();
+  res.json(diagnostics);
 });
 router.get("/products", (req, res) => {
   const db = getDatabase();
@@ -523,6 +956,32 @@ router.post("/products", requireAdmin, async (req, res) => {
   await logActivity(`Created product "${newProduct.name}" (${newProduct.sku})`);
   res.status(201).json(newProduct);
 });
+function isImageReferencedInDb(db, url, currentProductId) {
+  if (!url) return false;
+  if (db.products?.some((p) => p.id !== currentProductId && p.images?.includes(url))) {
+    return true;
+  }
+  if (db.categories?.some((c) => c.heroImage === url)) {
+    return true;
+  }
+  if (db.settings) {
+    if (db.settings.homeHeroImage === url || db.settings.laidePortraitImage === url || db.settings.brandLogoImage === url) {
+      return true;
+    }
+  }
+  if (db.realBrides?.some((b) => b.image === url)) {
+    return true;
+  }
+  return false;
+}
+function isDeletableMediaUrl(url) {
+  if (typeof url !== "string") return false;
+  const r2 = getR2Config();
+  if (r2.publicBaseUrl && url.startsWith(r2.publicBaseUrl)) return true;
+  if (url.includes("r2.cloudflarestorage.com") || url.includes(".r2.dev") || url.startsWith("/api/media/file/")) return true;
+  if (url.includes("blob.vercel-storage.com")) return true;
+  return false;
+}
 router.put("/products/:id", requireAdmin, async (req, res) => {
   const db = getDatabase();
   const index = db.products.findIndex((p) => p.id === req.params.id || p.slug === req.params.id);
@@ -566,8 +1025,8 @@ router.put("/products/:id", requireAdmin, async (req, res) => {
   await logActivity(`Updated product "${updatedProduct.name}"`);
   if (existing.images && Array.isArray(existing.images)) {
     for (const oldImg of existing.images) {
-      if (typeof oldImg === "string" && oldImg.includes("blob.vercel-storage.com") && !finalImages.includes(oldImg)) {
-        const isReferencedElsewhere = db.products.some((p) => p.id !== existing.id && p.images?.includes(oldImg));
+      if (isDeletableMediaUrl(oldImg) && !finalImages.includes(oldImg)) {
+        const isReferencedElsewhere = isImageReferencedInDb(db, oldImg, existing.id);
         if (!isReferencedElsewhere) {
           deletePersistentMedia(oldImg).catch(() => {
           });
@@ -585,8 +1044,8 @@ router.delete("/products/:id", requireAdmin, async (req, res) => {
   }
   if (product.images && Array.isArray(product.images)) {
     for (const img of product.images) {
-      if (typeof img === "string" && img.includes("blob.vercel-storage.com")) {
-        const isReferencedElsewhere = db.products.some((p) => p.id !== product.id && p.images?.includes(img));
+      if (isDeletableMediaUrl(img)) {
+        const isReferencedElsewhere = isImageReferencedInDb(db, img, product.id);
         if (!isReferencedElsewhere) {
           deletePersistentMedia(img).catch(() => {
           });
@@ -809,18 +1268,43 @@ router.get("/dashboard/stats", requireAdmin, (req, res) => {
     activityLogs: (db.activityLogs || []).slice(0, 10)
   });
 });
-router.post(["/upload", "/upload-raw"], async (req, res) => {
+router.post("/upload/presign", requireAdmin, async (req, res) => {
   res.setHeader("Content-Type", "application/json");
   try {
-    const rawFilename = req.query.filename || req.headers["x-filename"] || req.body?.filename || req.body?.name || `product_${Date.now()}.jpg`;
+    const { filename, contentType, folder, size } = req.body || {};
+    if (!filename || typeof filename !== "string") {
+      return res.status(400).json({ error: "Filename is required for presigned upload." });
+    }
+    if (!contentType || typeof contentType !== "string") {
+      return res.status(400).json({ error: "Content-Type is required for presigned upload." });
+    }
+    if (size && Number(size) > MAX_FILE_SIZE_BYTES) {
+      return res.status(400).json({
+        error: `File size exceeds maximum permitted limit of ${Math.round(MAX_FILE_SIZE_BYTES / (1024 * 1024))}MB.`
+      });
+    }
+    const safeFolder = folder && PERMITTED_FOLDERS.includes(folder.toLowerCase()) ? folder.toLowerCase() : "products";
+    const presigned = await getPresignedUploadUrl(filename, contentType, safeFolder, 300);
+    await logActivity(`Generated presigned R2 upload URL for ${filename}`);
+    return res.status(200).json(presigned);
+  } catch (err) {
+    console.error("Presigned upload generation error:", err);
+    return res.status(500).json({ error: err?.message || "Failed to generate presigned upload URL." });
+  }
+});
+router.post(["/upload", "/upload-raw"], requireAdmin, async (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  try {
+    const rawFilename = req.query.filename || req.headers["x-filename"] || req.body?.filename || req.body?.name || `media_${Date.now()}.jpg`;
     let decodedFilename = "image.jpg";
     try {
       decodedFilename = decodeURIComponent(rawFilename);
     } catch {
       decodedFilename = rawFilename;
     }
-    const cleanFilename = path3.basename(decodedFilename).replace(/[^a-zA-Z0-9._-]/g, "_") || `product_${Date.now()}.jpg`;
-    const blobPath = `products/${Date.now()}_${cleanFilename}`;
+    const cleanFilename = path4.basename(decodedFilename).replace(/[^a-zA-Z0-9._-]/g, "_") || `media_${Date.now()}.jpg`;
+    const folderParam = req.query.folder || req.headers["x-folder"] || req.body?.folder || "products";
+    const safeFolder = PERMITTED_FOLDERS.includes(folderParam.toLowerCase()) ? folderParam.toLowerCase() : "products";
     let contentType = req.headers["content-type"] || "image/jpeg";
     let fileBuffer = null;
     if (Buffer.isBuffer(req.body) && req.body.length > 0) {
@@ -847,36 +1331,55 @@ router.post(["/upload", "/upload-raw"], async (req, res) => {
     if (!fileBuffer || fileBuffer.length === 0) {
       return res.status(400).json({ error: "No image file provided for upload." });
     }
-    if (process.env.BLOB_READ_WRITE_TOKEN) {
-      const blob = await put2(blobPath, fileBuffer, {
-        access: "public",
-        contentType,
-        addRandomSuffix: true,
-        token: process.env.BLOB_READ_WRITE_TOKEN
-      });
-      await logActivity(`Uploaded persistent image to Vercel Blob: ${blob.url}`);
-      return res.status(200).json({
-        url: blob.url,
-        downloadUrl: blob.downloadUrl,
-        pathname: blob.pathname,
-        contentType: blob.contentType,
-        fileName: cleanFilename,
-        size: fileBuffer.length,
-        blob
-      });
+    const validation = validateImageBuffer(fileBuffer, contentType);
+    if (!validation.valid) {
+      return res.status(400).json({ error: validation.error || "Invalid or unsupported image file." });
     }
-    const result = await uploadPersistentMedia(fileBuffer, `${Date.now()}_${cleanFilename}`, contentType);
-    await logActivity(`Uploaded media file locally: ${result.fileName}`);
+    const validatedMime = validation.detectedMime || contentType || "image/jpeg";
+    const result = await uploadPersistentMedia(
+      fileBuffer,
+      cleanFilename,
+      validatedMime,
+      safeFolder
+    );
+    const provider = getStorageProvider();
+    await logActivity(`Uploaded media file [${provider}]: ${result.fileName}`);
     return res.status(200).json({
       url: result.url,
       fileName: result.fileName,
       size: result.size,
+      key: result.key,
       blob: { url: result.url }
+      // Backward-compatibility
     });
   } catch (err) {
-    console.error("Upload to Vercel Blob error:", err);
+    console.error("Upload error:", err);
     res.setHeader("Content-Type", "application/json");
-    return res.status(500).json({ error: err?.message || "Image upload to Vercel Blob failed." });
+    return res.status(500).json({ error: err?.message || "Image upload failed." });
+  }
+});
+router.get("/media/file/:key(*)", async (req, res) => {
+  const key = req.params.key;
+  if (!key) {
+    return res.status(400).json({ error: "Media object key required." });
+  }
+  try {
+    const obj = await getR2Object(key);
+    if (!obj || !obj.Body) {
+      return res.status(404).json({ error: "Object not found in Cloudflare R2." });
+    }
+    if (obj.ContentType) res.setHeader("Content-Type", obj.ContentType);
+    if (obj.ContentLength) res.setHeader("Content-Length", obj.ContentLength);
+    res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+    if (typeof obj.Body.pipe === "function") {
+      obj.Body.pipe(res);
+    } else {
+      const bytes = await obj.Body.transformToByteArray();
+      res.end(Buffer.from(bytes));
+    }
+  } catch (err) {
+    console.error(`Error streaming R2 media [${key}]:`, err);
+    return res.status(404).json({ error: "Failed to retrieve media file." });
   }
 });
 router.get("/media", async (_req, res) => {
@@ -886,6 +1389,28 @@ router.get("/media", async (_req, res) => {
   } catch (err) {
     console.error("Fetch media error:", err);
     res.status(500).json({ error: "Failed to read media library" });
+  }
+});
+router.delete("/media", requireAdmin, async (req, res) => {
+  try {
+    const targetUrl = req.body?.url || req.query.url || req.body?.key || req.query.key;
+    if (!targetUrl || typeof targetUrl !== "string") {
+      return res.status(400).json({ error: "Target media URL or key is required for deletion." });
+    }
+    const db = getDatabase();
+    const isReferenced = isImageReferencedInDb(db, targetUrl);
+    if (isReferenced) {
+      return res.status(409).json({
+        error: "Cannot delete media: asset is currently referenced by products or site settings."
+      });
+    }
+    await deletePersistentMedia(targetUrl);
+    const adminUser = req.adminUser;
+    await logActivity(`Deleted media asset: ${path4.basename(targetUrl)}`, adminUser?.name);
+    return res.status(200).json({ success: true, deleted: targetUrl });
+  } catch (err) {
+    console.error("Delete media error:", err);
+    return res.status(500).json({ error: err?.message || "Failed to delete media asset." });
   }
 });
 router.get("/settings", (req, res) => {

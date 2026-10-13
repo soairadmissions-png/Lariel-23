@@ -55,10 +55,10 @@ export function clearAdminAuth(): void {
 }
 
 function getAuthHeaders(): HeadersInit {
-  const token = getAdminToken() || 'lariel_super_admin_sec_token_2026';
+  const token = getAdminToken();
   return {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`,
+    ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
   };
 }
 
@@ -179,30 +179,6 @@ export const api = {
     const inputEmail = (email || '').trim().toLowerCase();
     const inputPassword = (password || '').trim();
 
-    // Validate directly against hardcoded demo admin credentials in source code
-    const isDemoMatch =
-      (inputEmail === DEMO_ADMIN.email.toLowerCase() && inputPassword === DEMO_ADMIN.password) ||
-      (inputEmail === DEMO_ADMIN_ALT_EMAIL.toLowerCase() && inputPassword === DEMO_ADMIN.password);
-
-    if (isDemoMatch) {
-      const token = 'lariel_super_admin_sec_token_2026';
-      setAdminAuth(token, DEMO_ADMIN_USER);
-
-      // Async notification to server for audit logs without blocking login
-      fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: inputEmail, password: inputPassword }),
-      }).catch(() => {});
-
-      return {
-        success: true,
-        user: DEMO_ADMIN_USER,
-        token,
-      };
-    }
-
-    // Try server endpoint fallback for valid server-side admin configurations
     try {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
@@ -211,16 +187,16 @@ export const api = {
       });
       const data = await res.json();
       if (!res.ok) {
-        throw new Error(data.error || 'Invalid email or password.');
+        throw new Error(data.error || 'Invalid administrator email or password.');
       }
-      setAdminAuth(data.token, data.user || DEMO_ADMIN_USER);
+      setAdminAuth(data.token, data.user);
       return {
         success: true,
-        user: data.user || DEMO_ADMIN_USER,
+        user: data.user,
         token: data.token,
       };
     } catch (err: any) {
-      throw new Error(err.message || 'Invalid email or password.');
+      throw new Error(err.message || 'Invalid administrator credentials.');
     }
   },
 
@@ -463,25 +439,74 @@ export const api = {
     return res.json();
   },
 
-  async uploadFile(file: File): Promise<{ url: string; fileName: string; size: number }> {
+  async uploadFile(file: File, folder: string = 'products'): Promise<{ url: string; fileName: string; size: number }> {
     // Compress image before upload (max 2000px on longest side, quality 0.85, preserve PNG transparency)
     const fileToUpload = await compressImageIfNeeded(file);
 
-    const token = getAdminToken() || 'lariel_super_admin_sec_token_2026';
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 30000);
+    const token = getAdminToken();
+    if (!token) {
+      throw new Error('Unauthorized: Active administrator session required for uploads. Please log in.');
+    }
 
+    // 1. Try presigned direct Cloudflare R2 upload for optimized performance and bypass of serverless payload limits
     try {
-      const res = await fetch(`/api/upload?filename=${encodeURIComponent(fileToUpload.name)}`, {
+      const presignRes = await fetch('/api/upload/presign', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
-          'Content-Type': fileToUpload.type || 'application/octet-stream',
-          'x-filename': encodeURIComponent(fileToUpload.name),
+          'Content-Type': 'application/json',
         },
-        body: fileToUpload,
-        signal: controller.signal,
+        body: JSON.stringify({
+          filename: fileToUpload.name,
+          contentType: fileToUpload.type || 'image/jpeg',
+          folder,
+          size: fileToUpload.size,
+        }),
       });
+
+      if (presignRes.ok) {
+        const presignData = await presignRes.json();
+        if (presignData.uploadUrl && presignData.publicUrl) {
+          const r2UploadRes = await fetch(presignData.uploadUrl, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': fileToUpload.type || 'image/jpeg',
+            },
+            body: fileToUpload,
+          });
+
+          if (r2UploadRes.ok) {
+            return {
+              url: presignData.publicUrl,
+              fileName: fileToUpload.name,
+              size: fileToUpload.size,
+            };
+          }
+        }
+      }
+    } catch {
+      // If presigned upload endpoint is unavailable or fails, gracefully fall back to server-side upload
+    }
+
+    // 2. Standard authenticated server-side upload endpoint
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 45000);
+
+    try {
+      const res = await fetch(
+        `/api/upload?filename=${encodeURIComponent(fileToUpload.name)}&folder=${encodeURIComponent(folder)}`,
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': fileToUpload.type || 'application/octet-stream',
+            'x-filename': encodeURIComponent(fileToUpload.name),
+            'x-folder': encodeURIComponent(folder),
+          },
+          body: fileToUpload,
+          signal: controller.signal,
+        }
+      );
 
       clearTimeout(timeoutId);
 
@@ -500,7 +525,10 @@ export const api = {
       }
 
       if (!res.ok) {
-        const errorMsg = data?.error || data?.message || (res.status === 413 ? 'Image is too large' : `Upload failed (HTTP ${res.status})`);
+        const errorMsg =
+          data?.error ||
+          data?.message ||
+          (res.status === 413 ? 'Image is too large' : `Upload failed (HTTP ${res.status})`);
         throw new Error(errorMsg);
       }
 
@@ -516,7 +544,7 @@ export const api = {
     } catch (err: any) {
       clearTimeout(timeoutId);
       if (err.name === 'AbortError') {
-        throw new Error('Upload timed out after 30 seconds. Please check your connection and try again.');
+        throw new Error('Upload timed out after 45 seconds. Please check your connection and try again.');
       }
       throw err;
     }

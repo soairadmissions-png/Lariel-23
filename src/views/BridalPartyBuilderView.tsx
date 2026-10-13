@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import { GLOBAL_COLORS } from '../data/currencies';
-import { BridalPartyMember } from '../types';
+import { BridalPartyMember, Product } from '../types';
 import { CANONICAL_DEFAULTS, handleImageError } from '../constants/imageDefaults';
 
 export const BridalPartyBuilderView: React.FC = () => {
@@ -34,9 +34,44 @@ export const BridalPartyBuilderView: React.FC = () => {
   // Catalog items suitable for bridesmaids
   const bridesmaidRobes = products.filter((p) => (p.category === 'bridesmaids' || p.category === 'bridal' || p.category === 'sets') && p.status !== 'draft');
 
-  // Compute total price
+  const getMemberProduct = (m: BridalPartyMember): Product => {
+    return m.selectedProduct || products.find((p) => p.id === m.robeProductId) || bridesmaidRobes[0] || products[0] || {
+      id: 'default-robe',
+      name: 'Bridal Party Robe',
+      slug: 'bridal-party-robe',
+      subtitle: 'Luxury Morning Robe',
+      priceUSD: 120,
+      category: 'bridesmaids',
+      style: 'Silk',
+      collectionName: 'Party',
+      description: 'Luxury bridal party robe.',
+      details: [],
+      materials: 'Silk',
+      sizingInfo: 'Standard',
+      productionTime: 'Standard',
+      shippingInfo: 'Standard',
+      careInstructions: 'Dry clean',
+      images: [CANONICAL_DEFAULTS.PRODUCT],
+      colors: GLOBAL_COLORS.slice(0, 4),
+      sizes: ['S (UK 8)', 'M (UK 10-12)', 'L (UK 14-16)', 'XL (UK 18)'],
+      reviewsCount: 10,
+      rating: 5,
+      crossSellIds: [],
+    };
+  };
+
+  const getMemberColor = (m: BridalPartyMember, prod?: Product) => {
+    return m.selectedColor || prod?.colors?.[0] || GLOBAL_COLORS[0];
+  };
+
+  const getMemberSize = (m: BridalPartyMember, prod?: Product) => {
+    return m.selectedSize || m.size || prod?.sizes?.[0] || 'M';
+  };
+
+  // Compute total price safely
   const baseSubtotalUSD = bridalPartyMembers.reduce((acc, member) => {
-    return acc + member.selectedProduct.priceUSD;
+    const prod = getMemberProduct(member);
+    return acc + (prod?.priceUSD || 0);
   }, 0);
 
   // Group discounts for bridal parties
@@ -57,9 +92,10 @@ export const BridalPartyBuilderView: React.FC = () => {
       id: `party-${Date.now()}`,
       name: `Bridesmaid ${memberCount + 1}`,
       role: 'Bridesmaid',
+      robeProductId: defaultProduct?.id,
       selectedProduct: defaultProduct,
-      selectedColor: defaultProduct.colors[0] || { name: partyThemeColor, hex: '#F0D0D5' },
-      selectedSize: 'M',
+      selectedColor: defaultProduct?.colors?.[0] || { name: partyThemeColor, hex: '#F0D0D5' },
+      selectedSize: defaultProduct?.sizes?.[0] || 'M',
       monogramText: '',
       includeMatchingBonnet: true,
       includeFlipFlops: false,
@@ -69,7 +105,10 @@ export const BridalPartyBuilderView: React.FC = () => {
 
   const handleAddAllToCart = () => {
     bridalPartyMembers.forEach((m) => {
-      addToCart(m.selectedProduct, m.selectedColor, m.selectedSize, 1, {
+      const prod = getMemberProduct(m);
+      const col = getMemberColor(m, prod);
+      const sz = getMemberSize(m, prod);
+      addToCart(prod, col, sz, 1, {
         text: m.monogramText ? `${m.name} - ${m.monogramText}` : m.name,
         role: m.role,
       });
@@ -89,10 +128,13 @@ export const BridalPartyBuilderView: React.FC = () => {
     text += `*ITEMIZED ROSTER:*\n`;
 
     bridalPartyMembers.forEach((m, idx) => {
-      text += `${idx + 1}. *${m.name.toUpperCase()}* (${m.role})\n`;
-      text += `   - Piece: ${m.selectedProduct.name}\n`;
-      text += `   - Shade: ${m.selectedColor.name}\n`;
-      text += `   - Size: ${m.selectedSize}\n`;
+      const prod = getMemberProduct(m);
+      const col = getMemberColor(m, prod);
+      const sz = getMemberSize(m, prod);
+      text += `${idx + 1}. *${(m.name || 'Bridesmaid').toUpperCase()}* (${m.role})\n`;
+      text += `   - Piece: ${prod.name}\n`;
+      text += `   - Shade: ${col.name}\n`;
+      text += `   - Size: ${sz}\n`;
       if (m.monogramText) {
         text += `   - Monogram: "${m.monogramText}"\n`;
       }
@@ -193,7 +235,12 @@ export const BridalPartyBuilderView: React.FC = () => {
             </button>
           </div>
 
-          {bridalPartyMembers.map((member, index) => (
+          {bridalPartyMembers.map((member, index) => {
+            const prod = getMemberProduct(member);
+            const col = getMemberColor(member, prod);
+            const sz = getMemberSize(member, prod);
+
+            return (
             <div
               key={member.id}
               className="bg-[#FAF8F5] border border-[#E3D9CC] p-6 text-left shadow-xs transition-all hover:border-[#C5A880]"
@@ -202,8 +249,8 @@ export const BridalPartyBuilderView: React.FC = () => {
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-12 bg-[#F2ECE4] border border-[#E0D7CC] shrink-0 overflow-hidden rounded-md">
                     <img
-                      src={member.selectedProduct?.images?.[0] || CANONICAL_DEFAULTS.PRODUCT}
-                      alt={member.selectedProduct?.name || 'Bridal Robe'}
+                      src={prod.images?.[0] || CANONICAL_DEFAULTS.PRODUCT}
+                      alt={prod.name || 'Bridal Robe'}
                       onError={(e) => handleImageError(e, CANONICAL_DEFAULTS.PRODUCT)}
                       className="w-full h-full object-cover"
                     />
@@ -255,12 +302,13 @@ export const BridalPartyBuilderView: React.FC = () => {
                     Selected Robe / Set
                   </label>
                   <select
-                    value={member.selectedProduct.id}
+                    value={prod.id}
                     onChange={(e) => {
-                      const prod = products.find((p) => p.id === e.target.value) || products[0];
+                      const selected = products.find((p) => p.id === e.target.value) || products[0];
                       updateBridalPartyMember(member.id, {
-                        selectedProduct: prod,
-                        selectedColor: prod.colors[0],
+                        robeProductId: selected.id,
+                        selectedProduct: selected,
+                        selectedColor: selected.colors[0],
                       });
                     }}
                     className="w-full bg-white border border-neutral-300 px-2 py-2 focus:outline-none font-medium truncate"
@@ -276,20 +324,20 @@ export const BridalPartyBuilderView: React.FC = () => {
                 {/* 2. Select Shade */}
                 <div>
                   <label className="block text-[10px] tracking-wider uppercase text-neutral-600 mb-1">
-                    Color Shade ({member.selectedColor.name})
+                    Color Shade ({col.name})
                   </label>
                   <div className="flex items-center space-x-1.5 overflow-x-auto py-1">
-                    {member.selectedProduct.colors.map((col) => (
+                    {(prod.colors || GLOBAL_COLORS.slice(0, 4)).map((c) => (
                       <button
-                        key={col.name}
-                        onClick={() => updateBridalPartyMember(member.id, { selectedColor: col })}
+                        key={c.name}
+                        onClick={() => updateBridalPartyMember(member.id, { selectedColor: c })}
                         className={`w-5 h-5 rounded-full border shrink-0 transition-transform ${
-                          member.selectedColor.name === col.name
+                          col.name === c.name
                             ? 'ring-2 ring-offset-1 ring-neutral-900 scale-110'
                             : 'border-neutral-300'
                         }`}
-                        style={{ backgroundColor: col.hex }}
-                        title={col.name}
+                        style={{ backgroundColor: c.hex }}
+                        title={c.name}
                       />
                     ))}
                   </div>
@@ -301,13 +349,13 @@ export const BridalPartyBuilderView: React.FC = () => {
                     Size
                   </label>
                   <select
-                    value={member.selectedSize}
+                    value={sz}
                     onChange={(e) => updateBridalPartyMember(member.id, { selectedSize: e.target.value })}
                     className="w-full bg-white border border-neutral-300 px-2 py-2 focus:outline-none font-medium"
                   >
-                    {member.selectedProduct.sizes.map((sz) => (
-                      <option key={sz} value={sz}>
-                        {sz}
+                    {(prod.sizes || ['S', 'M', 'L', 'XL']).map((s) => (
+                      <option key={s} value={s}>
+                        {s}
                       </option>
                     ))}
                   </select>
@@ -321,14 +369,15 @@ export const BridalPartyBuilderView: React.FC = () => {
                   <input
                     type="text"
                     placeholder="e.g. MOH, Anita, 24.10"
-                    value={member.monogramText}
+                    value={member.monogramText || ''}
                     onChange={(e) => updateBridalPartyMember(member.id, { monogramText: e.target.value })}
                     className="w-full bg-white border border-neutral-300 px-2 py-2 focus:outline-none"
                   />
                 </div>
               </div>
             </div>
-          ))}
+            );
+          })}
 
           {/* Add member button bottom */}
           <div className="text-center pt-2">

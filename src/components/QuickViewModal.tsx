@@ -194,10 +194,10 @@ Please let me know how soon this can be delivered!`;
                 <div className="flex space-x-3">
                   <button
                     onClick={handleAddToCart}
-                    className="flex-1 bg-[#111111] text-[#FAF8F5] py-3.5 text-xs tracking-[0.2em] uppercase font-semibold hover:bg-[#C5A880] transition-colors flex items-center justify-center space-x-2"
+                    className="flex-1 bg-[#111111] text-[#FAF8F5] py-3.5 text-xs tracking-wider uppercase font-semibold hover:bg-[#C5A880] transition-colors flex items-center justify-center space-x-2"
                   >
                     <ShoppingBag className="w-4 h-4" />
-                    <span>ADD TO BAG</span>
+                    <span>Add To Bag</span>
                   </button>
 
                   <button
@@ -215,10 +215,10 @@ Please let me know how soon this can be delivered!`;
                   href={generateWhatsAppDirectLink()}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full border border-neutral-800 bg-white text-neutral-900 py-3 text-xs tracking-[0.18em] uppercase font-medium hover:border-[#25D366] hover:text-[#25D366] transition-colors flex items-center justify-center space-x-2"
+                  className="w-full border border-neutral-800 bg-white text-neutral-900 py-3 text-xs tracking-wider uppercase font-medium hover:border-[#25D366] hover:text-[#25D366] transition-colors flex items-center justify-center space-x-2"
                 >
                   <MessageCircle className="w-4 h-4 text-[#25D366]" />
-                  <span>ORDER VIA WHATSAPP CONCIERGE</span>
+                  <span>Order Via WhatsApp Concierge</span>
                 </a>
 
                 <button
@@ -227,9 +227,9 @@ Please let me know how soon this can be delivered!`;
                     setQuickViewProduct(null);
                     navigateToProduct(id);
                   }}
-                  className="w-full text-center text-xs tracking-[0.2em] uppercase text-[#A68962] font-semibold py-2 hover:underline flex items-center justify-center space-x-1"
+                  className="w-full text-center text-xs tracking-wider uppercase text-[#A68962] font-semibold py-2 hover:underline flex items-center justify-center space-x-1"
                 >
-                  <span>VIEW FULL COUTURE DETAILS & FABRIC SPECS</span>
+                  <span>View Full Couture Details & Fabric Specs</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>

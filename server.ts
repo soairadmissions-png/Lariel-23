@@ -1,23 +1,34 @@
 import express from 'express';
 import path from 'path';
 import fs from 'fs';
-import { createServer as createViteServer } from 'vite';
 import apiRouter from './server/api.ts';
 import { getDatabase } from './server/db.ts';
 
 async function startServer() {
   const app = express();
   const PORT = Number(process.env.PORT || process.env.APP_PORT || process.env.DEFAULT_APP_PORT || 3000);
+  const distPath = path.join(process.cwd(), 'dist');
+  const isProduction =
+    process.env.NODE_ENV === 'production' ||
+    process.env.npm_lifecycle_event === 'start' ||
+    (fs.existsSync(path.join(distPath, 'index.html')) && process.env.npm_lifecycle_event !== 'dev');
 
   // Static serving for public folder and user uploads
   app.use(express.static(path.join(process.cwd(), 'public')));
   app.use('/fonts', express.static(path.join(process.cwd(), 'public', 'fonts')));
   app.use('/uploads', express.static(path.join(process.cwd(), 'public', 'uploads')));
   app.use('/uploads', express.static(path.join(process.cwd(), 'src', 'assets', 'images')));
-  app.use('/uploads', express.static(path.join(process.cwd(), 'dist', 'uploads')));
+  app.use('/uploads', express.static(path.join(distPath, 'uploads')));
   app.use('/public/uploads', express.static(path.join(process.cwd(), 'public', 'uploads')));
   app.use('/src/assets/images', express.static(path.join(process.cwd(), 'src', 'assets', 'images')));
-  app.use('/assets', express.static(path.join(process.cwd(), 'src', 'assets')));
+  
+  // In production, ensure compiled assets are served first
+  if (isProduction) {
+    app.use(express.static(distPath, { index: false }));
+    app.use('/assets', express.static(path.join(distPath, 'assets')));
+  } else {
+    app.use('/assets', express.static(path.join(process.cwd(), 'src', 'assets')));
+  }
   
   // If an /uploads request is not found, return 404 instead of letting Vite or SPA fallback return index.html
   app.use('/uploads', (req, res) => {
@@ -55,7 +66,8 @@ async function startServer() {
   };
 
   // Vite middleware for development vs static build in production
-  if (process.env.NODE_ENV !== 'production') {
+  if (!isProduction) {
+    const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'custom',

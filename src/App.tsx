@@ -22,67 +22,6 @@ import { AdminView } from './admin/AdminView';
 const MainAppContent: React.FC = () => {
   const { activeView, setActiveView, isAdminAuthenticated, adminUser } = useShop();
 
-  // Convert any 'all caps' text nodes to 'first letter capital' (Title Case)
-  useEffect(() => {
-    const toTitle = (text: string) => {
-      return text.replace(/\b[A-Z]{2,}\b/g, (match) => {
-        if (
-          match === 'DHL' ||
-          match === 'UK' ||
-          match === 'USA' ||
-          match === 'UBA' ||
-          match === 'NGN' ||
-          match === 'USD' ||
-          match === 'GBP' ||
-          match === 'EUR' ||
-          match === 'CAD' ||
-          match === 'AUD' ||
-          match === 'AED'
-        ) {
-          return match;
-        }
-        return match.charAt(0).toUpperCase() + match.slice(1).toLowerCase();
-      });
-    };
-
-    const processNode = (node: Node) => {
-      if (node.nodeType === Node.TEXT_NODE && node.nodeValue) {
-        const val = node.nodeValue;
-        if (/[A-Z]{2,}/.test(val)) {
-          const parent = node.parentElement;
-          if (parent && !['SCRIPT', 'STYLE', 'INPUT', 'TEXTAREA', 'CODE', 'PRE'].includes(parent.tagName)) {
-            const transformed = toTitle(val);
-            if (transformed !== val) {
-              node.nodeValue = transformed;
-            }
-          }
-        }
-      } else if (node.nodeType === Node.ELEMENT_NODE) {
-        const el = node as HTMLElement;
-        if (!['SCRIPT', 'STYLE', 'INPUT', 'TEXTAREA', 'CODE', 'PRE'].includes(el.tagName)) {
-          for (let i = 0; i < el.childNodes.length; i++) {
-            processNode(el.childNodes[i]);
-          }
-        }
-      }
-    };
-
-    processNode(document.body);
-
-    const observer = new MutationObserver((mutations) => {
-      for (const m of mutations) {
-        if (m.type === 'childList') {
-          m.addedNodes.forEach(processNode);
-        } else if (m.type === 'characterData') {
-          processNode(m.target);
-        }
-      }
-    });
-
-    observer.observe(document.body, { childList: true, subtree: true, characterData: true });
-    return () => observer.disconnect();
-  }, [activeView]);
-
   if (activeView === 'admin') {
     return (
       <div className="min-h-screen bg-[#F7F4EE]">
@@ -128,7 +67,7 @@ const MainAppContent: React.FC = () => {
           <BridalPartyBuilderView />
         ) : activeView === 'custom-design' ? (
           <CustomDesignView />
-        ) : activeView === 'the-lariel-world' ? (
+        ) : activeView === 'the-lariel-world' || activeView === 'information' ? (
           <TheLarielWorldView />
         ) : activeView === 'checkout' ? (
           <CheckoutView />
