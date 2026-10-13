@@ -10,8 +10,7 @@ async function startServer() {
   const distPath = path.join(process.cwd(), 'dist');
   const isProduction =
     process.env.NODE_ENV === 'production' ||
-    process.env.npm_lifecycle_event === 'start' ||
-    (fs.existsSync(path.join(distPath, 'index.html')) && process.env.npm_lifecycle_event !== 'dev');
+    process.env.npm_lifecycle_event === 'start';
 
   // Static serving for public folder and user uploads
   app.use(express.static(path.join(process.cwd(), 'public')));
@@ -20,14 +19,20 @@ async function startServer() {
   app.use('/uploads', express.static(path.join(process.cwd(), 'src', 'assets', 'images')));
   app.use('/uploads', express.static(path.join(distPath, 'uploads')));
   app.use('/public/uploads', express.static(path.join(process.cwd(), 'public', 'uploads')));
-  app.use('/src/assets/images', express.static(path.join(process.cwd(), 'src', 'assets', 'images')));
+  // For /src/assets/images: Never intercept Vite module imports (?import)
+  app.use('/src/assets/images', (req, res, next) => {
+    if (req.originalUrl.includes('?import') || req.query.import !== undefined) {
+      return next();
+    }
+    express.static(path.join(process.cwd(), 'src', 'assets', 'images'))(req, res, () => {
+      express.static(path.join(process.cwd(), 'public', 'uploads'))(req, res, next);
+    });
+  });
   
   // In production, ensure compiled assets are served first
   if (isProduction) {
     app.use(express.static(distPath, { index: false }));
     app.use('/assets', express.static(path.join(distPath, 'assets')));
-  } else {
-    app.use('/assets', express.static(path.join(process.cwd(), 'src', 'assets')));
   }
   
   // If an /uploads request is not found, return 404 instead of letting Vite or SPA fallback return index.html

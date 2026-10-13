@@ -12,9 +12,12 @@ import adireRoyalRobeImg from '../assets/images/regenerated_image_1788962690479.
 import adireSilkKimonoImg from '../assets/images/regenerated_image_1788962692419.jpg';
 import classicPipedPjImg from '../assets/images/regenerated_image_1788962693429.jpg';
 import monogrammedShortPjImg from '../assets/images/regenerated_image_1788962694671.jpg';
-import featherDetailPjImg from '../assets/images/regenerated_image_1788962695589.png';
+import featherDetailPjImg from '../assets/images/regenerated_image_1791793263619.jpg';
 import ruffleDetailPjImg from '../assets/images/regenerated_image_1788962700642.jpg';
-import personalisedRobeImg from '../assets/images/regenerated_image_1788963021175.png';
+import personalisedRobeImg from '../assets/images/regenerated_image_1791793258450.jpg';
+import crackAdireRobeImg from '../assets/images/regenerated_image_1791793258450.jpg';
+import larielPatternAdireImg from '../assets/images/regenerated_image_1791793263619.jpg';
+import corsetRobeImg from '../assets/images/regenerated_image_1791793254039.jpg';
 import pearlVeilAccessoryImg from '../assets/images/regenerated_image_1788963974286.jpg';
 import reversibleBonnetImg from '../assets/images/regenerated_image_1788963975261.png';
 import juniorBridesmaidImg from '../assets/images/regenerated_image_1788965491439.jpg';
@@ -333,7 +336,7 @@ export const PRODUCTS: Product[] = [
     shippingInfo: 'Worldwide courier delivery.',
     careInstructions: 'Professional dry clean only.',
     images: [
-      '/uploads/bridal_couch_hero_1788951504284.jpg',
+      corsetRobeImg,
       '/uploads/bridal_couch_hero_1788951504284.jpg',
     ],
     colors: [
@@ -724,7 +727,7 @@ export const PRODUCTS: Product[] = [
     shippingInfo: 'Worldwide shipping.',
     careInstructions: 'Dry clean recommended.',
     images: [
-      adireSilkKimonoImg,
+      crackAdireRobeImg,
       '/uploads/bridal_couch_hero_1788951504284.jpg',
     ],
     colors: [
@@ -760,7 +763,7 @@ export const PRODUCTS: Product[] = [
     shippingInfo: 'Worldwide tracked shipping.',
     careInstructions: 'Dry clean only.',
     images: [
-      adireRoyalRobeImg,
+      personalisedRobeImg,
       '/uploads/bridal_couch_hero_1788951504284.jpg',
     ],
     colors: [
@@ -908,7 +911,7 @@ export const PRODUCTS: Product[] = [
     shippingInfo: 'Worldwide tracked courier.',
     careInstructions: 'Dry clean recommended.',
     images: [
-      adireRoyalRobeImg,
+      larielPatternAdireImg,
       '/uploads/bridal_couch_hero_1788951504284.jpg',
     ],
     colors: [

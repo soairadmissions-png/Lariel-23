@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRight, Sparkles, Check } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
-import personalisedRobeImg from '../assets/images/regenerated_image_1788963021175.png';
+import personalisedRobeImg from '../assets/images/regenerated_image_1791793258450.jpg';
 import { CANONICAL_DEFAULTS, handleImageError } from '../constants/imageDefaults';
 
 export const PersonalisedRobesFeature: React.FC = () => {
@@ -210,7 +210,7 @@ export const PersonalisedRobesFeature: React.FC = () => {
               <div className="absolute -bottom-6 -left-6 hidden sm:flex items-center space-x-3 bg-[#1C1410]/95 backdrop-blur-md border border-[#4A372C] p-4 rounded-2xl shadow-xl max-w-xs">
                 <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0 border border-[#C5A880]/40">
                   <img
-                    src="/uploads/regenerated_image_1788963021175.png"
+                    src="/uploads/regenerated_image_1791793258450.jpg"
                     alt="Stitching detail"
                     onError={(e) => handleImageError(e, CANONICAL_DEFAULTS.MONOGRAM_DETAIL)}
                     className="w-full h-full object-cover"

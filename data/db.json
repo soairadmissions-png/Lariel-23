@@ -686,7 +686,7 @@
       "shippingInfo": "Worldwide courier delivery.",
       "careInstructions": "Professional dry clean only.",
       "images": [
-        "/uploads/regenerated_image_1788952915584.png",
+        "/uploads/regenerated_image_1791793254039.jpg",
         "/uploads/bridal_couch_hero_1788951504284.jpg"
       ],
       "colors": [
@@ -1831,8 +1831,8 @@
       "shippingInfo": "Worldwide shipping.",
       "careInstructions": "Dry clean recommended.",
       "images": [
-        "/uploads/regenerated_image_1788962692419.jpg",
-        "/uploads/regenerated_image_1788962690479.jpg"
+        "/uploads/regenerated_image_1791793258450.jpg",
+        "/uploads/regenerated_image_1788962692419.jpg"
       ],
       "colors": [
         {
@@ -1887,7 +1887,7 @@
       "shippingInfo": "Worldwide tracked shipping.",
       "careInstructions": "Dry clean only.",
       "images": [
-        "/uploads/regenerated_image_1788963021175.png",
+        "/uploads/regenerated_image_1791793258450.jpg",
         "/uploads/regenerated_image_1788962690479.jpg"
       ],
       "colors": [
@@ -2122,8 +2122,8 @@
       "shippingInfo": "Worldwide tracked courier.",
       "careInstructions": "Dry clean recommended.",
       "images": [
-        "/uploads/regenerated_image_1788962690479.jpg",
-        "/uploads/regenerated_image_1788962692419.jpg"
+        "/uploads/regenerated_image_1791793263619.jpg",
+        "/uploads/regenerated_image_1788962690479.jpg"
       ],
       "colors": [
         {
@@ -2179,7 +2179,7 @@
       "shippingInfo": "Express worldwide shipping.",
       "careInstructions": "Remove feathers before washing. Hand wash cold silk or dry clean.",
       "images": [
-        "/uploads/regenerated_image_1788962695589.png",
+        "/uploads/regenerated_image_1791793263619.jpg",
         "/uploads/regenerated_image_1788962693429.jpg"
       ],
       "colors": [
@@ -3808,6 +3808,12 @@
     }
   ],
   "activityLogs": [
+    {
+      "id": "log-1791789784354",
+      "action": "Admin logged in: Laide (admin@larielextravaganza.com)",
+      "adminName": "Laide",
+      "timestamp": "2026-10-12T07:23:04.354Z"
+    },
     {
       "id": "log-1791553326075",
       "action": "Uploaded media file [local]: test_auth_check_1791553326075.jpg",

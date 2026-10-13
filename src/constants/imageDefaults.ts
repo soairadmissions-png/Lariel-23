@@ -21,7 +21,7 @@ export const CANONICAL_DEFAULTS = {
   CATEGORY_ACCESSORIES: '/uploads/regenerated_image_1788965491439.jpg',
   CATEGORY_SETS: '/uploads/regenerated_image_1788961850750.jpg',
   CATEGORY_BOUDOIR: '/uploads/regenerated_image_1788954093212.jpg',
-  CATEGORY_CUSTOM: '/uploads/regenerated_image_1788963021175.png',
+  CATEGORY_CUSTOM: '/uploads/regenerated_image_1791793258450.jpg',
 
   // Editorial & World Banners
   HERO_MAIN: '/uploads/bridal_couch_hero_1788951504284.jpg',
@@ -30,7 +30,7 @@ export const CANONICAL_DEFAULTS = {
   FOUNDER_PORTRAIT: '/uploads/laide_founder_portrait_1789650582034.jpg',
 
   // Bespoke Embroidery & Monogramming
-  MONOGRAM_DETAIL: '/uploads/regenerated_image_1788963021175.png',
+  MONOGRAM_DETAIL: '/uploads/regenerated_image_1791793258450.jpg',
   BESPOKE_SWATCH: '/uploads/regenerated_image_1788962692419.jpg',
 
   // Brand Identity
