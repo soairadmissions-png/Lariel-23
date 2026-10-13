@@ -460,47 +460,61 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // Bridal Party Builder Initial Setup
-  const [bridalParty, setBridalParty] = useState<BridalPartyMember[]>([
-    {
-      id: 'party-1',
-      role: 'Bride',
-      name: 'The Bride',
-      robeProductId: 'amanda-3d-petals-robe',
-      selectedSize: 'M (UK 10-12)',
-      color: 'Ivory',
-      size: 'M (UK 10-12)',
-      personalisationText: 'The Bride',
-      monogramText: 'The Bride',
-      includeSet: true,
-      includeMatchingBonnet: true,
-    },
-    {
-      id: 'party-2',
-      role: 'Maid of Honour',
-      name: 'Sister / Best Friend',
-      robeProductId: 'abiks-bridesmaids-robe',
-      selectedSize: 'S (UK 8)',
-      color: 'Champagne Gold',
-      size: 'S (UK 8)',
-      personalisationText: 'Maid of Honour',
-      monogramText: 'Maid of Honour',
-      includeSet: true,
-      includeMatchingBonnet: true,
-    },
-    {
-      id: 'party-3',
-      role: 'Bridesmaid',
-      name: 'Bridesmaid 1',
-      robeProductId: 'halo-bridesmaids-robe',
-      selectedSize: 'M/L (UK 12-16)',
-      color: 'Champagne Gold',
-      size: 'M/L (UK 12-16)',
-      personalisationText: 'Bridesmaid',
-      monogramText: 'Bridesmaid',
-      includeSet: false,
-      includeMatchingBonnet: true,
-    },
-  ]);
+  const [bridalParty, setBridalParty] = useState<BridalPartyMember[]>(() => {
+    const initProds = getInitialProducts();
+    const findProd = (id: string) => initProds.find((p) => p.id === id) || initProds[0];
+    const p1 = findProd('amanda-3d-petals-robe');
+    const p2 = findProd('abiks-bridesmaids-robe');
+    const p3 = findProd('halo-bridesmaids-robe');
+
+    return [
+      {
+        id: 'party-1',
+        role: 'Bride',
+        name: 'The Bride',
+        robeProductId: p1?.id || 'amanda-3d-petals-robe',
+        selectedProduct: p1,
+        selectedColor: p1?.colors?.[0] || GLOBAL_COLORS[0],
+        selectedSize: 'M (UK 10-12)',
+        color: 'Ivory',
+        size: 'M (UK 10-12)',
+        personalisationText: 'The Bride',
+        monogramText: 'The Bride',
+        includeSet: true,
+        includeMatchingBonnet: true,
+      },
+      {
+        id: 'party-2',
+        role: 'Maid of Honour',
+        name: 'Sister / Best Friend',
+        robeProductId: p2?.id || 'abiks-bridesmaids-robe',
+        selectedProduct: p2,
+        selectedColor: p2?.colors?.[0] || GLOBAL_COLORS[0],
+        selectedSize: 'S (UK 8)',
+        color: 'Champagne Gold',
+        size: 'S (UK 8)',
+        personalisationText: 'Maid of Honour',
+        monogramText: 'Maid of Honour',
+        includeSet: true,
+        includeMatchingBonnet: true,
+      },
+      {
+        id: 'party-3',
+        role: 'Bridesmaid',
+        name: 'Bridesmaid 1',
+        robeProductId: p3?.id || 'halo-bridesmaids-robe',
+        selectedProduct: p3,
+        selectedColor: p3?.colors?.[0] || GLOBAL_COLORS[0],
+        selectedSize: 'M/L (UK 12-16)',
+        color: 'Champagne Gold',
+        size: 'M/L (UK 12-16)',
+        personalisationText: 'Bridesmaid',
+        monogramText: 'Bridesmaid',
+        includeSet: false,
+        includeMatchingBonnet: true,
+      },
+    ];
+  });
 
   // Synchronize bridal party members when dynamic catalog loads
   useEffect(() => {

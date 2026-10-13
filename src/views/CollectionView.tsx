@@ -19,7 +19,7 @@ export const CollectionView: React.FC = () => {
     const dynamicCat = categories.find((c) => c.id === selectedCategory);
     if (dynamicCat) {
       return {
-        title: dynamicCat.name.toUpperCase(),
+        title: dynamicCat.name,
         subtitle: dynamicCat.subtitle || 'Lariel Essentials Haute Couture',
         heroImage: dynamicCat.heroImage || '/uploads/bridal_couch_hero_1788951504284.jpg',
         description: dynamicCat.description || '',
@@ -28,56 +28,56 @@ export const CollectionView: React.FC = () => {
     switch (selectedCategory) {
       case 'bridal':
         return {
-          title: 'BRIDAL ROBES',
+          title: 'Bridal Robes',
           subtitle: 'Made for the moment before the dress.',
           heroImage: '/uploads/bridal_couch_hero_1788951504284.jpg',
           description: 'Our signature bridal robes are handcrafted from 22-momme pure Mulberry silk, tiered French illusion tulle, and hand-appliquéd 3D floral petals.',
         };
       case 'bridesmaids':
         return {
-          title: 'FOR YOUR GIRLS',
+          title: 'For Your Girls',
           subtitle: 'Bridesmaids robes & coordinated morning suites.',
           heroImage: '/uploads/regenerated_image_1788954098680.jpg',
           description: 'Featuring our HALO mesh-sleeve robes, Linda ruffle sets, Abiks pearl details, and classic liquid silk styles for your bride tribe.',
         };
       case 'sets':
         return {
-          title: 'BRIDAL PARTY SETS',
+          title: 'Bridal Party Sets',
           subtitle: 'Every detail of the morning.',
           heroImage: '/uploads/regenerated_image_1788961847724.jpg',
           description: 'Curated gift sets pairing luxury robes with Mulberry silk bonnets, scrunchies, satin pillowcases, memory-foam slippers, and handheld mini fans.',
         };
       case 'adire':
         return {
-          title: 'RICH AFRICAN HERITAGE',
+          title: 'Rich African Heritage',
           subtitle: 'Adire, reimagined for the modern bride.',
           heroImage: '/uploads/regenerated_image_1788962690479.jpg',
           description: 'Centuries-old Yoruba resist-dyeing traditions meet liquid bridal silk. Handcrafted in Abeokuta and Lagos for unforgettable royal mornings.',
         };
       case 'pyjamas':
         return {
-          title: 'BRIDAL PYJAMAS',
+          title: 'Bridal Pyjamas',
           subtitle: 'Feather trim long sets, piped shorts & eve loungewear.',
           heroImage: '/uploads/regenerated_image_1788962695589.png',
           description: 'Slip into cloud-soft Mulberry silk pyjamas with detachable ostrich feathers and custom monogramming for the eve of your celebration.',
         };
       case 'accessories':
         return {
-          title: 'BRIDAL ACCESSORIES',
+          title: 'Bridal Accessories',
           subtitle: 'Bonnets, pillowcases, flip-flops & suite essentials.',
           heroImage: '/uploads/regenerated_image_1788963974286.jpg',
           description: 'High-protection reversible silk bonnets, lash-setting mini fans, and cushioned flip-flops to ensure flawless ease in the bridal suite.',
         };
       case 'personalised':
         return {
-          title: 'PERSONALISED ROBES',
+          title: 'Personalised Robes',
           subtitle: 'Custom embroidered surnames, titles & dates.',
           heroImage: '/uploads/regenerated_image_1788963021175.png',
           description: 'Cherish an eternal bridal heirloom with metallic thread monograms across the back or pocket in modern serif or romantic calligraphy.',
         };
       case 'junior':
         return {
-          title: 'JUNIOR & KIDS ROBES',
+          title: 'Junior & Kids Robes',
           subtitle: 'For flower girls and junior bridesmaids.',
           heroImage: '/uploads/regenerated_image_1788965497255.jpg',
           description: 'Delicate matching robes designed for the little princesses participating in your celebration.',
@@ -85,7 +85,7 @@ export const CollectionView: React.FC = () => {
       case 'new':
       default:
         return {
-          title: 'NEW ARRIVALS',
+          title: 'New Arrivals',
           subtitle: 'The latest bridal morning couture from Lariel Essentials.',
           heroImage: '/uploads/hero_bridal_bg_1788959544066.jpg',
           description: 'Discover fresh bridal silhouettes, newly released sunset hues, and artisan embellishments.',

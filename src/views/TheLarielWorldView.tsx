@@ -9,12 +9,18 @@ import laidePortraitImg from '../assets/images/laide_founder_portrait_1789650582
 import { CANONICAL_DEFAULTS, handleImageError } from '../constants/imageDefaults';
 
 export const TheLarielWorldView: React.FC = () => {
-  const { selectedWorldTab, setSelectedWorldTab, navigateToCategory, setActiveView, realBrides, siteSettings } = useShop();
+  const { selectedWorldTab, setSelectedWorldTab, selectedInfoTab, activeView, navigateToCategory, setActiveView, realBrides, siteSettings } = useShop();
 
   const [activeBrideCategory, setActiveBrideCategory] = useState<string>('All');
   const [selectedArticle, setSelectedArticle] = useState<JournalArticle | null>(null);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
   const [isBioExpanded, setIsBioExpanded] = useState<boolean>(false);
+
+  React.useEffect(() => {
+    if (activeView === 'information') {
+      setSelectedWorldTab('faq');
+    }
+  }, [activeView, setSelectedWorldTab]);
 
   const bridesList = realBrides && realBrides.length > 0 ? realBrides : REAL_BRIDES;
 
@@ -184,7 +190,7 @@ export const TheLarielWorldView: React.FC = () => {
 
                 {/* Hand-signed closing */}
                 <div className="pt-2 sm:pt-3">
-                  <p className="font-['Runethia',cursive] font-runethia text-2xl sm:text-4xl text-[#A68962] leading-none">
+                  <p className="font-serif italic text-2xl sm:text-4xl text-[#A68962] leading-none">
                     With love, <br />
                     Laide
                   </p>

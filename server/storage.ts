@@ -1,52 +1,107 @@
 import fs from 'fs';
 import path from 'path';
 import { put, del, list } from '@vercel/blob';
+import {
+  getR2Config,
+  uploadToR2,
+  deleteFromR2,
+  listR2Objects,
+  PermittedFolder,
+} from './r2.ts';
 
 export interface UploadResult {
   url: string;
   fileName: string;
   size: number;
+  key?: string;
+  sha256?: string;
 }
 
 /**
  * Determine the active persistent storage provider.
  * Priority:
- * 1. Vercel Blob (BLOB_READ_WRITE_TOKEN) - Native Vercel object storage
- * 2. Cloudinary (CLOUDINARY_URL or CLOUDINARY_CLOUD_NAME) - External media CDN
- * 3. Local filesystem /tmp fallback - Development and offline environments
+ * 1. Cloudflare R2 (R2_ACCESS_KEY_ID & R2_SECRET_ACCESS_KEY & R2_BUCKET_NAME) - Production object storage
+ * 2. Vercel Blob (BLOB_READ_WRITE_TOKEN) - Legacy/secondary object storage (read & legacy fallback)
+ * 3. Cloudinary (CLOUDINARY_URL or CLOUDINARY_CLOUD_NAME) - Legacy external media CDN
+ * 4. Local filesystem fallback - Non-production local development
  */
-export function getStorageProvider(): 'vercel-blob' | 'cloudinary' | 'local' {
+export function getStorageProvider(): 'cloudflare-r2' | 'vercel-blob' | 'cloudinary' | 'local' {
+  if (getR2Config().isConfigured || process.env.STORAGE_PROVIDER === 'cloudflare-r2') {
+    return 'cloudflare-r2';
+  }
   if (process.env.BLOB_READ_WRITE_TOKEN) {
     return 'vercel-blob';
   }
-  if (process.env.CLOUDINARY_URL || (process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY)) {
+  if (
+    process.env.CLOUDINARY_URL ||
+    (process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY)
+  ) {
     return 'cloudinary';
   }
   return 'local';
 }
 
 /**
- * Uploads media to persistent object storage.
- * On Vercel, this stores the asset in Vercel Blob or Cloudinary, generating a permanent canonical HTTPS URL.
+ * Uploads media to persistent object storage (preferring Cloudflare R2).
+ * In production or when R2 is configured, Cloudflare R2 is the exclusive upload destination.
+ * Upload failures on R2 NEVER silently fall back to legacy storage.
  */
 export async function uploadPersistentMedia(
   buffer: Buffer,
   originalFilename: string,
-  contentType?: string
+  contentType?: string,
+  folder: string = 'products'
 ): Promise<UploadResult> {
   const provider = getStorageProvider();
+  const isProduction =
+    process.env.NODE_ENV === 'production' ||
+    process.env.VERCEL === '1' ||
+    process.env.STORAGE_PROVIDER === 'cloudflare-r2';
+
+  // 1. Cloudflare R2 Object Storage (Exclusive Production Destination)
+  if (provider === 'cloudflare-r2') {
+    try {
+      const res = await uploadToR2(buffer, originalFilename, contentType, folder);
+      return {
+        url: res.url,
+        fileName: res.fileName,
+        size: res.size,
+        key: res.key,
+        sha256: res.sha256,
+      };
+    } catch (err: any) {
+      console.error('Cloudflare R2 upload failed:', err);
+      // Hard requirement: Never silently fall back when R2 is the configured destination
+      throw new Error(`Cloudflare R2 upload error: ${err.message || err}`);
+    }
+  }
+
+  // 2. Strict Production Guard: Production must never write to local disk or unverified fallback
+  if (isProduction) {
+    throw new Error(
+      'Production configuration error: Cloudflare R2 is required as the exclusive production upload destination, but R2 is not configured. Please configure CLOUDFLARE_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, and R2_BUCKET_NAME.'
+    );
+  }
 
   const rawExt = path.extname(originalFilename).replace('.', '').toLowerCase() || 'jpg';
   const ext = rawExt === 'jpeg' ? 'jpg' : rawExt;
   const baseName = path.basename(originalFilename, path.extname(originalFilename));
   const cleanName = baseName.toLowerCase().replace(/[^a-z0-9]+/g, '_').slice(0, 30) || 'image';
   const fileName = `${cleanName}_${Date.now()}.${ext}`;
-  const mime = contentType || (ext === 'png' ? 'image/png' : ext === 'webp' ? 'image/webp' : ext === 'gif' ? 'image/gif' : 'image/jpeg');
+  const mime =
+    contentType ||
+    (ext === 'png'
+      ? 'image/png'
+      : ext === 'webp'
+      ? 'image/webp'
+      : ext === 'gif'
+      ? 'image/gif'
+      : 'image/jpeg');
 
-  // 1. Vercel Blob Storage (Permanent Vercel Object Storage)
-  if (provider === 'vercel-blob') {
+  // 3. Vercel Blob Storage (Legacy Fallback in non-R2 environments)
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
     try {
-      const blobPath = `products/${fileName}`;
+      const blobPath = `${folder}/${fileName}`;
       const blob = await put(blobPath, buffer, {
         access: 'public',
         contentType: mime,
@@ -59,12 +114,12 @@ export async function uploadPersistentMedia(
         size: buffer.length,
       };
     } catch (err: any) {
-      console.error('Vercel Blob upload failed, falling back to safe local write:', err);
+      console.error('Vercel Blob upload failed:', err);
     }
   }
 
-  // 2. Cloudinary Storage (if configured via environment variables)
-  if (provider === 'cloudinary') {
+  // 4. Cloudinary Storage (if configured)
+  if (process.env.CLOUDINARY_URL || (process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY)) {
     try {
       const cloudName = process.env.CLOUDINARY_CLOUD_NAME || process.env.CLOUDINARY_URL?.split('@')?.[1];
       const uploadPreset = process.env.CLOUDINARY_UPLOAD_PRESET || 'unsigned_lariel';
@@ -76,7 +131,7 @@ export async function uploadPersistentMedia(
         body: JSON.stringify({
           file: base64Data,
           upload_preset: uploadPreset,
-          public_id: `products/${cleanName}_${Date.now()}`,
+          public_id: `${folder}/${cleanName}_${Date.now()}`,
         }),
       });
 
@@ -89,19 +144,17 @@ export async function uploadPersistentMedia(
         };
       }
     } catch (err: any) {
-      console.error('Cloudinary upload failed, falling back to safe local write:', err);
+      console.error('Cloudinary upload failed:', err);
     }
   }
 
-  // 3. Local Filesystem / Development / Safe Fallback
-  // Try writing to public/uploads; if read-only (as on Vercel runtime), use /tmp
+  // 5. Local Filesystem Fallback (Development & Offline Environments Only)
   let targetDir = path.join(process.cwd(), 'public', 'uploads');
   try {
     if (!fs.existsSync(targetDir)) {
       fs.mkdirSync(targetDir, { recursive: true });
     }
   } catch {
-    // EROFS or permission error on Vercel ephemeral container
     targetDir = path.join('/tmp', 'uploads');
     if (!fs.existsSync(targetDir)) {
       try {
@@ -125,70 +178,138 @@ export async function uploadPersistentMedia(
 }
 
 /**
- * Optionally deletes an image from persistent object storage when replaced or deleted.
+ * Deletes an image from persistent object storage when replaced or deleted.
+ * Note: Legacy assets (Vercel Blob and local disk) are intentionally preserved
+ * during the migration window to ensure zero loss and reliable rollback.
  */
 export async function deletePersistentMedia(url: string): Promise<void> {
   if (!url) return;
 
-  // If Vercel Blob URL
-  if (url.includes('blob.vercel-storage.com') && process.env.BLOB_READ_WRITE_TOKEN) {
-    try {
-      await del(url, { token: process.env.BLOB_READ_WRITE_TOKEN });
-    } catch (err) {
-      console.warn('Could not delete old asset from Vercel Blob:', err);
+  const r2Config = getR2Config();
+
+  // If Cloudflare R2 URL or key
+  const isR2Url =
+    (r2Config.publicBaseUrl && url.startsWith(r2Config.publicBaseUrl)) ||
+    url.includes('r2.cloudflarestorage.com') ||
+    url.includes('r2.dev') ||
+    url.startsWith('/api/media/file/');
+
+  if (isR2Url && r2Config.isConfigured) {
+    let key = url;
+    if (url.startsWith('/api/media/file/')) {
+      key = url.replace('/api/media/file/', '');
+    } else {
+      try {
+        const u = new URL(url);
+        key = u.pathname.replace(/^\//, '');
+      } catch {}
     }
+    await deleteFromR2(key);
     return;
   }
 
-  // If local file
-  if (url.startsWith('/uploads/')) {
-    const filename = path.basename(url);
-    const pubPath = path.join(process.cwd(), 'public', 'uploads', filename);
-    const tmpPath = path.join('/tmp', 'uploads', filename);
-    try {
-      if (fs.existsSync(pubPath)) fs.unlinkSync(pubPath);
-    } catch {}
-    try {
-      if (fs.existsSync(tmpPath)) fs.unlinkSync(tmpPath);
-    } catch {}
-  }
+  // Legacy assets: Do not delete legacy Vercel Blob or local files during migration window
+  // to ensure backwards compatibility and rollback availability.
 }
 
 /**
- * Retrieves list of persistent media assets (from Vercel Blob or local disk).
+ * Diagnostic information about the active storage subsystem.
+ * Strictly sanitizes credentials so no secret keys or tokens are exposed.
  */
-export async function listPersistentMedia(): Promise<{ url: string; fileName: string; size: number; createdAt: string }[]> {
+export function getStorageDiagnostics() {
   const provider = getStorageProvider();
+  const r2Config = getR2Config();
+  const isProduction =
+    process.env.NODE_ENV === 'production' ||
+    process.env.VERCEL === '1' ||
+    process.env.STORAGE_PROVIDER === 'cloudflare-r2';
 
-  if (provider === 'vercel-blob' && process.env.BLOB_READ_WRITE_TOKEN) {
+  return {
+    activeProvider: provider,
+    isProduction,
+    exclusiveDestination: isProduction ? 'cloudflare-r2' : provider,
+    r2: {
+      isConfigured: r2Config.isConfigured,
+      bucketName: r2Config.bucketName || null,
+      endpointConfigured: Boolean(r2Config.endpoint),
+      endpointHost: r2Config.endpoint ? new URL(r2Config.endpoint).host : null,
+      publicBaseUrl: r2Config.publicBaseUrl || null,
+      hasAccountId: Boolean(r2Config.accountId),
+      hasAccessKeyId: Boolean(r2Config.accessKeyId),
+      hasSecretAccessKey: Boolean(r2Config.secretAccessKey),
+    },
+    legacy: {
+      vercelBlobConfigured: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
+      cloudinaryConfigured: Boolean(
+        process.env.CLOUDINARY_URL ||
+          (process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY)
+      ),
+    },
+    timestamp: new Date().toISOString(),
+  };
+}
+
+/**
+ * Retrieves list of persistent media assets (from Cloudflare R2, Vercel Blob, or local disk).
+ */
+export async function listPersistentMedia(): Promise<
+  { url: string; fileName: string; size: number; createdAt: string; source?: string }[]
+> {
+  const provider = getStorageProvider();
+  const results: { url: string; fileName: string; size: number; createdAt: string; source?: string }[] = [];
+  const seenUrls = new Set<string>();
+
+  // 1. If Cloudflare R2 is configured, list R2 objects
+  if (provider === 'cloudflare-r2' || getR2Config().isConfigured) {
+    try {
+      const r2Items = await listR2Objects();
+      for (const item of r2Items) {
+        if (!seenUrls.has(item.url)) {
+          seenUrls.add(item.url);
+          results.push({
+            ...item,
+            source: 'cloudflare-r2',
+          });
+        }
+      }
+    } catch (err) {
+      console.warn('Could not list media from Cloudflare R2:', err);
+    }
+  }
+
+  // 2. If Vercel Blob is also configured, list blobs
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
     try {
       const response = await list({
-        prefix: 'products/',
         token: process.env.BLOB_READ_WRITE_TOKEN,
       });
 
-      return response.blobs.map((blob) => ({
-        url: blob.url,
-        fileName: path.basename(blob.pathname),
-        size: blob.size,
-        createdAt: blob.uploadedAt.toISOString(),
-      }));
+      for (const blob of response.blobs) {
+        if (!seenUrls.has(blob.url)) {
+          seenUrls.add(blob.url);
+          results.push({
+            url: blob.url,
+            fileName: path.basename(blob.pathname),
+            size: blob.size,
+            createdAt: blob.uploadedAt.toISOString(),
+            source: 'vercel-blob',
+          });
+        }
+      }
     } catch (err) {
       console.warn('Could not list media from Vercel Blob:', err);
     }
   }
 
-  // Local fallback
-  const results: { url: string; fileName: string; size: number; createdAt: string }[] = [];
-  const seen = new Set<string>();
-
+  // 3. Local fallback assets
   const scanDir = (dir: string) => {
     if (fs.existsSync(dir)) {
       try {
         const files = fs.readdirSync(dir);
         for (const file of files) {
-          if (!seen.has(file) && /\.(jpg|jpeg|png|webp|gif|avif)$/i.test(file)) {
-            seen.add(file);
+          const url = `/uploads/${file}`;
+          if (!seenUrls.has(url) && /\.(jpg|jpeg|png|webp|gif|avif)$/i.test(file)) {
+            seenUrls.add(url);
             const fullPath = path.join(dir, file);
             let size = 0;
             let mtime = new Date().toISOString();
@@ -198,10 +319,11 @@ export async function listPersistentMedia(): Promise<{ url: string; fileName: st
               mtime = stat.mtime.toISOString();
             } catch {}
             results.push({
-              url: `/uploads/${file}`,
+              url,
               fileName: file,
               size,
               createdAt: mtime,
+              source: 'local',
             });
           }
         }

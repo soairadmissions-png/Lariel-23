@@ -201,7 +201,7 @@ export const BridalPartySetsSection: React.FC<BridalPartySetsSectionProps> = ({ 
                           className="w-full bg-[#1A1614]/90 backdrop-blur-xs text-[#FAF8F5] text-[10.5px] tracking-[0.2em] uppercase py-2.5 rounded-full hover:bg-[#C5A880] hover:text-[#1A1614] transition-colors font-medium flex items-center justify-center space-x-2"
                         >
                           <Eye className="w-3.5 h-3.5" />
-                          <span>QUICK VIEW SET</span>
+                          <span>Quick View Set</span>
                         </button>
                       </div>
                     )}

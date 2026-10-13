@@ -102,7 +102,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, featured = fa
             className="flex-1 bg-[#FAF8F5]/95 backdrop-blur-xs text-neutral-900 text-[9px] sm:text-[11px] tracking-[0.15em] sm:tracking-[0.2em] uppercase py-1.5 sm:py-2.5 px-2 sm:px-3 rounded-full hover:bg-[#111111] hover:text-white transition-colors font-medium text-center flex items-center justify-center space-x-1 sm:space-x-1.5 border border-neutral-300 shadow-sm whitespace-nowrap"
           >
             <Eye className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-            <span>QUICK VIEW</span>
+            <span>Quick View</span>
           </button>
 
           <button

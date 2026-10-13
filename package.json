@@ -8,10 +8,18 @@
     "build": "vite build && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs && esbuild server/vercel.ts --bundle --platform=node --format=esm --packages=external --target=node18 --outfile=api/index.js",
     "build:api": "esbuild server/vercel.ts --bundle --platform=node --format=esm --packages=external --target=node18 --outfile=api/index.js",
     "start": "node server.ts",
+    "migrate:r2": "tsx scripts/migrate-to-r2.ts",
+    "migrate:r2:dry-run": "tsx scripts/migrate-to-r2.ts --dry-run",
+    "migrate:r2:verify": "tsx scripts/migrate-to-r2.ts --verify",
+    "migrate:r2:rollback": "tsx scripts/migrate-to-r2.ts --rollback",
+    "test:storage": "tsx scripts/test-r2-storage.ts",
+    "test:acceptance": "tsx scripts/test-all-acceptance.ts",
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1148.0",
+    "@aws-sdk/s3-request-presigner": "^3.1148.0",
     "@google/genai": "^2.4.0",
     "@tailwindcss/vite": "^4.1.14",
     "@vercel/blob": "^2.8.0",
