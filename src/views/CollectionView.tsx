@@ -58,7 +58,7 @@ export const CollectionView: React.FC = () => {
         return {
           title: 'Bridal Pyjamas',
           subtitle: 'Feather trim long sets, piped shorts & eve loungewear.',
-          heroImage: '/uploads/regenerated_image_1788962695589.png',
+          heroImage: '/uploads/regenerated_image_1791793263619.jpg',
           description: 'Slip into cloud-soft Mulberry silk pyjamas with detachable ostrich feathers and custom monogramming for the eve of your celebration.',
         };
       case 'accessories':
@@ -72,7 +72,7 @@ export const CollectionView: React.FC = () => {
         return {
           title: 'Personalised Robes',
           subtitle: 'Custom embroidered surnames, titles & dates.',
-          heroImage: '/uploads/regenerated_image_1788963021175.png',
+          heroImage: '/uploads/regenerated_image_1791793258450.jpg',
           description: 'Cherish an eternal bridal heirloom with metallic thread monograms across the back or pocket in modern serif or romantic calligraphy.',
         };
       case 'junior':
