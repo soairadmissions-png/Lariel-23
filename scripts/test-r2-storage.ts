@@ -1,3 +1,4 @@
+import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
 import {
@@ -11,6 +12,8 @@ import {
   getStorageProvider,
   uploadPersistentMedia,
 } from '../server/storage.ts';
+
+dotenv.config();
 
 let passedTests = 0;
 let totalTests = 0;

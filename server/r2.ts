@@ -198,6 +198,7 @@ export function validateImageBuffer(
 /**
  * Resolves the public delivery URL for a given Cloudflare R2 object key.
  */
+
 export function getPublicUrl(key: string): string {
   const config = getR2Config();
   const cleanKey = key.replace(/^\//, '');
@@ -206,13 +207,10 @@ export function getPublicUrl(key: string): string {
     return `${config.publicBaseUrl.replace(/\/$/, '')}/${cleanKey}`;
   }
 
-  if (config.bucketName && config.accountId) {
-    return `https://${config.bucketName}.${config.accountId}.r2.dev/${cleanKey}`;
-  }
-
-  // Application fallback proxy route
+  // Keep R2 private and serve media through the application.
   return `/api/media/file/${cleanKey}`;
 }
+
 
 /**
  * Generates an organized, collision-resistant object key.
