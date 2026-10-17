@@ -6,3 +6,8 @@ coverage/
 *.log
 .env*
 !.env.example
+
+.vercel
+.env*
+/data/db.json
+/data/backups/

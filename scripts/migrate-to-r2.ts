@@ -1,3 +1,4 @@
+import { pathToFileURL } from 'node:url';
 import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
@@ -15,8 +16,22 @@ import {
   type DatabaseSchema,
 } from '../server/db.ts';
 
-// Load .env if present
-dotenv.config();
+// Load only the explicitly selected environment file.
+const useProductionEnv = process.argv.includes('--use-production-env');
+
+dotenv.config({
+  path: useProductionEnv ? '.env.production.local' : '.env',
+  override: true,
+});
+
+if (
+  process.argv.includes('--use-production-env') &&
+  !process.env.BLOB_READ_WRITE_TOKEN
+) {
+  throw new Error(
+    'Production mode requested, but BLOB_READ_WRITE_TOKEN is missing.'
+  );
+}
 
 const MANIFEST_PATH = path.join(process.cwd(), 'data', 'r2-migration-manifest.json');
 const BACKUPS_DIR = path.join(process.cwd(), 'data', 'backups');
@@ -78,14 +93,18 @@ function getR2Config() {
   };
 }
 
-function getPublicUrl(key: string, publicBaseUrl?: string, bucketName?: string, accountId?: string): string {
+function getPublicUrl(
+  key: string,
+  publicBaseUrl?: string,
+  _bucketName?: string,
+  _accountId?: string
+): string {
   const cleanKey = key.replace(/^\//, '');
+
   if (publicBaseUrl) {
     return `${publicBaseUrl.replace(/\/$/, '')}/${cleanKey}`;
   }
-  if (bucketName && accountId) {
-    return `https://${bucketName}.${accountId}.r2.dev/${cleanKey}`;
-  }
+
   return `/api/media/file/${cleanKey}`;
 }
 
@@ -227,7 +246,19 @@ export async function runMigration() {
     }`
   );
 
+   if (isVerifyOnly) {
+    console.error(
+      '\nERROR: --verify mode is not implemented as a read-only operation yet.'
+    );
+    console.error(
+      'No migration was performed. Use --dry-run to inspect the migration plan.'
+    );
+    process.exitCode = 1;
+    return;
+  }
+
   if (!isDryRun && !r2.isConfigured) {
+     
     console.error('\nERROR: Cloudflare R2 credentials are not configured in environment.');
     console.error('To run migration, please configure:');
     console.error('  CLOUDFLARE_ACCOUNT_ID=...');
@@ -243,6 +274,63 @@ export async function runMigration() {
   // 3. FETCH AUTHORITATIVE DATABASE VIA SERVER ABSTRACTION
   console.log('\n[DATABASE] Fetching authoritative database state...');
   const db: DatabaseSchema = await getDatabaseAsync(true);
+
+  // Production safety: independently confirm the database
+  // loaded by the app matches the database stored in Vercel Blob.
+  if (useProductionEnv) {
+    const token = process.env.BLOB_READ_WRITE_TOKEN;
+    if (!token) {
+      throw new Error('Production Blob token is missing.');
+    }
+
+    const { list } = await import('@vercel/blob');
+    const result = await list({
+      prefix: 'database/db.json',
+      token,
+    });
+
+    const blob = result.blobs.find(
+      (item) => item.pathname === 'database/db.json'
+    );
+
+    if (!blob?.url) {
+      throw new Error(
+        'Production safety check failed: database/db.json was not found in Vercel Blob.'
+      );
+    }
+
+    const response = await fetch(
+      `${blob.url}?_t=${Date.now()}`,
+      {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        `Production safety check failed: Blob returned HTTP ${response.status}.`
+      );
+    }
+
+    const remoteDb = (await response.json()) as DatabaseSchema;
+
+    if (
+      !Array.isArray(remoteDb.products) ||
+      remoteDb.products.length === 0 ||
+      JSON.stringify(db) !== JSON.stringify(remoteDb)
+    ) {
+      throw new Error(
+        'Production safety check failed: the loaded database does not exactly match Vercel Blob. No migration should proceed.'
+      );
+    }
+
+    console.log(
+      '[PRODUCTION SAFETY] Loaded database exactly matches Vercel Blob.'
+    );
+  }
 
   if (!db || !Array.isArray(db.products) || db.products.length === 0) {
     console.error('Failed to load active catalog from authoritative database.');
@@ -609,7 +697,10 @@ export async function runMigration() {
 }
 
 // Execute if run directly
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (
+  process.argv[1] &&
+  import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href
+) {
   runMigration().catch((err) => {
     console.error('Fatal migration error:', err);
     process.exit(1);
