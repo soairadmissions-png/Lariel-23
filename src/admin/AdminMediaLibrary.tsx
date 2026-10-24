@@ -19,6 +19,7 @@ import {
   CheckCircle2,
   User,
   RotateCcw,
+  Trash2,
 } from 'lucide-react';
 import { useShop, triggerStoreSync } from '../context/ShopContext';
 import { api } from '../services/api';
@@ -123,7 +124,11 @@ export const AdminMediaLibrary: React.FC = () => {
       setIsUploading(true);
       const res = await api.uploadFile(file);
       if (res && res.url) {
-        showToast(`Uploaded ${res.fileName || 'asset'} successfully!`);
+        if (res.github?.committed) {
+          showToast(`Uploaded & committed to GitHub repo: ${res.fileName}!`);
+        } else {
+          showToast(`Uploaded ${res.fileName || 'asset'} successfully!`);
+        }
         await fetchServerMedia();
 
         // Automatically open the "Use in Store" modal for this newly uploaded asset
@@ -142,6 +147,33 @@ export const AdminMediaLibrary: React.FC = () => {
     } finally {
       setIsUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  };
+
+  const [confirmDeleteUrl, setConfirmDeleteUrl] = useState<string | null>(null);
+  const [deletingMediaUrl, setDeletingMediaUrl] = useState<string | null>(null);
+
+  const handleDeleteMedia = async (url: string) => {
+    if (confirmDeleteUrl !== url) {
+      setConfirmDeleteUrl(url);
+      return;
+    }
+
+    try {
+      setDeletingMediaUrl(url);
+      await api.deleteMedia(url, true);
+      showToast('Asset permanently deleted from disk and catalog!');
+      setConfirmDeleteUrl(null);
+      await fetchServerMedia();
+      await refreshProducts();
+      await refreshCategories();
+      await refreshSiteSettings();
+      await refreshRealBrides();
+      triggerStoreSync();
+    } catch (err: any) {
+      showToast(err.message || 'Failed to delete asset');
+    } finally {
+      setDeletingMediaUrl(null);
     }
   };
 
@@ -453,6 +485,20 @@ export const AdminMediaLibrary: React.FC = () => {
           />
 
           <button
+            onClick={() => {
+              if (typeof window !== 'undefined') {
+                window.history.pushState(null, '', '/admin/image-studio');
+                window.dispatchEvent(new PopStateEvent('popstate'));
+              }
+            }}
+            className="inline-flex items-center space-x-2 px-4 py-2 bg-[#C5A880] hover:bg-[#D5B890] text-[#141210] text-xs font-semibold uppercase tracking-wider rounded-xl transition-all shadow-2xs cursor-pointer"
+            title="Open Direct-to-Code Image Studio"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-[#141210]" />
+            <span>Direct-to-Code Studio</span>
+          </button>
+
+          <button
             onClick={() => fileInputRef.current?.click()}
             disabled={isUploading}
             className="inline-flex items-center space-x-2 px-4 py-2 bg-[#181614] hover:bg-[#C5A880] hover:text-[#181614] text-white text-xs font-semibold uppercase tracking-wider rounded-xl transition-colors shadow-2xs disabled:opacity-50 cursor-pointer"
@@ -757,6 +803,42 @@ export const AdminMediaLibrary: React.FC = () => {
                         </>
                       )}
                     </button>
+
+                    {/* Delete Asset Permanently */}
+                    {confirmDeleteUrl === media.url ? (
+                      <div className="flex items-center space-x-1 pt-0.5 animate-in fade-in duration-150">
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteMedia(media.url)}
+                          disabled={deletingMediaUrl === media.url}
+                          className="flex-1 py-1 px-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-[10px] font-semibold flex items-center justify-center space-x-1 cursor-pointer disabled:opacity-50"
+                        >
+                          {deletingMediaUrl === media.url ? (
+                            <Loader2 className="w-3 h-3 animate-spin" />
+                          ) : (
+                            <Check className="w-3 h-3" />
+                          )}
+                          <span>Confirm Delete</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setConfirmDeleteUrl(null)}
+                          className="p-1 bg-neutral-200 hover:bg-neutral-300 text-neutral-700 rounded-lg text-xs cursor-pointer"
+                        >
+                          <X className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteMedia(media.url)}
+                        className="w-full py-1 px-2 bg-white hover:bg-red-50 hover:text-red-600 border border-[#DCD1BF] hover:border-red-200 rounded-lg text-[10px] font-medium text-neutral-500 transition-colors flex items-center justify-center space-x-1 cursor-pointer"
+                        title="Permanently delete asset from storage and catalog"
+                      >
+                        <Trash2 className="w-3 h-3" />
+                        <span>Delete Asset</span>
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>

@@ -16,5 +16,5 @@ export const DEMO_ADMIN_USER: AdminUser = {
   name: 'Laide',
   email: 'admin@larielextravaganza.com',
   role: 'Super Admin',
-  avatar: '/src/assets/images/laide_founder_portrait_1789650582034.jpg',
+  avatar: '/uploads/laide_founder_portrait_1789650582034.jpg',
 };

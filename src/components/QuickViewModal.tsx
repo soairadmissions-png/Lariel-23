@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { X, ShoppingBag, Heart, MessageCircle, ArrowRight, Check } from 'lucide-react';
+import { X, ShoppingBag, Heart, MessageCircle, ArrowRight } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
-import { ProductColor } from '../types';
+import { Product, ProductColor } from '../types';
 import { CANONICAL_DEFAULTS, handleImageError } from '../constants/imageDefaults';
 
-export const QuickViewModal: React.FC = () => {
+interface QuickViewModalContentProps {
+  product: Product;
+}
+
+const QuickViewModalContent: React.FC<QuickViewModalContentProps> = ({ product }) => {
   const {
-    quickViewProduct,
     setQuickViewProduct,
     formatPrice,
     addToCart,
@@ -15,19 +18,17 @@ export const QuickViewModal: React.FC = () => {
     navigateToProduct,
   } = useShop();
 
-  if (!quickViewProduct) return null;
-
-  const defaultColor = quickViewProduct.colors?.[0] || { name: 'Natural', hex: '#FAF5EE' };
+  const defaultColor: ProductColor = product.colors?.[0] || { name: 'Natural', hex: '#FAF5EE' };
   const [selectedColor, setSelectedColor] = useState<ProductColor>(defaultColor);
-  const [selectedSize, setSelectedSize] = useState<string>(quickViewProduct.sizes?.[0] || 'Standard');
+  const [selectedSize, setSelectedSize] = useState<string>(product.sizes?.[0] || 'Standard');
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [personalisation, setPersonalisation] = useState('');
 
-  const wishlisted = isWishlisted(quickViewProduct.id);
+  const wishlisted = isWishlisted(product.id);
 
   const handleAddToCart = () => {
-    addToCart(quickViewProduct, selectedColor || defaultColor, selectedSize || 'Standard', quantity, {
+    addToCart(product, selectedColor || defaultColor, selectedSize || 'Standard', quantity, {
       text: personalisation.trim() || undefined,
       role: 'Bride',
     });
@@ -36,12 +37,12 @@ export const QuickViewModal: React.FC = () => {
 
   const generateWhatsAppDirectLink = () => {
     const text = `Hello Lariel Essentials! I would like to order:
-- Product: ${quickViewProduct.name}
+- Product: ${product.name}
 - Color: ${selectedColor.name}
 - Size: ${selectedSize}
 - Quantity: ${quantity}
 ${personalisation ? `- Personalisation: "${personalisation}"` : ''}
-- Price: ${formatPrice(quickViewProduct.priceUSD * quantity)}
+- Price: ${formatPrice(product.priceUSD * quantity)}
 
 Please let me know how soon this can be delivered!`;
     return `https://wa.me/2348180306073?text=${encodeURIComponent(text)}`;
@@ -67,23 +68,23 @@ Please let me know how soon this can be delivered!`;
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
             {/* Gallery */}
             <div className="space-y-3">
-              <div className="aspect-[3/4] bg-[#F2ECE4] overflow-hidden border border-[#E8E1D7] relative">
+              <div className="aspect-[3/4] bg-[#F2ECE4] overflow-hidden border border-[#E8E1D7] relative group">
                 <img
-                  src={quickViewProduct.images?.[selectedImageIndex] || quickViewProduct.images?.[0] || CANONICAL_DEFAULTS.PRODUCT}
-                  alt={quickViewProduct.name}
+                  src={product.images?.[selectedImageIndex] || product.images?.[0] || CANONICAL_DEFAULTS.PRODUCT}
+                  alt={product.name}
                   onError={(e) => handleImageError(e, CANONICAL_DEFAULTS.PRODUCT)}
                   className="w-full h-full object-cover object-top"
                 />
-                {quickViewProduct.badge && (
+                {product.badge && (
                   <span className="absolute top-3 left-3 bg-[#111111] text-[#FAF8F5] text-[9px] tracking-[0.2em] uppercase font-semibold px-2.5 py-1">
-                    {quickViewProduct.badge}
+                    {product.badge}
                   </span>
                 )}
               </div>
 
-              {quickViewProduct.images && quickViewProduct.images.length > 1 && (
+              {product.images && product.images.length > 1 && (
                 <div className="flex space-x-2 overflow-x-auto pb-1">
-                  {quickViewProduct.images.map((img, idx) => (
+                  {product.images.map((img, idx) => (
                     <button
                       key={idx}
                       onClick={() => setSelectedImageIndex(idx)}
@@ -107,22 +108,22 @@ Please let me know how soon this can be delivered!`;
             <div className="flex flex-col justify-between space-y-5">
               <div>
                 <span className="text-[10px] tracking-[0.25em] uppercase text-[#A68962] font-semibold block mb-1">
-                  {quickViewProduct.collectionName} COLLECTION
+                  {product.collectionName} COLLECTION
                 </span>
                 <h2 className="font-serif text-2xl sm:text-3xl text-neutral-900 font-medium leading-tight">
-                  {quickViewProduct.name}
+                  {product.name}
                 </h2>
                 <p className="text-xs text-neutral-600 mt-1 font-sans">
-                  {quickViewProduct.subtitle}
+                  {product.subtitle}
                 </p>
 
                 <div className="flex items-center justify-between mt-3 pb-3 border-b border-[#E8E1D7]">
                   <span className="font-serif text-xl font-semibold text-neutral-900">
-                    {formatPrice(quickViewProduct.priceUSD)}
+                    {formatPrice(product.priceUSD)}
                   </span>
                   <div className="flex items-center text-xs text-neutral-600">
                     <span className="text-[#C5A880] mr-1">★★★★★</span>
-                    <span>5.0 ({quickViewProduct.reviewsCount} reviews)</span>
+                    <span>5.0 ({product.reviewsCount} reviews)</span>
                   </div>
                 </div>
 
@@ -134,7 +135,7 @@ Please let me know how soon this can be delivered!`;
                     </span>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {quickViewProduct.colors.map((c) => (
+                    {product.colors.map((c) => (
                       <button
                         key={c.name}
                         onClick={() => setSelectedColor(c)}
@@ -158,7 +159,7 @@ Please let me know how soon this can be delivered!`;
                     </span>
                   </div>
                   <div className="grid grid-cols-3 gap-2">
-                    {quickViewProduct.sizes.map((sz) => (
+                    {product.sizes.map((sz) => (
                       <button
                         key={sz}
                         onClick={() => setSelectedSize(sz)}
@@ -201,7 +202,7 @@ Please let me know how soon this can be delivered!`;
                   </button>
 
                   <button
-                    onClick={() => toggleWishlist(quickViewProduct)}
+                    onClick={() => toggleWishlist(product)}
                     className={`p-3.5 border border-neutral-300 transition-colors ${
                       wishlisted ? 'bg-neutral-900 text-[#C5A880]' : 'bg-white text-neutral-800 hover:bg-neutral-100'
                     }`}
@@ -223,7 +224,7 @@ Please let me know how soon this can be delivered!`;
 
                 <button
                   onClick={() => {
-                    const id = quickViewProduct.id;
+                    const id = product.id;
                     setQuickViewProduct(null);
                     navigateToProduct(id);
                   }}
@@ -239,4 +240,12 @@ Please let me know how soon this can be delivered!`;
       </div>
     </div>
   );
+};
+
+export const QuickViewModal: React.FC = () => {
+  const { quickViewProduct } = useShop();
+
+  if (!quickViewProduct) return null;
+
+  return <QuickViewModalContent key={quickViewProduct.id} product={quickViewProduct} />;
 };

@@ -8,6 +8,7 @@ import { AdminProductEditor } from './AdminProductEditor';
 import { AdminCategories } from './AdminCategories';
 import { AdminOrders } from './AdminOrders';
 import { AdminMediaLibrary } from './AdminMediaLibrary';
+import { AdminImageStudio } from './AdminImageStudio';
 import { AdminLivePreviewModal } from './AdminLivePreviewModal';
 import { Product } from '../types';
 
@@ -24,6 +25,9 @@ const parseAdminUrl = (pathname: string): { tab: AdminTab; productId: string | n
   }
   if (pathname.startsWith('/admin/categories')) {
     return { tab: 'categories', productId: null };
+  }
+  if (pathname.startsWith('/admin/image-studio') || pathname.startsWith('/admin/images')) {
+    return { tab: 'image-studio', productId: null };
   }
   if (pathname.startsWith('/admin/orders')) {
     return { tab: 'orders', productId: null };
@@ -53,6 +57,7 @@ export const AdminView: React.FC = () => {
     else if (tab === 'new-product') path = '/admin/products/new';
     else if (tab === 'edit-product' && prodId) path = `/admin/products/${prodId}`;
     else if (tab === 'categories') path = '/admin/categories';
+    else if (tab === 'image-studio') path = '/admin/image-studio';
     else if (tab === 'orders') path = '/admin/orders';
     else if (tab === 'media') path = '/admin/media';
 
@@ -148,6 +153,8 @@ export const AdminView: React.FC = () => {
         )}
 
         {currentTab === 'categories' && <AdminCategories />}
+
+        {currentTab === 'image-studio' && <AdminImageStudio />}
 
         {currentTab === 'orders' && <AdminOrders />}
 

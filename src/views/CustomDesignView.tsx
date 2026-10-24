@@ -57,10 +57,10 @@ export const CustomDesignView: React.FC = () => {
   return (
     <div className="w-full bg-[#FAF8F5] text-[#111111]">
       {/* Hero */}
-      <section className="relative w-full py-20 bg-[#161311] text-[#FAF8F5] overflow-hidden text-center">
+      <section className="relative w-full py-20 bg-[#161311] text-[#FAF8F5] overflow-hidden text-center group">
         <div className="absolute inset-0 z-0">
           <img
-            src="/uploads/regenerated_image_1788952915584.png"
+            src={CANONICAL_DEFAULTS.CATEGORY_CUSTOM || '/uploads/regenerated_image_1788952915584.png'}
             alt="Bespoke Bridal Couture"
             onError={(e) => handleImageError(e, CANONICAL_DEFAULTS.CATEGORY_CUSTOM)}
             className="w-full h-full object-cover opacity-35"

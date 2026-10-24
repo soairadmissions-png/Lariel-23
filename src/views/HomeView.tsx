@@ -3,7 +3,6 @@ import { ArrowRight } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import { ProductCard } from '../components/ProductCard';
 import { PersonalisedRobesFeature } from '../components/PersonalisedRobesFeature';
-import heroBrideImg from '../assets/images/regenerated_image_1788952915584.png';
 import { CANONICAL_DEFAULTS, handleImageError } from '../constants/imageDefaults';
 
 type ProductTab =
@@ -247,13 +246,13 @@ export const HomeView: React.FC = () => {
             {/* RIGHT SIDE: Editorial lifestyle photograph */}
             <div className="col-span-5 sm:col-span-6 lg:col-span-7 relative flex items-center justify-end w-full">
               <div className="relative w-full max-w-[200px] xs:max-w-[240px] sm:max-w-[340px] md:max-w-[420px] lg:max-w-[480px] xl:max-w-[500px]">
-                <div className="relative w-full bg-transparent p-0 overflow-hidden rounded-xl xs:rounded-2xl sm:rounded-3xl group shadow-[0_12px_35px_rgba(40,32,24,0.1)]">
+                <div className="relative w-full bg-transparent p-0 overflow-visible group">
                   <img
-                    src={siteSettings?.homeHeroImage || heroBrideImg || CANONICAL_DEFAULTS.HERO_MAIN}
+                    src={siteSettings?.homeHeroImage || CANONICAL_DEFAULTS.HERO_MAIN}
                     alt="Elegant adult bride seated gracefully on a sophisticated cream couch wearing a luxury ivory satin bridal robe with delicate lace detailing and subtle gold Bride embroidery"
                     onError={(e) => handleImageError(e, CANONICAL_DEFAULTS.HERO_MAIN)}
                     referrerPolicy="no-referrer"
-                    className="w-full aspect-[2/3] object-cover object-center rounded-xl xs:rounded-2xl sm:rounded-3xl transition-transform duration-700 group-hover:scale-[1.01]"
+                    className="w-full aspect-[2/3] object-contain object-bottom bg-transparent drop-shadow-[0_16px_30px_rgba(40,32,24,0.12)] transition-transform duration-700 group-hover:scale-[1.01]"
                   />
                 </div>
               </div>

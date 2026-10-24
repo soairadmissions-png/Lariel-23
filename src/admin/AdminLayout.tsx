@@ -15,6 +15,8 @@ import {
   Eye,
   CheckCircle2,
   Check,
+  Sparkles,
+  Code2,
 } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import { CANONICAL_DEFAULTS, handleImageError } from '../constants/imageDefaults';
@@ -25,6 +27,7 @@ export type AdminTab =
   | 'new-product'
   | 'edit-product'
   | 'categories'
+  | 'image-studio'
   | 'orders'
   | 'media';
 
@@ -65,22 +68,29 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
       count: null,
     },
     {
+      id: 'image-studio' as AdminTab,
+      label: 'Image Studio (Direct to Code)',
+      icon: Sparkles,
+      count: null,
+      highlight: true,
+    },
+    {
       id: 'categories' as AdminTab,
       label: 'Categories',
       icon: FolderTree,
       count: categories.length || 9,
     },
     {
-      id: 'orders' as AdminTab,
-      label: 'Customer Orders',
-      icon: PackageCheck,
-      count: orders.length || 3,
-    },
-    {
       id: 'media' as AdminTab,
       label: 'Media Library',
       icon: ImageIcon,
       count: null,
+    },
+    {
+      id: 'orders' as AdminTab,
+      label: 'Customer Orders',
+      icon: PackageCheck,
+      count: orders.length || 3,
     },
   ];
 
@@ -132,9 +142,20 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
                   }`}
                 >
                   <div className="flex items-center space-x-3">
-                    <Icon className="w-4 h-4 shrink-0" />
+                    <Icon className="w-4 h-4 shrink-0 text-[#C5A880]" />
                     <span>{item.label}</span>
                   </div>
+                  {(item as any).highlight && (
+                    <span
+                      className={`text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded font-mono font-bold ${
+                        isActive
+                          ? 'bg-[#141210] text-[#C5A880]'
+                          : 'bg-[#C5A880]/20 text-[#C5A880] border border-[#C5A880]/30'
+                      }`}
+                    >
+                      Code
+                    </span>
+                  )}
                   {item.count !== null && (
                     <span
                       className={`text-[10px] px-2 py-0.5 rounded-full font-mono ${

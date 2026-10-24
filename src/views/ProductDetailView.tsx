@@ -204,24 +204,25 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ previewPro
             </div>
 
             {/* Thumbnail navigation */}
-            <div className="flex space-x-1.5 sm:space-x-3 overflow-x-auto pb-1 sm:pb-2 scrollbar-none">
+            <div className="flex space-x-1.5 sm:space-x-3 overflow-x-auto pb-1 sm:pb-2 scrollbar-none items-center">
               {product.images?.map((img, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setSelectedImageIndex(idx)}
-                  className={`w-10 xs:w-12 sm:w-20 md:w-24 aspect-[3/4] shrink-0 overflow-hidden border-2 transition-all rounded-sm sm:rounded-none ${
-                    selectedImageIndex === idx
-                      ? 'border-[#111111] opacity-100 scale-102'
-                      : 'border-[#E5DDD0] opacity-60 hover:opacity-100'
-                  }`}
-                >
-                  <img
-                    src={img || CANONICAL_DEFAULTS.PRODUCT}
-                    alt={`${product.name} angle ${idx + 1}`}
-                    onError={(e) => handleImageError(e, CANONICAL_DEFAULTS.PRODUCT)}
-                    className="w-full h-full object-cover"
-                  />
-                </button>
+                <div key={idx} className="relative group shrink-0">
+                  <button
+                    onClick={() => setSelectedImageIndex(idx)}
+                    className={`w-10 xs:w-12 sm:w-20 md:w-24 aspect-[3/4] overflow-hidden border-2 transition-all rounded-sm sm:rounded-none block cursor-pointer ${
+                      selectedImageIndex === idx
+                        ? 'border-[#111111] opacity-100 scale-102 ring-1 ring-[#C5A880]'
+                        : 'border-[#E5DDD0] opacity-65 hover:opacity-100'
+                    }`}
+                  >
+                    <img
+                      src={img || CANONICAL_DEFAULTS.PRODUCT}
+                      alt={`${product.name} angle ${idx + 1}`}
+                      onError={(e) => handleImageError(e, CANONICAL_DEFAULTS.PRODUCT)}
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                </div>
               ))}
             </div>
 

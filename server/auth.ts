@@ -12,9 +12,9 @@ const SESSION_SECRET =
   'lariel_bridal_prod_session_secret_2026_secured';
 
 /**
- * Token Expiration Window (24 hours)
+ * Token Expiration Window (30 days for sustained admin management)
  */
-const TOKEN_TTL_MS = 24 * 60 * 60 * 1000;
+const TOKEN_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 
 export interface TokenPayload {
   sub: string; // Admin ID
@@ -64,6 +64,7 @@ export function verifyAdminSessionToken(token: string): {
   adminId?: string;
   payload?: TokenPayload;
   error?: string;
+  needsRefresh?: boolean;
 } {
   if (!token || typeof token !== 'string') {
     return { valid: false, error: 'Authorization token missing.' };
@@ -100,11 +101,20 @@ export function verifyAdminSessionToken(token: string): {
       return { valid: false, error: 'Malformed token payload.' };
     }
 
-    if (Date.now() > payload.exp) {
+    const GRACE_PERIOD_MS = 30 * 24 * 60 * 60 * 1000;
+    const isExpired = Date.now() > payload.exp;
+    const isPastGrace = Date.now() > payload.exp + GRACE_PERIOD_MS;
+
+    if (isPastGrace) {
       return { valid: false, error: 'Token has expired. Please log in again.' };
     }
 
-    return { valid: true, adminId: payload.sub, payload };
+    return {
+      valid: true,
+      adminId: payload.sub,
+      payload,
+      needsRefresh: isExpired,
+    };
   } catch {
     return { valid: false, error: 'Failed to decode token payload.' };
   }
@@ -197,5 +207,15 @@ export function requireAdmin(req: Request, res: Response, next: NextFunction) {
 
   // Attach verified admin user object to request
   (req as any).adminUser = admin;
+
+  // If token was within grace period, automatically provide a freshly issued session token
+  if (verification.needsRefresh) {
+    try {
+      const freshToken = generateAdminSessionToken(admin);
+      res.setHeader('X-Refreshed-Token', freshToken);
+      res.setHeader('Access-Control-Expose-Headers', 'X-Refreshed-Token');
+    } catch {}
+  }
+
   return next();
 }

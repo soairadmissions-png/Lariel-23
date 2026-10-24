@@ -4,6 +4,8 @@ import { CURRENCIES, GLOBAL_COLORS } from '../data/currencies';
 import { api, getStoredAdminUser, getAdminToken, clearAdminAuth } from '../services/api';
 import { REAL_BRIDES } from '../data/realBrides';
 import { PRODUCTS } from '../data/products';
+import { CATEGORIES } from '../data/categories';
+import { DEFAULT_SITE_SETTINGS } from '../data/siteSettings';
 import dbData from '../../data/db.json';
 
 export const triggerStoreSync = () => {
@@ -170,10 +172,20 @@ const getInitialCategories = (): CategoryMeta[] => {
   if (dbData && Array.isArray((dbData as any).categories) && (dbData as any).categories.length > 0) {
     return (dbData as any).categories;
   }
-  return [];
+  return CATEGORIES;
 };
 
 export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  // Toast Notification State (declared first so showToast is initialized before any hook or callback)
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const showToast = useCallback((msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => {
+      setToastMessage((prev) => (prev === msg ? null : prev));
+    }, 3200);
+  }, []);
+
   const initialRoute = parseCurrentRoute();
   const [activeView, setActiveViewRaw] = useState<string>(initialRoute.view);
   const [selectedCategory, setSelectedCategory] = useState<string>(initialRoute.category || 'bridal');
@@ -226,7 +238,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const refreshProducts = useCallback(async () => {
     try {
       const liveProducts = await api.getProducts();
-      if (Array.isArray(liveProducts) && liveProducts.length > 0) {
+      if (Array.isArray(liveProducts)) {
         setProducts(liveProducts);
       }
     } catch (err) {
@@ -237,7 +249,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const refreshCategories = useCallback(async () => {
     try {
       const liveCats = await api.getCategories();
-      if (Array.isArray(liveCats) && liveCats.length > 0) {
+      if (Array.isArray(liveCats)) {
         setCategories(liveCats);
       }
     } catch (err) {
@@ -246,13 +258,14 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   // Site Settings & Real Brides state
-  const [siteSettings, setSiteSettings] = useState<SiteSettings>({
-    homeHeroImage: '/uploads/regenerated_image_1788952915584.png',
-    homeHeroTitle: 'The Morning Before Forever',
-    homeHeroSubtitle: 'Hand-appliquéd 3D florals, French chantilly laces & 100% pure Mulberry liquid silks for the discerning global bride.',
-    announcement: 'Complimentary worldwide express courier delivery on all bridal suite commissions.',
-    laidePortraitImage: '/uploads/laide_founder_portrait_1789650582034.jpg',
-    brandLogoImage: '/uploads/lariel_brand_logo_1788970256407.jpg',
+  const [siteSettings, setSiteSettings] = useState<SiteSettings>(() => {
+    if (typeof window !== 'undefined' && (window as any).__LARIEL_INITIAL_SETTINGS__) {
+      return { ...DEFAULT_SITE_SETTINGS, ...(window as any).__LARIEL_INITIAL_SETTINGS__ };
+    }
+    if (dbData && (dbData as any).settings) {
+      return { ...DEFAULT_SITE_SETTINGS, ...(dbData as any).settings };
+    }
+    return DEFAULT_SITE_SETTINGS;
   });
   const [realBrides, setRealBrides] = useState<RealBrideStory[]>(() => REAL_BRIDES);
 
@@ -419,6 +432,28 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setActiveView('home');
   };
 
+  // Listen for session expiration events dispatched by authFetch
+  useEffect(() => {
+    const handleExpired = (e: any) => {
+      setAdminUser(null);
+      if (typeof window !== 'undefined' && window.location.pathname.startsWith('/admin')) {
+        showToast(e?.detail?.message || 'Your session has expired. Please log in again.');
+      }
+    };
+
+    window.addEventListener('lariel_admin_expired', handleExpired);
+    return () => window.removeEventListener('lariel_admin_expired', handleExpired);
+  }, [showToast]);
+
+  // Verify stored session validity on boot if admin credentials exist
+  useEffect(() => {
+    if (adminUser && getAdminToken()) {
+      api.getMe().catch(() => {
+        // authFetch automatically handles 401 and calls handleAuthExpired
+      });
+    }
+  }, []);
+
   // Currency
   const [currency, setCurrency] = useState<Currency>(() => {
     try {
@@ -456,15 +491,12 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  // Toast
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
-
   // Bridal Party Builder Initial Setup
   const [bridalParty, setBridalParty] = useState<BridalPartyMember[]>(() => {
     const initProds = getInitialProducts();
     const findProd = (id: string) => initProds.find((p) => p.id === id) || initProds[0];
     const p1 = findProd('amanda-3d-petals-robe');
-    const p2 = findProd('abiks-bridesmaids-robe');
+    const p2 = findProd('linda-bridesmaids-robe') || findProd('halo-bridesmaids-robe');
     const p3 = findProd('halo-bridesmaids-robe');
 
     return [
@@ -487,7 +519,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
         id: 'party-2',
         role: 'Maid of Honour',
         name: 'Sister / Best Friend',
-        robeProductId: p2?.id || 'abiks-bridesmaids-robe',
+        robeProductId: p2?.id || 'linda-bridesmaids-robe',
         selectedProduct: p2,
         selectedColor: p2?.colors?.[0] || GLOBAL_COLORS[0],
         selectedSize: 'S (UK 8)',
@@ -620,12 +652,6 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, [wishlist]);
 
-  const showToast = (msg: string) => {
-    setToastMessage(msg);
-    setTimeout(() => {
-      setToastMessage((prev) => (prev === msg ? null : prev));
-    }, 3200);
-  };
 
   const formatPrice = (amountUSD: number) => {
     const config = CURRENCIES[currency] || CURRENCIES.USD;

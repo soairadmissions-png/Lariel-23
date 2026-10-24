@@ -14,6 +14,15 @@ export interface ProductColor {
   hex: string;
 }
 
+export interface ProductImageRecord {
+  id: string; // Guaranteed stable unique ID: e.g. `${productId}__primary`, `${productId}__hover`, `${productId}__gallery_${index}`
+  url: string;
+  position: number;
+  role: 'primary' | 'hover' | 'gallery';
+  caption?: string;
+  updatedAt?: string;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -36,6 +45,7 @@ export interface Product {
   careInstructions?: string;
   careNotes?: string;
   images: string[];
+  imageGallery?: ProductImageRecord[];
   colors: ProductColor[];
   sizes: string[];
   reviewsCount?: number;
@@ -65,6 +75,7 @@ export interface CategoryMeta {
   isVisible?: boolean;
   order?: number;
   itemCount?: number;
+  updatedAt?: string;
 }
 
 export interface AdminUser {
@@ -199,6 +210,24 @@ export interface SiteSettings {
   announcement?: string;
   laidePortraitImage?: string;
   brandLogoImage?: string;
+  brandWordmarkImage?: string;
+  adminAvatarImage?: string;
+  heroImage?: string;
+  canonicalOverrides?: Record<string, string>;
+  [key: string]: any;
+}
+
+export interface EditableImagePayload {
+  id?: string;
+  name?: string;
+  title?: string;
+  section?: 'Products' | 'Categories' | 'Hero & Banners' | 'Bespoke Embroidery' | 'Real Brides' | 'Journal' | 'Brand Identity';
+  type: 'product' | 'category' | 'setting' | 'real-bride' | 'journal' | 'canonical';
+  targetId: string;
+  imageIndex?: number;
+  currentUrl: string;
+  description?: string;
+  recommendedAspect?: string;
 }
 
 declare global {
@@ -208,3 +237,4 @@ declare global {
     __LARIEL_INITIAL_SETTINGS__?: Partial<SiteSettings> | null;
   }
 }
+

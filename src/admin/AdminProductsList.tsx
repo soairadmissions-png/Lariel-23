@@ -16,6 +16,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Sparkles,
+  Code2,
+  RefreshCw,
 } from 'lucide-react';
 import { useShop, triggerStoreSync } from '../context/ShopContext';
 import { api } from '../services/api';
@@ -45,6 +47,7 @@ export const AdminProductsList: React.FC<AdminProductsListProps> = ({
   // Selection state for bulk operations
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [isBulkOperating, setIsBulkOperating] = useState(false);
+  const [isSyncingCode, setIsSyncingCode] = useState(false);
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -201,9 +204,25 @@ export const AdminProductsList: React.FC<AdminProductsListProps> = ({
     }
   };
 
+  const handleSyncToCode = async () => {
+    try {
+      setIsSyncingCode(true);
+      const res = await api.syncAllToCode();
+      if (res.success) {
+        showToast(`All products & images synchronized directly to code files!`);
+        await refreshProducts();
+        triggerStoreSync();
+      }
+    } catch (err: any) {
+      showToast(err.message || 'Failed to sync products to code');
+    } finally {
+      setIsSyncingCode(false);
+    }
+  };
+
   return (
     <div className="space-y-6 text-left">
-      {/* 1. Header with Title & Add Product Button */}
+      {/* 1. Header with Title, Sync to Code & Add Product Button */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="font-serif text-2xl sm:text-3xl text-[#181614] font-normal">
@@ -213,13 +232,24 @@ export const AdminProductsList: React.FC<AdminProductsListProps> = ({
             Manage all robes, sets, pyjamas, styles, inventory, and storefront publication states.
           </p>
         </div>
-        <button
-          onClick={onNewProduct}
-          className="px-4 py-2.5 bg-[#181614] hover:bg-[#C5A880] hover:text-[#181614] text-white text-xs font-medium tracking-wider uppercase rounded-xl transition-all flex items-center space-x-2 shadow-sm self-start sm:self-auto"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Add New Product</span>
-        </button>
+        <div className="flex items-center space-x-2 self-start sm:self-auto">
+          <button
+            onClick={handleSyncToCode}
+            disabled={isSyncingCode}
+            className="px-3.5 py-2.5 bg-white hover:bg-[#F2ECE4] border border-[#DCD1BF] text-neutral-800 text-xs font-semibold rounded-xl transition-all flex items-center space-x-1.5 cursor-pointer shadow-2xs disabled:opacity-50"
+            title="Force synchronization of all products into src/data/products.ts and db.json"
+          >
+            <Code2 className="w-3.5 h-3.5 text-[#C5A880]" />
+            <span>{isSyncingCode ? 'Syncing Code...' : 'Sync to Code'}</span>
+          </button>
+          <button
+            onClick={onNewProduct}
+            className="px-4 py-2.5 bg-[#181614] hover:bg-[#C5A880] hover:text-[#181614] text-white text-xs font-medium tracking-wider uppercase rounded-xl transition-all flex items-center space-x-2 shadow-sm cursor-pointer"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Add New Product</span>
+          </button>
+        </div>
       </div>
 
       {/* 2. Search, Filter & Sort Controls */}

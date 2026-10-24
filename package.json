@@ -12,8 +12,13 @@
     "migrate:r2:dry-run": "tsx scripts/migrate-to-r2.ts --dry-run",
     "migrate:r2:verify": "tsx scripts/migrate-to-r2.ts --verify",
     "migrate:r2:rollback": "tsx scripts/migrate-to-r2.ts --rollback",
+    "migrate:github": "tsx scripts/migrate-to-github.ts",
+    "migrate:github:dry-run": "tsx scripts/migrate-to-github.ts --dry-run",
+    "migrate:github:verify": "tsx scripts/migrate-to-github.ts --verify",
     "test:storage": "tsx scripts/test-r2-storage.ts",
+    "test:github": "tsx scripts/test-github-storage.ts",
     "test:acceptance": "tsx scripts/test-all-acceptance.ts",
+    "test:canonical": "tsx scripts/test-canonical-and-targeting.ts",
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit"
   },

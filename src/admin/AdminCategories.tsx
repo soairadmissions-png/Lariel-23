@@ -16,7 +16,7 @@ import {
 import { useShop, triggerStoreSync } from '../context/ShopContext';
 import { api } from '../services/api';
 import { CategoryMeta } from '../types';
-import { CANONICAL_DEFAULTS, handleImageError } from '../constants/imageDefaults';
+import { CANONICAL_DEFAULTS, getCategoryImage, handleImageError } from '../constants/imageDefaults';
 
 export const AdminCategories: React.FC = () => {
   const { categories, refreshCategories, products, showToast, navigateToCategory } = useShop();
@@ -166,9 +166,9 @@ export const AdminCategories: React.FC = () => {
                 {/* Hero Banner Thumbnail */}
                 <div className="h-36 relative overflow-hidden bg-neutral-200">
                   <img
-                    src={cat.heroImage || CANONICAL_DEFAULTS.CATEGORY_BRIDAL}
+                    src={getCategoryImage(cat.id, cat.heroImage)}
                     alt={cat.name}
-                    onError={(e) => handleImageError(e, CANONICAL_DEFAULTS.CATEGORY_BRIDAL)}
+                    onError={(e) => handleImageError(e, getCategoryImage(cat.id))}
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
@@ -346,9 +346,9 @@ export const AdminCategories: React.FC = () => {
                   {formCategory.heroImage && (
                     <div className="mt-2 h-28 rounded-xl overflow-hidden border border-[#DCD1BF] relative group">
                       <img
-                        src={formCategory.heroImage || CANONICAL_DEFAULTS.CATEGORY_BRIDAL}
+                        src={getCategoryImage(formCategory.id, formCategory.heroImage)}
                         alt="Banner Preview"
-                        onError={(e) => handleImageError(e, CANONICAL_DEFAULTS.CATEGORY_BRIDAL)}
+                        onError={(e) => handleImageError(e, getCategoryImage(formCategory.id))}
                         className="w-full h-full object-cover"
                       />
                       <div className="absolute bottom-1 right-1 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded">

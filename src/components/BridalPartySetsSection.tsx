@@ -2,9 +2,6 @@ import React, { useRef, useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, ArrowRight, ShoppingBag, Eye, Heart, Check } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import { Product } from '../types';
-import completeSetImg from '../assets/images/regenerated_image_1788961847724.jpg';
-import bridalNightSetImg from '../assets/images/regenerated_image_1788961850105.jpg';
-import gettingReadySetImg from '../assets/images/regenerated_image_1788961850750.jpg';
 import { CANONICAL_DEFAULTS, handleImageError } from '../constants/imageDefaults';
 
 interface BridalPartySetsSectionProps {
@@ -27,27 +24,16 @@ export const BridalPartySetsSection: React.FC<BridalPartySetsSectionProps> = ({ 
   const [canScrollRight, setCanScrollRight] = useState(true);
 
   // Cards defined in prompt:
-  // Card 01: The Complete Beauty Set (Robe + Scrunchie + Hair Bonnet + Satin Pillowcase)
-  // Card 02: The Bridal Night Set (PJ + Face Mask + Hair Bonnet + Indoor Flip Flop)
-  // Card 03: The Get-Ready Set (Robe + Indoor Flip Flop + Hair Bonnet + Mini Fan)
+  // Card 01: The Bridal Night Set (PJ + Face Mask + Hair Bonnet + Indoor Flip Flop)
+  // Card 02: The Get-Ready Set (Robe + Indoor Flip Flop + Hair Bonnet + Mini Fan)
   const setCards = [
-    {
-      id: 'complete-robe-set',
-      title: 'The Complete Beauty Set',
-      subtitle: 'Robe + Scrunchie + Hair Bonnet + Satin Pillowcase',
-      items: ['Robe', 'Scrunchie', 'Hair Bonnet', 'Satin Pillowcase'],
-      priceUSD: 285,
-      image: completeSetImg,
-      badge: 'Bestselling Box',
-      description: 'The complete luxury getting-ready gift box with 100% Mulberry silk essentials to protect hair, skin, and makeup.',
-    },
     {
       id: 'bridal-night-set',
       title: 'The Bridal Night Set',
       subtitle: 'PJ + Face Mask + Hair Bonnet + Indoor Flip Flop',
       items: ['PJ Set', 'Face Mask', 'Hair Bonnet', 'Indoor Flip Flop'],
       priceUSD: 245,
-      image: bridalNightSetImg,
+      image: CANONICAL_DEFAULTS.CATEGORY_SLEEPWEAR || '/uploads/regenerated_image_1788961850105.jpg',
       badge: 'The Eve Ritual',
       description: 'For the eve before forever. Pure silk pyjamas paired with a plush padded sleep eye mask and cloud slippers.',
     },
@@ -57,7 +43,7 @@ export const BridalPartySetsSection: React.FC<BridalPartySetsSectionProps> = ({ 
       subtitle: 'Robe + Indoor Flip Flop + Hair Bonnet + Mini Fan',
       items: ['Robe', 'Indoor Flip Flop', 'Hair Bonnet', 'Mini Fan'],
       priceUSD: 230,
-      image: gettingReadySetImg,
+      image: CANONICAL_DEFAULTS.CATEGORY_SETS || '/uploads/regenerated_image_1788962693429.jpg',
       badge: 'Suite Essential',
       description: 'The bridal suite lifesaver. Keeps your makeup set, provides personal breeze, and guarantees photo elegance.',
     },
@@ -159,7 +145,7 @@ export const BridalPartySetsSection: React.FC<BridalPartySetsSectionProps> = ({ 
                   {/* Image Container with Editorial Aspect */}
                   <div className="relative aspect-[16/11] w-full overflow-hidden bg-[#ECE4D8]">
                     <img
-                      src={card.image || CANONICAL_DEFAULTS.CATEGORY_PARTY}
+                      src={matchedProduct?.images?.[0] || card.image || CANONICAL_DEFAULTS.CATEGORY_PARTY}
                       alt={card.title}
                       onError={(e) => handleImageError(e, CANONICAL_DEFAULTS.CATEGORY_PARTY)}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"

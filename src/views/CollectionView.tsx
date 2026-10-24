@@ -91,7 +91,7 @@ export const CollectionView: React.FC = () => {
           description: 'Discover fresh bridal silhouettes, newly released sunset hues, and artisan embellishments.',
         };
     }
-  }, [selectedCategory]);
+  }, [selectedCategory, categories]);
 
   // Filtering products
   const filteredProducts = useMemo(() => {
@@ -142,12 +142,12 @@ export const CollectionView: React.FC = () => {
   return (
     <div className="w-full bg-[#FAF8F5]">
       {/* Category Hero Banner */}
-      <section className="relative w-full py-16 sm:py-24 bg-[#181512] text-[#FAF8F5] overflow-hidden">
+      <section className="relative w-full py-16 sm:py-24 bg-[#181512] text-[#FAF8F5] overflow-hidden group">
         <div className="absolute inset-0 z-0">
           <img
-            src={categoryMeta.heroImage || CANONICAL_DEFAULTS.CATEGORY_BRIDAL}
+            src={getCategoryImage(selectedCategory || 'bridal', categoryMeta.heroImage)}
             alt={categoryMeta.title}
-            onError={(e) => handleImageError(e, CANONICAL_DEFAULTS.CATEGORY_BRIDAL)}
+            onError={(e) => handleImageError(e, getCategoryImage(selectedCategory || 'bridal'))}
             className="w-full h-full object-cover opacity-35"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#181512] via-[#181512]/50 to-transparent" />

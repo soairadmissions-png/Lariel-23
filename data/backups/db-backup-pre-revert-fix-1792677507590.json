@@ -1,0 +1,3499 @@
+{
+  "products": [
+    {
+      "id": "amanda-3d-petals-robe",
+      "name": "Amanda 3D Robe",
+      "slug": "amanda-3d-petals-robe",
+      "subtitle": "Hand-appliquéd cascading 3D organza florals with pearl centers on sheer silk chiffon",
+      "priceUSD": 150,
+      "category": "bridal",
+      "style": "Embellished",
+      "collectionName": "Amanda",
+      "description": "The definitive Lariel masterpiece. Created for the unforgettable bride who commands poetry in motion. The Amanda robe features hundreds of individual hand-cut organza petals lovingly stitched across sweeping sleeves and a floor-pooling hemline.",
+      "details": [
+        "Hundreds of handcrafted 3D organza floral petals",
+        "Hand-sewn freshwater glass pearl centers",
+        "Floor-grazing silhouette with 45cm train",
+        "Detachable 22-momme Mulberry silk inner belt & outer tie",
+        "Includes complimentary luxury dust bag & garment hanger"
+      ],
+      "materials": "100% French Silk Organza, Italian Chiffon overlay, freshwater simulated pearls",
+      "sizingInfo": "Floor length (approx. 155cm shoulder to hem). Custom length available upon request.",
+      "productionTime": "Handcrafted in 7–14 working days. Express rush production available via WhatsApp.",
+      "shippingInfo": "Complimentary worldwide express courier delivery (DHL Express / FedEx 3–5 days).",
+      "careInstructions": "Dry clean only. Gentle steam with low heat.",
+      "images": [
+        "/uploads/1000863672_1792569460768_005529.jpg",
+        "/uploads/client_bridal_09_2e0e485f.jpg",
+        "/uploads/client_bridal_06_d5b1c862.jpg"
+      ],
+      "colors": [
+        {
+          "name": "White",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Ivory",
+          "hex": "#FAF5EE"
+        },
+        {
+          "name": "Champagne Gold",
+          "hex": "#E2CFA7"
+        },
+        {
+          "name": "Beige",
+          "hex": "#E2D8CA"
+        },
+        {
+          "name": "Blush Pink",
+          "hex": "#F0D2D2"
+        }
+      ],
+      "sizes": [
+        "S (UK 6/8)",
+        "M (UK 10/12)",
+        "L (UK 14/16)",
+        "XL (UK 18)",
+        "XXL (UK 20)",
+        "XXXL (UK 22/24)",
+        "Custom Measurements"
+      ],
+      "reviewsCount": 84,
+      "rating": 5,
+      "isBestSeller": true,
+      "isNew": false,
+      "crossSellIds": [
+        "halo-bridesmaids-robe"
+      ],
+      "badge": "Iconic Bestseller · ₦150,000",
+      "status": "published",
+      "stockQuantity": 25,
+      "stockStatus": "in_stock",
+      "sku": "LE-BRI-001",
+      "compareAtPriceUSD": 180,
+      "createdAt": "2026-08-11T14:10:28.411Z",
+      "updatedAt": "2026-10-22T13:28:49.613Z",
+      "imageGallery": [
+        {
+          "id": "amanda-3d-petals-robe__primary",
+          "url": "/uploads/1000863672_1792569460768_005529.jpg",
+          "position": 0,
+          "role": "primary",
+          "updatedAt": "2026-10-22T13:28:49.613Z"
+        },
+        {
+          "id": "amanda-3d-petals-robe__hover",
+          "url": "/uploads/client_bridal_09_2e0e485f.jpg",
+          "position": 1,
+          "role": "hover",
+          "updatedAt": "2026-10-22T13:28:49.613Z"
+        },
+        {
+          "id": "amanda-3d-petals-robe__gallery_2",
+          "url": "/uploads/client_bridal_06_d5b1c862.jpg",
+          "position": 2,
+          "role": "gallery",
+          "updatedAt": "2026-10-22T13:28:49.613Z"
+        }
+      ]
+    },
+    {
+      "id": "mercy-tulle-robe",
+      "name": "Mercy Robe",
+      "slug": "mercy-tulle-robe",
+      "subtitle": "Ethereal multi-tier sheer French illusion tulle with romantic bishop sleeves",
+      "priceUSD": 160,
+      "category": "bridal",
+      "style": "Tulle",
+      "collectionName": "Mercy",
+      "description": "A cloud-like confection of cascading soft French illusion tulle. Designed to evoke effortless majesty during your bridal portraits and champagne toast before stepping into the wedding dress.",
+      "details": [
+        "Multi-layered fine French illusion tulle for dramatic volume without weight",
+        "Voluminous bishop sleeves with soft elasticated satin cuffs",
+        "Includes matching high-waist silk-blend chemise slip",
+        "Wide double-sided silk ribbon waist tie"
+      ],
+      "materials": "100% Fine Polyamide French Illusion Tulle, Mulberry Silk trims",
+      "sizingInfo": "Oversized editorial drape. Available in S through XXXL.",
+      "productionTime": "Hand-tailored in 7–14 business days.",
+      "shippingInfo": "Worldwide tracked shipping within 3–5 working days.",
+      "careInstructions": "Professional delicate dry clean only.",
+      "images": [
+        "/uploads/client_bridal_09_2e0e485f.jpg",
+        "/uploads/1000863798_1792569936882_cd6124.jpg",
+        "/uploads/whatsapp_image_2026_09_13_at_14_44__1792584829818_1f503b.jpg"
+      ],
+      "colors": [
+        {
+          "name": "Ivory",
+          "hex": "#FAF5EE"
+        },
+        {
+          "name": "White",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Beige",
+          "hex": "#E2D8CA"
+        },
+        {
+          "name": "Nude",
+          "hex": "#E7D3C1"
+        },
+        {
+          "name": "Champagne Gold",
+          "hex": "#E2CFA7"
+        },
+        {
+          "name": "Blush Pink",
+          "hex": "#F0D2D2"
+        },
+        {
+          "name": "Lilac",
+          "hex": "#D8CEE3"
+        },
+        {
+          "name": "Soft Pink",
+          "hex": "#F7D8E2"
+        },
+        {
+          "name": "Sky Blue",
+          "hex": "#ABC4D8"
+        },
+        {
+          "name": "Soft Green",
+          "hex": "#C4D6C4"
+        },
+        {
+          "name": "Olive Green",
+          "hex": "#6F7A56"
+        },
+        {
+          "name": "Chocolate Brown",
+          "hex": "#442A1D"
+        },
+        {
+          "name": "Burnt Orange",
+          "hex": "#C25A27"
+        },
+        {
+          "name": "Nude Brown",
+          "hex": "#9A7864"
+        },
+        {
+          "name": "Emerald Green",
+          "hex": "#1C4A38"
+        },
+        {
+          "name": "Navy Blue",
+          "hex": "#1C2951"
+        },
+        {
+          "name": "Burgundy",
+          "hex": "#631B2A"
+        },
+        {
+          "name": "Red",
+          "hex": "#9E1A1A"
+        }
+      ],
+      "sizes": [
+        "S (UK 6/8)",
+        "M (UK 10/12)",
+        "L (UK 14/16)",
+        "XL (UK 18)",
+        "XXL (UK 20)",
+        "XXXL (UK 22/24)",
+        "Custom Measurements"
+      ],
+      "reviewsCount": 62,
+      "rating": 4.9,
+      "isBestSeller": true,
+      "crossSellIds": [
+        "bridal-night-set"
+      ],
+      "badge": "Signature Volume",
+      "status": "published",
+      "stockQuantity": 25,
+      "stockStatus": "in_stock",
+      "sku": "LE-BRI-002",
+      "compareAtPriceUSD": 192,
+      "createdAt": "2026-08-12T14:10:28.412Z",
+      "updatedAt": "2026-10-22T13:28:49.569Z",
+      "imageGallery": [
+        {
+          "id": "mercy-tulle-robe__primary",
+          "url": "/uploads/client_bridal_09_2e0e485f.jpg",
+          "position": 0,
+          "role": "primary",
+          "updatedAt": "2026-10-22T13:28:49.569Z"
+        },
+        {
+          "id": "mercy-tulle-robe__hover",
+          "url": "/uploads/1000863798_1792569936882_cd6124.jpg",
+          "position": 1,
+          "role": "hover",
+          "updatedAt": "2026-10-22T13:28:49.569Z"
+        },
+        {
+          "id": "mercy-tulle-robe__gallery_2",
+          "url": "/uploads/whatsapp_image_2026_09_13_at_14_44__1792584829818_1f503b.jpg",
+          "position": 2,
+          "role": "gallery",
+          "updatedAt": "2026-10-22T13:28:49.569Z"
+        }
+      ]
+    },
+    {
+      "id": "mercy-extra-full-robe",
+      "name": "Amaka Extra Full Robe",
+      "slug": "amaka-extra-full-robe",
+      "subtitle": "Architectural ultra-voluminous tulle couture robe with 2-meter dramatic cathedral train",
+      "priceUSD": 200,
+      "category": "bridal",
+      "style": "Tulle",
+      "collectionName": "Amaka",
+      "description": "When drama is non-negotiable. Using more than 40 meters of premium French tulle, the Amaka Extra Full Robe floats around you like a royal cloud, designed specifically for museum-grade wedding morning photography.",
+      "details": [
+        "Over 40 meters of pleated and gathered French bridal tulle",
+        "Extended 2-meter sweeping royal cathedral train",
+        "Tiered architectural ruffles framing the neckline and front opening",
+        "Includes custom slip dress in matching tone"
+      ],
+      "materials": "Micro-weave French bridal tulle with Italian satin binding",
+      "sizingInfo": "Couture floor sweep. We customize hem to your wedding shoe height.",
+      "productionTime": "7–14 days handcrafted in our Lagos atelier.",
+      "shippingInfo": "Worldwide courier via DHL Express with signature required.",
+      "careInstructions": "Specialist dry clean only. Store hung in breathable garment bag.",
+      "images": [
+        "/uploads/1000863798_1792569936882_cd6124.jpg",
+        "/uploads/whatsapp_image_2026_09_13_at_14_44__1792584829818_1f503b.jpg",
+        "/uploads/client_bridal_09_2e0e485f.jpg"
+      ],
+      "colors": [
+        {
+          "name": "Ivory",
+          "hex": "#FAF5EE"
+        },
+        {
+          "name": "White",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Beige",
+          "hex": "#E2D8CA"
+        },
+        {
+          "name": "Blush Pink",
+          "hex": "#F0D2D2"
+        },
+        {
+          "name": "Sky Blue",
+          "hex": "#ABC4D8"
+        },
+        {
+          "name": "Burgundy",
+          "hex": "#631B2A"
+        }
+      ],
+      "sizes": [
+        "S (UK 6/8)",
+        "M (UK 10/12)",
+        "L (UK 14/16)",
+        "XL (UK 18)",
+        "XXL (UK 20)",
+        "XXXL (UK 22/24)",
+        "Custom Tailored"
+      ],
+      "reviewsCount": 49,
+      "rating": 5,
+      "crossSellIds": [],
+      "badge": "Couture Train",
+      "status": "published",
+      "stockQuantity": 25,
+      "stockStatus": "in_stock",
+      "sku": "LE-BRI-003",
+      "createdAt": "2026-08-13T14:10:28.412Z",
+      "updatedAt": "2026-10-21T12:11:24.883Z",
+      "imageGallery": [
+        {
+          "id": "mercy-extra-full-robe__primary",
+          "url": "/uploads/1000863798_1792569936882_cd6124.jpg",
+          "position": 0,
+          "role": "primary",
+          "updatedAt": "2026-10-21T12:11:24.883Z"
+        },
+        {
+          "id": "mercy-extra-full-robe__hover",
+          "url": "/uploads/whatsapp_image_2026_09_13_at_14_44__1792584829818_1f503b.jpg",
+          "position": 1,
+          "role": "hover",
+          "updatedAt": "2026-10-21T12:11:24.883Z"
+        },
+        {
+          "id": "mercy-extra-full-robe__gallery_2",
+          "url": "/uploads/client_bridal_09_2e0e485f.jpg",
+          "position": 2,
+          "role": "gallery",
+          "updatedAt": "2026-10-21T12:11:24.883Z"
+        }
+      ]
+    },
+    {
+      "id": "classic-silk-robe",
+      "name": "Classic Silk Robe",
+      "slug": "classic-silk-robe",
+      "subtitle": "Heavyweight 22-momme Mulberry silk with french seams and structured wide lapels",
+      "priceUSD": 80,
+      "category": "bridal",
+      "style": "Silk",
+      "collectionName": "Classic",
+      "description": "Pure, timeless bridal elegance. Crafted from lustrous 22-momme 100% Grade 6A Mulberry silk that feels like liquid pearl against the skin. Tailored with French seams and an internal modesty tie.",
+      "details": [
+        "100% Grade 6A pure Mulberry silk (22 Momme heavyweight)",
+        "Internal security ties to prevent slipping",
+        "Generous wrap silhouette with structured belt loops and matching silk sash",
+        "French seam construction throughout for lifelong longevity"
+      ],
+      "materials": "100% Grade 6A Mulberry Silk",
+      "sizingInfo": "Available in knee-length (95cm) and floor-length (145cm).",
+      "productionTime": "Standard production 3–4 business days.",
+      "shippingInfo": "Shipped worldwide with express tracking.",
+      "careInstructions": "Hand wash cold with silk detergent or dry clean.",
+      "images": [
+        "/uploads/client_bridal_32_bd874897.jpg",
+        "/uploads/client_bridal_33_e4cb5931.jpg",
+        "/uploads/client_bridal_06_d5b1c862.jpg"
+      ],
+      "colors": [
+        {
+          "name": "Ivory",
+          "hex": "#FAF5EE"
+        },
+        {
+          "name": "White",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Beige",
+          "hex": "#E2D8CA"
+        },
+        {
+          "name": "Nude",
+          "hex": "#E7D3C1"
+        },
+        {
+          "name": "Champagne Gold",
+          "hex": "#E2CFA7"
+        },
+        {
+          "name": "Blush Pink",
+          "hex": "#F0D2D2"
+        },
+        {
+          "name": "Lilac",
+          "hex": "#D8CEE3"
+        },
+        {
+          "name": "Soft Pink",
+          "hex": "#F7D8E2"
+        },
+        {
+          "name": "Sky Blue",
+          "hex": "#ABC4D8"
+        },
+        {
+          "name": "Soft Green",
+          "hex": "#C4D6C4"
+        },
+        {
+          "name": "Olive Green",
+          "hex": "#6F7A56"
+        },
+        {
+          "name": "Chocolate Brown",
+          "hex": "#442A1D"
+        },
+        {
+          "name": "Burnt Orange",
+          "hex": "#C25A27"
+        },
+        {
+          "name": "Nude Brown",
+          "hex": "#9A7864"
+        },
+        {
+          "name": "Emerald Green",
+          "hex": "#1C4A38"
+        },
+        {
+          "name": "Navy Blue",
+          "hex": "#1C2951"
+        },
+        {
+          "name": "Burgundy",
+          "hex": "#631B2A"
+        },
+        {
+          "name": "Red",
+          "hex": "#9E1A1A"
+        }
+      ],
+      "sizes": [
+        "S (UK 6/8)",
+        "M (UK 10/12)",
+        "L (UK 14/16)",
+        "XL (UK 18)",
+        "XXL (UK 20)",
+        "XXXL (UK 22/24)"
+      ],
+      "reviewsCount": 110,
+      "rating": 4.9,
+      "isBestSeller": true,
+      "crossSellIds": [
+        "linda-bridesmaids-robe"
+      ],
+      "badge": "Essential · ₦80,000",
+      "status": "published",
+      "stockQuantity": 4,
+      "stockStatus": "low_stock",
+      "sku": "LE-BRI-004",
+      "compareAtPriceUSD": 96,
+      "createdAt": "2026-08-14T14:10:28.412Z",
+      "updatedAt": "2026-10-21T08:41:11.192Z",
+      "imageGallery": [
+        {
+          "id": "classic-silk-robe__primary",
+          "url": "/uploads/client_bridal_32_bd874897.jpg",
+          "position": 0,
+          "role": "primary",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        },
+        {
+          "id": "classic-silk-robe__hover",
+          "url": "/uploads/client_bridal_33_e4cb5931.jpg",
+          "position": 1,
+          "role": "hover",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        },
+        {
+          "id": "classic-silk-robe__gallery_2",
+          "url": "/uploads/client_bridal_06_d5b1c862.jpg",
+          "position": 2,
+          "role": "gallery",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        }
+      ]
+    },
+    {
+      "id": "sunset-robe",
+      "name": "Sunset Robe",
+      "slug": "sunset-robe",
+      "subtitle": "Hand-shaded ombre chiffon gradient inspired by West African twilight & golden hour",
+      "priceUSD": 130,
+      "category": "bridal",
+      "style": "Silk",
+      "collectionName": "Sunset",
+      "description": "Capturing the breathtaking warmth of a tropical golden hour. The Sunset Robe melts from ivory into soft champagne, warm blush, and burnt terracotta, honoring radiant bridal skin under natural morning light.",
+      "details": [
+        "Artisanal hand-dipped ombre color gradation",
+        "Whisper-light Italian silk-chiffon with fluid movement",
+        "Draped flare sleeves that catch every gentle breeze",
+        "Includes ivory satin under-slip"
+      ],
+      "materials": "Italian Silk Chiffon, silk crepe de chine accents",
+      "sizingInfo": "Relaxed fluid drape. Fits true to size with generous wrap.",
+      "productionTime": "Handcrafted in 7–14 days in Lagos.",
+      "shippingInfo": "Express worldwide shipping (DHL / FedEx).",
+      "careInstructions": "Specialist dry clean only.",
+      "images": [
+        "/uploads/client_bridal_08_35954c6b.jpg",
+        "/uploads/client_bridal_11_b03b4ddf.jpg"
+      ],
+      "colors": [
+        {
+          "name": "Golden Hour (Ivory to Warm Amber)",
+          "hex": "#E7B784"
+        },
+        {
+          "name": "Rose Twilight (Ivory to Blush Terracotta)",
+          "hex": "#DFA599"
+        },
+        {
+          "name": "Lagoon Dusk (Ivory to Lilac Sky)",
+          "hex": "#B8A6CE"
+        }
+      ],
+      "sizes": [
+        "S (UK 6/8)",
+        "M (UK 10/12)",
+        "L (UK 14/16)",
+        "XL (UK 18)",
+        "XXL (UK 20)",
+        "XXXL (UK 22/24)"
+      ],
+      "reviewsCount": 38,
+      "rating": 4.9,
+      "crossSellIds": [
+        "amanda-3d-petals-robe"
+      ],
+      "status": "published",
+      "stockQuantity": 25,
+      "stockStatus": "in_stock",
+      "sku": "LE-BRI-005",
+      "createdAt": "2026-08-15T14:10:28.412Z",
+      "updatedAt": "2026-10-22T08:47:48.557Z",
+      "imageGallery": [
+        {
+          "id": "sunset-robe__primary",
+          "url": "/uploads/client_bridal_08_35954c6b.jpg",
+          "position": 0,
+          "role": "primary",
+          "updatedAt": "2026-10-22T08:47:48.557Z"
+        },
+        {
+          "id": "sunset-robe__hover",
+          "url": "/uploads/client_bridal_11_b03b4ddf.jpg",
+          "position": 1,
+          "role": "hover",
+          "updatedAt": "2026-10-22T08:47:48.557Z"
+        }
+      ]
+    },
+    {
+      "id": "lily-bridal-robe",
+      "name": "Lily Robe",
+      "slug": "lily-bridal-robe",
+      "subtitle": "Intricate French corded floral lace with scalloped eyelash borders and silk satin lapel",
+      "priceUSD": 140,
+      "category": "bridal",
+      "style": "Lace",
+      "collectionName": "Lily",
+      "description": "Romance encapsulated. The Lily Bridal Robe marries fine French Chantilly and corded lace with lustrous satin trim. Featuring romantic bell sleeves trimmed in delicate eyelash fringe for exquisite detail in close-up beauty shots.",
+      "details": [
+        "Imported French corded floral lace",
+        "Scalloped eyelash lace cuffs and hemline",
+        "Lustrous Duchess satin lapels and waist tie",
+        "Includes opaque nude or ivory satin inner slip"
+      ],
+      "materials": "French Corded Lace, 100% Silk Duchess Satin",
+      "sizingInfo": "Tailored fit at shoulders with gentle A-line sweep.",
+      "productionTime": "7–14 business days.",
+      "shippingInfo": "Worldwide delivery 3–5 days.",
+      "careInstructions": "Delicate dry clean only.",
+      "images": [
+        "/uploads/client_bridal_34_df6833c3.jpg",
+        "/uploads/whatsapp_image_2026_09_13_at_14_44__1792584829818_1f503b.jpg",
+        "/uploads/client_bridal_12_5ef778c5.jpg"
+      ],
+      "colors": [
+        {
+          "name": "Ivory",
+          "hex": "#FAF5EE"
+        },
+        {
+          "name": "White",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Blush Pink",
+          "hex": "#F0D2D2"
+        }
+      ],
+      "sizes": [
+        "S (UK 6/8)",
+        "M (UK 10/12)",
+        "L (UK 14/16)",
+        "XL (UK 18)",
+        "XXL (UK 20)",
+        "XXXL (UK 22/24)"
+      ],
+      "reviewsCount": 53,
+      "rating": 5,
+      "crossSellIds": [],
+      "status": "published",
+      "stockQuantity": 0,
+      "stockStatus": "out_of_stock",
+      "sku": "LE-BRI-006",
+      "createdAt": "2026-08-16T14:10:28.412Z",
+      "updatedAt": "2026-10-21T08:41:11.192Z",
+      "imageGallery": [
+        {
+          "id": "lily-bridal-robe__primary",
+          "url": "/uploads/client_bridal_34_df6833c3.jpg",
+          "position": 0,
+          "role": "primary",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        },
+        {
+          "id": "lily-bridal-robe__hover",
+          "url": "/uploads/whatsapp_image_2026_09_13_at_14_44__1792584829818_1f503b.jpg",
+          "position": 1,
+          "role": "hover",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        },
+        {
+          "id": "lily-bridal-robe__gallery_2",
+          "url": "/uploads/client_bridal_12_5ef778c5.jpg",
+          "position": 2,
+          "role": "gallery",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        }
+      ]
+    },
+    {
+      "id": "the-bunmi-robe",
+      "name": "Bunmí Feather Lace Couture Robe",
+      "slug": "the-bunmi-robe",
+      "subtitle": "Floor-length French floral chantilly lace robe trimmed with opulent ostrich feathers along neckline, cuffs, and sweeping hem",
+      "priceUSD": 180,
+      "category": "bridal",
+      "style": "Lace",
+      "collectionName": "Bunmí",
+      "description": "The epitome of haute boudoir couture. Crafted from sheer floral French lace and bordered by hand-applied plush ostrich feather plumes that drift effortlessly with every step. Paired with a tailored liquid silk satin romper inner slip.",
+      "details": [
+        "Soft flexible boning for sculpted silhouette and effortless breathing",
+        "Thousands of hand-applied glass seed beads & pearls",
+        "Dramatic cape-like slit sleeves",
+        "Sweeping floor-length silk georgette skirt"
+      ],
+      "materials": "Heavy Silk Georgette, Austrian Crystal beads, glass pearls",
+      "sizingInfo": "Lace-up back placket allows flexible custom fit across bust and waist.",
+      "productionTime": "Couture hand-sewn in 7–14 days.",
+      "shippingInfo": "Free worldwide express delivery.",
+      "careInstructions": "Specialist couture dry clean.",
+      "images": [
+        "/uploads/client_bridal_13_10665499.jpg",
+        "/uploads/1000863798_1792569936882_cd6124.jpg"
+      ],
+      "colors": [
+        {
+          "name": "Ivory White",
+          "hex": "#FAF5EE"
+        },
+        {
+          "name": "Midnight Black",
+          "hex": "#111111"
+        }
+      ],
+      "sizes": [
+        "S (UK 6/8)",
+        "M (UK 10/12)",
+        "L (UK 14/16)",
+        "XL (UK 18)",
+        "XXL (UK 20)",
+        "Custom Fit"
+      ],
+      "reviewsCount": 71,
+      "rating": 5,
+      "isBestSeller": true,
+      "crossSellIds": [
+        "sisi-yemi-halter-neck-dress"
+      ],
+      "badge": "Couture Corset",
+      "status": "published",
+      "stockQuantity": 25,
+      "stockStatus": "in_stock",
+      "sku": "LE-BRI-007",
+      "compareAtPriceUSD": 216,
+      "createdAt": "2026-08-17T14:10:28.412Z",
+      "updatedAt": "2026-10-21T12:12:38.917Z",
+      "imageGallery": [
+        {
+          "id": "the-bunmi-robe__primary",
+          "url": "/uploads/client_bridal_13_10665499.jpg",
+          "position": 0,
+          "role": "primary",
+          "updatedAt": "2026-10-21T12:12:38.917Z"
+        },
+        {
+          "id": "the-bunmi-robe__hover",
+          "url": "/uploads/1000863798_1792569936882_cd6124.jpg",
+          "position": 1,
+          "role": "hover",
+          "updatedAt": "2026-10-21T12:12:38.917Z"
+        }
+      ]
+    },
+    {
+      "id": "sisi-yemi-halter-neck-dress",
+      "name": "Sisi Yemi",
+      "slug": "sisi-yemi-halter-neck-dress",
+      "subtitle": "High-slit cowl back bridal morning dress crafted from heavyweight liquid silk satin",
+      "priceUSD": 300,
+      "category": "bridal",
+      "style": "Silk",
+      "collectionName": "Sisi Yemi",
+      "description": "The modern bride’s chic alternative. The Sisi Yemi gown effortlessly doubles as your morning getting-ready slip and an iconic after-party reception dress. Cut on the bias for a contouring drape that flows with every step.",
+      "details": [
+        "Bias-cut liquid silk satin that hugs curves gracefully",
+        "Halter high neckline with self-tie neck streamer",
+        "Dramatic low back drape with modesty hook",
+        "Thigh-high walking slit for ease and photograph elegance"
+      ],
+      "materials": "95% Silk Satin, 5% Elastane for comfort and resilience",
+      "sizingInfo": "Bias cut provides natural stretch. Fits true to size.",
+      "productionTime": "7–14 days handcrafted in Lagos.",
+      "shippingInfo": "Express tracked delivery worldwide.",
+      "careInstructions": "Dry clean or cold hand wash with silk soap.",
+      "images": [
+        "/uploads/client_bridal_15_621f42e5.jpg",
+        "/uploads/whatsapp_image_2026_09_14_at_15_08__1792584880997_362bfb.jpg"
+      ],
+      "colors": [
+        {
+          "name": "Ivory",
+          "hex": "#FAF5EE"
+        },
+        {
+          "name": "White",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Champagne Gold",
+          "hex": "#E2CFA7"
+        },
+        {
+          "name": "Blush Pink",
+          "hex": "#F0D2D2"
+        },
+        {
+          "name": "Chocolate Brown",
+          "hex": "#442A1D"
+        },
+        {
+          "name": "Emerald Green",
+          "hex": "#1C4A38"
+        },
+        {
+          "name": "Burgundy",
+          "hex": "#631B2A"
+        }
+      ],
+      "sizes": [
+        "S (UK 6/8)",
+        "M (UK 10/12)",
+        "L (UK 14/16)",
+        "XL (UK 18)",
+        "XXL (UK 20)",
+        "XXXL (UK 22/24)"
+      ],
+      "reviewsCount": 44,
+      "rating": 4.8,
+      "crossSellIds": [
+        "classic-silk-robe",
+        "mercy-tulle-robe"
+      ],
+      "badge": "Signature Couture · ₦300,000",
+      "status": "published",
+      "stockQuantity": 25,
+      "stockStatus": "in_stock",
+      "sku": "LE-BRI-008",
+      "createdAt": "2026-08-18T14:10:28.412Z",
+      "updatedAt": "2026-10-21T08:41:11.192Z",
+      "imageGallery": [
+        {
+          "id": "sisi-yemi-halter-neck-dress__primary",
+          "url": "/uploads/client_bridal_15_621f42e5.jpg",
+          "position": 0,
+          "role": "primary",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        },
+        {
+          "id": "sisi-yemi-halter-neck-dress__hover",
+          "url": "/uploads/whatsapp_image_2026_09_14_at_15_08__1792584880997_362bfb.jpg",
+          "position": 1,
+          "role": "hover",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        }
+      ]
+    },
+    {
+      "id": "corset-embellished-robe",
+      "name": "Corset Robe Series",
+      "slug": "corset-embellished-robe",
+      "subtitle": "Internal boned sculpted waist with handcrafted crystal bugle beading and sheer tulle train",
+      "priceUSD": 160,
+      "category": "bridal",
+      "style": "Corset",
+      "collectionName": "Corset",
+      "description": "Sculptural luxury meeting classic bridal grandeur. Designed with an engineered interior corset that accentuates the waistline while leaving the arms and sweeping skirt completely fluid and photogenic.",
+      "details": [
+        "Reinforced cotton-lined interior corset with steel spiral boning",
+        "Hand-sewn crystal motifs across sweetheart neckline",
+        "Sweeping floor-length sleeves with slit cuff",
+        "Concealed zip back closure with decorative silk-covered buttons"
+      ],
+      "materials": "Heavy Crepe de Chine, Illusion Mesh, Czech crystals",
+      "sizingInfo": "Provide your bust and waist measurements at checkout for a guaranteed glove fit.",
+      "productionTime": "7–14 business days.",
+      "shippingInfo": "Worldwide courier delivery.",
+      "careInstructions": "Professional dry clean only.",
+      "images": [
+        "/uploads/1000865034_1792569774825_18c8d9.jpg",
+        "/uploads/client_bridal_22_832c3ce8.jpg",
+        "/uploads/client_bridal_17_bef85aa2.jpg"
+      ],
+      "colors": [
+        {
+          "name": "Ivory & Silver Crystal",
+          "hex": "#FAF5EE"
+        },
+        {
+          "name": "White & Crystal",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Beige & Gold Crystal",
+          "hex": "#E2D8CA"
+        }
+      ],
+      "sizes": [
+        "S (UK 6/8)",
+        "M (UK 10/12)",
+        "L (UK 14/16)",
+        "XL (UK 18)",
+        "XXL (UK 20)",
+        "Custom Sizing"
+      ],
+      "reviewsCount": 39,
+      "rating": 5,
+      "crossSellIds": [],
+      "badge": "Corset Series · ₦150k–₦200k",
+      "status": "published",
+      "stockQuantity": 25,
+      "stockStatus": "in_stock",
+      "sku": "LE-BRI-009",
+      "createdAt": "2026-08-19T14:10:28.412Z",
+      "updatedAt": "2026-10-21T12:13:14.103Z",
+      "imageGallery": [
+        {
+          "id": "corset-embellished-robe__primary",
+          "url": "/uploads/1000865034_1792569774825_18c8d9.jpg",
+          "position": 0,
+          "role": "primary",
+          "updatedAt": "2026-10-21T12:13:14.103Z"
+        },
+        {
+          "id": "corset-embellished-robe__hover",
+          "url": "/uploads/client_bridal_22_832c3ce8.jpg",
+          "position": 1,
+          "role": "hover",
+          "updatedAt": "2026-10-21T12:13:14.103Z"
+        },
+        {
+          "id": "corset-embellished-robe__gallery_2",
+          "url": "/uploads/client_bridal_17_bef85aa2.jpg",
+          "position": 2,
+          "role": "gallery",
+          "updatedAt": "2026-10-21T12:13:14.103Z"
+        }
+      ]
+    },
+    {
+      "id": "evelyn-silk-corset-robe",
+      "name": "Evelyn Silk Robe with Corset Band & Inner Wear",
+      "slug": "evelyn-silk-corset-robe",
+      "subtitle": "Sumptuous 22-momme silk robe paired with sculpting corset cinch band and matching inner chemise",
+      "priceUSD": 120,
+      "category": "bridal",
+      "style": "Corset",
+      "collectionName": "Evelyn",
+      "description": "An architectural 3-piece morning suite. The Evelyn features a fluid liquid silk kimono robe, a detachable matching boned corset band that defines the waist, and a coordinating silk inner slip dress.",
+      "details": [
+        "Includes 3 pieces: Kimono silk robe, structured corset band, and bias-cut inner chemise",
+        "Detachable lace-up waist corset for adjustable cinching",
+        "Flattering midi length with bell sleeves",
+        "French seams and premium silk binding"
+      ],
+      "materials": "100% Grade 6A Mulberry Silk, flexible boning",
+      "sizingInfo": "S (UK 6/8) through XXXL (UK 22/24).",
+      "productionTime": "7–14 business days.",
+      "shippingInfo": "Worldwide courier dispatch via DHL / FedEx.",
+      "careInstructions": "Delicate dry clean only.",
+      "images": [
+        "/uploads/client_bridal_22_832c3ce8.jpg",
+        "/uploads/client_bridal_24_9c098b1e.jpg"
+      ],
+      "colors": [
+        {
+          "name": "Ivory",
+          "hex": "#FAF5EE"
+        },
+        {
+          "name": "White",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Nude",
+          "hex": "#E7D3C1"
+        },
+        {
+          "name": "Champagne Gold",
+          "hex": "#E2CFA7"
+        },
+        {
+          "name": "Blush Pink",
+          "hex": "#F0D2D2"
+        },
+        {
+          "name": "Emerald Green",
+          "hex": "#1C4A38"
+        },
+        {
+          "name": "Burgundy",
+          "hex": "#631B2A"
+        }
+      ],
+      "sizes": [
+        "S (UK 6/8)",
+        "M (UK 10/12)",
+        "L (UK 14/16)",
+        "XL (UK 18)",
+        "XXL (UK 20)",
+        "XXXL (UK 22/24)"
+      ],
+      "reviewsCount": 42,
+      "rating": 5,
+      "crossSellIds": [
+        "classic-silk-robe"
+      ],
+      "badge": "3-Piece Suite · ₦120,000",
+      "status": "published",
+      "stockQuantity": 25,
+      "stockStatus": "in_stock",
+      "sku": "LE-BRI-010",
+      "createdAt": "2026-08-20T14:10:28.412Z",
+      "updatedAt": "2026-10-21T08:41:11.192Z",
+      "imageGallery": [
+        {
+          "id": "evelyn-silk-corset-robe__primary",
+          "url": "/uploads/client_bridal_22_832c3ce8.jpg",
+          "position": 0,
+          "role": "primary",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        },
+        {
+          "id": "evelyn-silk-corset-robe__hover",
+          "url": "/uploads/client_bridal_24_9c098b1e.jpg",
+          "position": 1,
+          "role": "hover",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        }
+      ]
+    },
+    {
+      "id": "halo-bridesmaids-robe",
+      "name": "Halo Bridesmaids Robe",
+      "slug": "halo-bridesmaids-robe",
+      "subtitle": "Lustrous silk satin robes with sheer ethereal mesh sleeves and satin wrist cuffs",
+      "priceUSD": 30,
+      "category": "bridesmaids",
+      "style": "Silk",
+      "collectionName": "HALO",
+      "description": "Designed to frame your bridesmaids in timeless harmony. The Halo Robe pairs buttery smooth silk satin with whisper-soft sheer illusion mesh sleeves, providing photograph texture while allowing full mobility.",
+      "details": [
+        "Premium liquid silk satin body with opaque modesty drape",
+        "Delicate sheer mesh sleeves with matching silk cuffs",
+        "Internal security ties and wide satin waist belt",
+        "Available in our complete 18-shade bridal party palette"
+      ],
+      "materials": "Premium Silk Satin, Polyamide illusion mesh",
+      "sizingInfo": "Knee-length or midi-length available. Flattering wrap closure.",
+      "productionTime": "Standard 3–4 business days (2–3 weeks for bulk suites).",
+      "shippingInfo": "Worldwide courier shipping.",
+      "careInstructions": "Machine wash delicate cold in wash bag or hand wash.",
+      "images": [
+        "/uploads/1000863952_1792570551063_d65956.jpg",
+        "/uploads/whatsapp_image_2026_09_13_at_14_44__1792584829818_1f503b.jpg"
+      ],
+      "colors": [
+        {
+          "name": "Ivory",
+          "hex": "#FAF5EE"
+        },
+        {
+          "name": "White",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Beige",
+          "hex": "#E2D8CA"
+        },
+        {
+          "name": "Nude",
+          "hex": "#E7D3C1"
+        },
+        {
+          "name": "Champagne Gold",
+          "hex": "#E2CFA7"
+        },
+        {
+          "name": "Blush Pink",
+          "hex": "#F0D2D2"
+        },
+        {
+          "name": "Lilac",
+          "hex": "#D8CEE3"
+        },
+        {
+          "name": "Soft Pink",
+          "hex": "#F7D8E2"
+        },
+        {
+          "name": "Sky Blue",
+          "hex": "#ABC4D8"
+        },
+        {
+          "name": "Soft Green",
+          "hex": "#C4D6C4"
+        },
+        {
+          "name": "Olive Green",
+          "hex": "#6F7A56"
+        },
+        {
+          "name": "Chocolate Brown",
+          "hex": "#442A1D"
+        },
+        {
+          "name": "Burnt Orange",
+          "hex": "#C25A27"
+        },
+        {
+          "name": "Nude Brown",
+          "hex": "#9A7864"
+        },
+        {
+          "name": "Emerald Green",
+          "hex": "#1C4A38"
+        },
+        {
+          "name": "Navy Blue",
+          "hex": "#1C2951"
+        },
+        {
+          "name": "Burgundy",
+          "hex": "#631B2A"
+        },
+        {
+          "name": "Red",
+          "hex": "#9E1A1A"
+        }
+      ],
+      "sizes": [
+        "S (UK 6/8)",
+        "M (UK 10/12)",
+        "L (UK 14/16)",
+        "XL (UK 18)",
+        "XXL (UK 20)",
+        "XXXL (UK 22/24)",
+        "Custom Sizing"
+      ],
+      "reviewsCount": 96,
+      "rating": 4.9,
+      "isBestSeller": true,
+      "crossSellIds": [
+        "linda-bridesmaids-robe",
+        "amanda-3d-petals-robe"
+      ],
+      "badge": "Bridesmaids Favorite · ₦30,000 each",
+      "status": "published",
+      "stockQuantity": 25,
+      "stockStatus": "in_stock",
+      "sku": "LE-BRI-012",
+      "compareAtPriceUSD": 36,
+      "createdAt": "2026-08-22T14:10:28.412Z",
+      "updatedAt": "2026-10-21T12:13:49.822Z",
+      "imageGallery": [
+        {
+          "id": "halo-bridesmaids-robe__primary",
+          "url": "/uploads/1000863952_1792570551063_d65956.jpg",
+          "position": 0,
+          "role": "primary",
+          "updatedAt": "2026-10-21T12:13:49.822Z"
+        },
+        {
+          "id": "halo-bridesmaids-robe__hover",
+          "url": "/uploads/whatsapp_image_2026_09_13_at_14_44__1792584829818_1f503b.jpg",
+          "position": 1,
+          "role": "hover",
+          "updatedAt": "2026-10-21T12:13:49.822Z"
+        }
+      ]
+    },
+    {
+      "id": "linda-bridesmaids-robe",
+      "name": "Linda Robe with Inner Chemise",
+      "slug": "linda-bridesmaids-robe",
+      "subtitle": "Mesh ruffle tier robes complete with matching inner wear chemise slip",
+      "priceUSD": 40,
+      "category": "bridesmaids",
+      "style": "Tulle",
+      "collectionName": "Linda",
+      "description": "Playful, feminine, and utterly photogenic. The Linda Robe surrounds your bridal party with soft pleated mesh ruffles along the hem and sleeves, creating sensational movement when dancing and popping morning champagne, paired with a matching inner chemise.",
+      "details": [
+        "Pleated micro-mesh cascading ruffles on sleeves and hemlines",
+        "Includes matching opaque inner chemise dress",
+        "Wide satin belt for flattering waist definition",
+        "Non-scratch ultra-soft illusion mesh"
+      ],
+      "materials": "Soft micro-mesh, satin inner dress",
+      "sizingInfo": "Generous wrap with forgiving fit across bust and hips.",
+      "productionTime": "Standard 3–4 business days (2–3 weeks for bulk suites).",
+      "shippingInfo": "Global express dispatch.",
+      "careInstructions": "Delicate hand wash cold.",
+      "images": [
+        "/uploads/whatsapp_image_2026_09_14_at_15_08__1792584858532_c8d517.jpg",
+        "/uploads/whatsapp_image_2026_09_14_at_15_08__1792584880997_362bfb.jpg"
+      ],
+      "colors": [
+        {
+          "name": "Ivory",
+          "hex": "#FAF5EE"
+        },
+        {
+          "name": "White",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Beige",
+          "hex": "#E2D8CA"
+        },
+        {
+          "name": "Nude",
+          "hex": "#E7D3C1"
+        },
+        {
+          "name": "Champagne Gold",
+          "hex": "#E2CFA7"
+        },
+        {
+          "name": "Blush Pink",
+          "hex": "#F0D2D2"
+        },
+        {
+          "name": "Lilac",
+          "hex": "#D8CEE3"
+        },
+        {
+          "name": "Soft Pink",
+          "hex": "#F7D8E2"
+        },
+        {
+          "name": "Sky Blue",
+          "hex": "#ABC4D8"
+        },
+        {
+          "name": "Soft Green",
+          "hex": "#C4D6C4"
+        },
+        {
+          "name": "Olive Green",
+          "hex": "#6F7A56"
+        },
+        {
+          "name": "Chocolate Brown",
+          "hex": "#442A1D"
+        },
+        {
+          "name": "Burnt Orange",
+          "hex": "#C25A27"
+        },
+        {
+          "name": "Nude Brown",
+          "hex": "#9A7864"
+        },
+        {
+          "name": "Emerald Green",
+          "hex": "#1C4A38"
+        },
+        {
+          "name": "Navy Blue",
+          "hex": "#1C2951"
+        },
+        {
+          "name": "Burgundy",
+          "hex": "#631B2A"
+        },
+        {
+          "name": "Red",
+          "hex": "#9E1A1A"
+        }
+      ],
+      "sizes": [
+        "S (UK 6/8)",
+        "M (UK 10/12)",
+        "L (UK 14/16)",
+        "XL (UK 18)",
+        "XXL (UK 20)",
+        "XXXL (UK 22/24)"
+      ],
+      "reviewsCount": 52,
+      "rating": 4.9,
+      "crossSellIds": [
+        "halo-bridesmaids-robe"
+      ],
+      "badge": "Includes Inner Chemise · ₦40,000",
+      "status": "published",
+      "stockQuantity": 25,
+      "stockStatus": "in_stock",
+      "sku": "LE-BRI-013",
+      "createdAt": "2026-08-23T14:10:28.412Z",
+      "updatedAt": "2026-10-21T12:14:41.004Z",
+      "imageGallery": [
+        {
+          "id": "linda-bridesmaids-robe__primary",
+          "url": "/uploads/whatsapp_image_2026_09_14_at_15_08__1792584858532_c8d517.jpg",
+          "position": 0,
+          "role": "primary",
+          "updatedAt": "2026-10-21T12:14:41.004Z"
+        },
+        {
+          "id": "linda-bridesmaids-robe__hover",
+          "url": "/uploads/whatsapp_image_2026_09_14_at_15_08__1792584880997_362bfb.jpg",
+          "position": 1,
+          "role": "hover",
+          "updatedAt": "2026-10-21T12:14:41.004Z"
+        }
+      ]
+    },
+    {
+      "id": "bridal-night-set",
+      "name": "The Bridal Night Set",
+      "slug": "bridal-night-set",
+      "subtitle": "PJ Set + Silk Sleep Face Mask + Hair Bonnet + Indoor Flip-Flops",
+      "priceUSD": 65,
+      "category": "sets",
+      "style": "Silk",
+      "collectionName": "Bridal Party Sets",
+      "description": "For the eve of your wedding day. Sleep deeply in cloud-soft silk pyjamas, padded sleep mask, hair bonnet, and cushioned indoor slippers, waking refreshed for the momentous day ahead.",
+      "details": [
+        "Pure Silk Button-Down Pyjama Set (Shirt + Trousers or Shorts)",
+        "Light-blocking Padded Silk Eye Sleep Mask with gentle elastic band",
+        "Double-lined Reversible Silk Hair Bonnet",
+        "Cushioned Pearl-embroidered Indoor Bridal Flip-Flops"
+      ],
+      "materials": "Mulberry Silk, memory foam slipper base, cotton lining",
+      "sizingInfo": "Select your normal pyjama size and shoe size.",
+      "productionTime": "3–5 days.",
+      "shippingInfo": "Worldwide delivery.",
+      "careInstructions": "Silk care guidelines included.",
+      "images": [
+        "/uploads/client_bridal_28_f4989fcf.jpg",
+        "/uploads/client_bridal_27_3212c639.jpg"
+      ],
+      "colors": [
+        {
+          "name": "Ivory",
+          "hex": "#FAF5EE"
+        },
+        {
+          "name": "White",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Blush Pink",
+          "hex": "#F0D2D2"
+        },
+        {
+          "name": "Lilac",
+          "hex": "#D8CEE3"
+        },
+        {
+          "name": "Sky Blue",
+          "hex": "#ABC4D8"
+        },
+        {
+          "name": "Emerald Green",
+          "hex": "#1C4A38"
+        },
+        {
+          "name": "Burgundy",
+          "hex": "#631B2A"
+        }
+      ],
+      "sizes": [
+        "S (UK 6/8)",
+        "M (UK 10/12)",
+        "L (UK 14/16)",
+        "XL (UK 18)",
+        "XXL (UK 20)",
+        "XXXL (UK 22/24)"
+      ],
+      "reviewsCount": 88,
+      "rating": 4.9,
+      "setItems": [
+        "PJ Set",
+        "Face Mask",
+        "Hair Bonnet",
+        "Indoor Flip-Flop"
+      ],
+      "crossSellIds": [
+        "getting-ready-set"
+      ],
+      "badge": "Night Before · ₦65,000",
+      "status": "published",
+      "stockQuantity": 25,
+      "stockStatus": "in_stock",
+      "sku": "LE-SET-017",
+      "createdAt": "2026-08-27T14:10:28.412Z",
+      "updatedAt": "2026-10-21T12:15:38.275Z",
+      "imageGallery": [
+        {
+          "id": "bridal-night-set__primary",
+          "url": "/uploads/client_bridal_28_f4989fcf.jpg",
+          "position": 0,
+          "role": "primary",
+          "updatedAt": "2026-10-21T12:15:38.275Z"
+        },
+        {
+          "id": "bridal-night-set__hover",
+          "url": "/uploads/client_bridal_27_3212c639.jpg",
+          "position": 1,
+          "role": "hover",
+          "updatedAt": "2026-10-21T12:15:38.275Z"
+        }
+      ]
+    },
+    {
+      "id": "getting-ready-set",
+      "name": "The Getting-Ready Set",
+      "slug": "getting-ready-set",
+      "subtitle": "Robe + Indoor Flip-Flop + Hair Bonnet + Rechargeable Mini Bridal Fan",
+      "priceUSD": 60,
+      "category": "sets",
+      "style": "Silk",
+      "collectionName": "Bridal Party Sets",
+      "description": "The viral bridal suite lifesaver. Keeps your makeup flawlessly set, prevents sweat from touching your silk robe, and ensures effortless comfort while hair and makeup artists work their craft.",
+      "details": [
+        "Lariel Luxury Satin Robe with personalized initials option",
+        "Rechargeable 3-speed Whisper-Quiet Handheld Mini Bridal Cooling Fan",
+        "Non-slip Quilted Satin Indoor Flip-Flops",
+        "Protective Reversible Satin Hair Bonnet"
+      ],
+      "materials": "Satin, ABS mini fan (USB-C rechargeable), rubber sole slippers",
+      "sizingInfo": "Universal robe and slipper sizing.",
+      "productionTime": "3–5 days.",
+      "shippingInfo": "Worldwide courier dispatch.",
+      "careInstructions": "Machine washable bonnet and robe in cold gentle cycle.",
+      "images": [
+        "/uploads/client_bridal_27_3212c639.jpg",
+        "/uploads/client_bridal_29_330e5a9d.jpg"
+      ],
+      "colors": [
+        {
+          "name": "Ivory",
+          "hex": "#FAF5EE"
+        },
+        {
+          "name": "White",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Beige",
+          "hex": "#E2D8CA"
+        },
+        {
+          "name": "Nude",
+          "hex": "#E7D3C1"
+        },
+        {
+          "name": "Champagne Gold",
+          "hex": "#E2CFA7"
+        },
+        {
+          "name": "Blush Pink",
+          "hex": "#F0D2D2"
+        },
+        {
+          "name": "Lilac",
+          "hex": "#D8CEE3"
+        },
+        {
+          "name": "Soft Pink",
+          "hex": "#F7D8E2"
+        },
+        {
+          "name": "Sky Blue",
+          "hex": "#ABC4D8"
+        },
+        {
+          "name": "Soft Green",
+          "hex": "#C4D6C4"
+        },
+        {
+          "name": "Olive Green",
+          "hex": "#6F7A56"
+        },
+        {
+          "name": "Chocolate Brown",
+          "hex": "#442A1D"
+        },
+        {
+          "name": "Burnt Orange",
+          "hex": "#C25A27"
+        },
+        {
+          "name": "Nude Brown",
+          "hex": "#9A7864"
+        },
+        {
+          "name": "Emerald Green",
+          "hex": "#1C4A38"
+        },
+        {
+          "name": "Navy Blue",
+          "hex": "#1C2951"
+        },
+        {
+          "name": "Burgundy",
+          "hex": "#631B2A"
+        },
+        {
+          "name": "Red",
+          "hex": "#9E1A1A"
+        }
+      ],
+      "sizes": [
+        "S (UK 6/8)",
+        "M (UK 10/12)",
+        "L (UK 14/16)",
+        "XL (UK 18)",
+        "XXL (UK 20)",
+        "XXXL (UK 22/24)"
+      ],
+      "reviewsCount": 140,
+      "rating": 5,
+      "isBestSeller": true,
+      "setItems": [
+        "Robe",
+        "Indoor Flip-Flop",
+        "Hair Bonnet",
+        "Mini Fan"
+      ],
+      "crossSellIds": [
+        "amanda-3d-petals-robe"
+      ],
+      "badge": "Bridal Suite Essential · ₦60,000",
+      "status": "published",
+      "stockQuantity": 25,
+      "stockStatus": "in_stock",
+      "sku": "LE-SET-018",
+      "compareAtPriceUSD": 72,
+      "createdAt": "2026-08-28T14:10:28.412Z",
+      "updatedAt": "2026-10-21T12:16:56.405Z",
+      "imageGallery": [
+        {
+          "id": "getting-ready-set__primary",
+          "url": "/uploads/client_bridal_27_3212c639.jpg",
+          "position": 0,
+          "role": "primary",
+          "updatedAt": "2026-10-21T12:16:56.405Z"
+        },
+        {
+          "id": "getting-ready-set__hover",
+          "url": "/uploads/client_bridal_29_330e5a9d.jpg",
+          "position": 1,
+          "role": "hover",
+          "updatedAt": "2026-10-21T12:16:56.405Z"
+        }
+      ]
+    },
+    {
+      "id": "crack-customised-adire-neckline-combo",
+      "name": "Crack Customised Adire × Customized Neckline Combo",
+      "slug": "crack-customised-adire-neckline-combo",
+      "subtitle": "Signature artisanal crack-resist Adire paired with contrasting custom silk lapel neckline",
+      "priceUSD": 35,
+      "category": "adire",
+      "style": "Custom",
+      "collectionName": "Rich African Heritage",
+      "description": "Heritage artistry elevated. Features authentic Abeokuta and Lagos crack-resist dyed Adire batik fabric paired with a custom tailored silk neckline and cuff facing, celebrating traditional Nigerian craftsmanship.",
+      "details": [
+        "Authentic hand-dyed crackle resist Adire motif",
+        "Contrasting custom solid silk neckline & sash tie",
+        "Kimono silhouette with comfortable side slits",
+        "Breathable, lightweight artisanal cotton-silk drape"
+      ],
+      "materials": "Handcrafted Nigerian Adire, Silk Satin neckline trims",
+      "sizingInfo": "S (UK 6/8) through XXXL (UK 22/24).",
+      "productionTime": "Handcrafted in 7–14 business days.",
+      "shippingInfo": "Worldwide express courier via DHL / FedEx.",
+      "careInstructions": "Dry clean or gentle hand wash in cold water with mild detergent.",
+      "images": [
+        "/uploads/1000863775_1792570090079_54d384.jpg",
+        "/uploads/client_bridal_26_e0c2c511.jpg"
+      ],
+      "colors": [
+        {
+          "name": "Royal Indigo & White",
+          "hex": "#1C2951"
+        },
+        {
+          "name": "Warm Terracotta & Ochre",
+          "hex": "#C25A27"
+        },
+        {
+          "name": "Emerald Forest & Gold",
+          "hex": "#1C4A38"
+        }
+      ],
+      "sizes": [
+        "S (UK 6/8)",
+        "M (UK 10/12)",
+        "L (UK 14/16)",
+        "XL (UK 18)",
+        "XXL (UK 20)",
+        "XXXL (UK 22/24)"
+      ],
+      "reviewsCount": 76,
+      "rating": 5,
+      "isBestSeller": true,
+      "crossSellIds": [
+        "crack-adire-robe-silk-neckline",
+        "personalised-adire-robe"
+      ],
+      "badge": "Heritage Combo · ₦35,000",
+      "status": "published",
+      "stockQuantity": 25,
+      "stockStatus": "in_stock",
+      "sku": "LE-ADI-019",
+      "compareAtPriceUSD": 42,
+      "createdAt": "2026-08-29T14:10:28.412Z",
+      "updatedAt": "2026-10-21T08:41:11.192Z",
+      "imageGallery": [
+        {
+          "id": "crack-customised-adire-neckline-combo__primary",
+          "url": "/uploads/1000863775_1792570090079_54d384.jpg",
+          "position": 0,
+          "role": "primary",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        },
+        {
+          "id": "crack-customised-adire-neckline-combo__hover",
+          "url": "/uploads/client_bridal_26_e0c2c511.jpg",
+          "position": 1,
+          "role": "hover",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        }
+      ]
+    },
+    {
+      "id": "crack-adire-robe-silk-neckline",
+      "name": "Crack Adire Robe with Silk Neckline",
+      "slug": "crack-adire-robe-silk-neckline",
+      "subtitle": "Classic crackle Adire resist robe with lustrous silk band collar and matching sash",
+      "priceUSD": 35,
+      "category": "adire",
+      "style": "Silk",
+      "collectionName": "Rich African Heritage",
+      "description": "A timeless staple of the Lariel African Heritage line. Rich crackle indigo dye patterns accented with a smooth liquid silk band that frames the face and neckline with effortless grace.",
+      "details": [
+        "Hand-stamped crack batik motif",
+        "Smooth silk band collar and matching belt",
+        "Generous wrap with secure interior ties"
+      ],
+      "materials": "Authentic Adire fabric, 100% Silk trims",
+      "sizingInfo": "S (UK 6/8) through XXXL (UK 22/24).",
+      "productionTime": "7–14 days handcrafted.",
+      "shippingInfo": "Worldwide shipping.",
+      "careInstructions": "Dry clean recommended.",
+      "images": [
+        "/uploads/1000863775_1792570090079_54d384.jpg",
+        "/uploads/client_bridal_26_e0c2c511.jpg"
+      ],
+      "colors": [
+        {
+          "name": "Indigo Crackle",
+          "hex": "#1C2951"
+        },
+        {
+          "name": "Cocoa Brown Crackle",
+          "hex": "#442A1D"
+        }
+      ],
+      "sizes": [
+        "S (UK 6/8)",
+        "M (UK 10/12)",
+        "L (UK 14/16)",
+        "XL (UK 18)",
+        "XXL (UK 20)",
+        "XXXL (UK 22/24)"
+      ],
+      "reviewsCount": 41,
+      "rating": 4.9,
+      "crossSellIds": [
+        "crack-customised-adire-neckline-combo",
+        "lariel-custom-pattern-adire"
+      ],
+      "badge": "₦35,000",
+      "status": "published",
+      "stockQuantity": 25,
+      "stockStatus": "in_stock",
+      "sku": "LE-ADI-020",
+      "createdAt": "2026-08-30T14:10:28.412Z",
+      "updatedAt": "2026-10-21T08:41:11.192Z",
+      "imageGallery": [
+        {
+          "id": "crack-adire-robe-silk-neckline__primary",
+          "url": "/uploads/1000863775_1792570090079_54d384.jpg",
+          "position": 0,
+          "role": "primary",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        },
+        {
+          "id": "crack-adire-robe-silk-neckline__hover",
+          "url": "/uploads/client_bridal_26_e0c2c511.jpg",
+          "position": 1,
+          "role": "hover",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        }
+      ]
+    },
+    {
+      "id": "personalised-adire-robe",
+      "name": "Personalised Adire Robe",
+      "slug": "personalised-adire-robe",
+      "subtitle": "Custom embroidered Adire robe with your initials, new surname, or wedding title",
+      "priceUSD": 35,
+      "category": "adire",
+      "style": "Custom",
+      "collectionName": "Rich African Heritage",
+      "description": "Commission an authentic Adire robe personalized with gold or metallic thread embroidery of your initials or wedding date, blending Yoruba textile culture with personal keepsake memories.",
+      "details": [
+        "High-density metallic thread embroidery included",
+        "Artisanal hand-dyed Nigerian textile",
+        "Includes matching waist tie sash"
+      ],
+      "materials": "Authentic Adire Cotton-Silk, Madeira metallic embroidery threads",
+      "sizingInfo": "S (UK 6/8) through XXXL (UK 22/24).",
+      "productionTime": "7–14 business days.",
+      "shippingInfo": "Worldwide tracked shipping.",
+      "careInstructions": "Dry clean only.",
+      "images": [
+        "/uploads/client_bridal_27_3212c639.jpg",
+        "/uploads/client_bridal_26_e0c2c511.jpg",
+        "/uploads/1000863775_1792570090079_54d384.jpg"
+      ],
+      "colors": [
+        {
+          "name": "Royal Indigo",
+          "hex": "#1C2951"
+        },
+        {
+          "name": "Burgundy Earth",
+          "hex": "#631B2A"
+        },
+        {
+          "name": "Onyx Geometric",
+          "hex": "#262422"
+        }
+      ],
+      "sizes": [
+        "S (UK 6/8)",
+        "M (UK 10/12)",
+        "L (UK 14/16)",
+        "XL (UK 18)",
+        "XXL (UK 20)",
+        "XXXL (UK 22/24)"
+      ],
+      "reviewsCount": 55,
+      "rating": 5,
+      "crossSellIds": [
+        "crack-customised-adire-neckline-combo",
+        "short-length-patterned-adire"
+      ],
+      "badge": "Personalised · ₦35,000",
+      "status": "published",
+      "stockQuantity": 25,
+      "stockStatus": "in_stock",
+      "sku": "LE-ADI-021",
+      "createdAt": "2026-08-31T14:10:28.412Z",
+      "updatedAt": "2026-10-21T08:41:11.192Z",
+      "imageGallery": [
+        {
+          "id": "personalised-adire-robe__primary",
+          "url": "/uploads/client_bridal_27_3212c639.jpg",
+          "position": 0,
+          "role": "primary",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        },
+        {
+          "id": "personalised-adire-robe__hover",
+          "url": "/uploads/client_bridal_26_e0c2c511.jpg",
+          "position": 1,
+          "role": "hover",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        },
+        {
+          "id": "personalised-adire-robe__gallery_2",
+          "url": "/uploads/1000863775_1792570090079_54d384.jpg",
+          "position": 2,
+          "role": "gallery",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        }
+      ]
+    },
+    {
+      "id": "lariel-custom-pattern-adire",
+      "name": "Lariel Custom Pattern Adire",
+      "slug": "lariel-custom-pattern-adire",
+      "subtitle": "Exclusive proprietary Lariel geometric floral resist pattern hand-drawn by master dyers",
+      "priceUSD": 35,
+      "category": "adire",
+      "style": "Custom",
+      "collectionName": "Rich African Heritage",
+      "description": "An exclusive textile created specifically for Lariel Essentials brides. Features proprietary geometric and floral resist motifs hand-drawn using traditional cassava starch techniques.",
+      "details": [
+        "Proprietary Lariel geometric Adire Eleko pattern",
+        "Handcrafted individually by master dyers in Abeokuta",
+        "Wide kimono sleeves with fluid drape"
+      ],
+      "materials": "100% Artisanal Nigerian Adire Cotton-Silk",
+      "sizingInfo": "S (UK 6/8) through XXXL (UK 22/24).",
+      "productionTime": "7–14 business days.",
+      "shippingInfo": "Express worldwide dispatch.",
+      "careInstructions": "Dry clean recommended.",
+      "images": [
+        "/uploads/client_bridal_26_e0c2c511.jpg",
+        "/uploads/client_bridal_27_3212c639.jpg",
+        "/uploads/1000863775_1792570090079_54d384.jpg"
+      ],
+      "colors": [
+        {
+          "name": "Signature Deep Indigo",
+          "hex": "#1C2951"
+        },
+        {
+          "name": "Olive Bronze",
+          "hex": "#6F7A56"
+        }
+      ],
+      "sizes": [
+        "S (UK 6/8)",
+        "M (UK 10/12)",
+        "L (UK 14/16)",
+        "XL (UK 18)",
+        "XXL (UK 20)",
+        "XXXL (UK 22/24)"
+      ],
+      "reviewsCount": 38,
+      "rating": 4.9,
+      "crossSellIds": [
+        "long-length-exaggerated-sleeves-adire",
+        "crack-adire-robe-silk-neckline"
+      ],
+      "badge": "Custom Pattern · ₦35,000",
+      "status": "published",
+      "stockQuantity": 25,
+      "stockStatus": "in_stock",
+      "sku": "LE-ADI-022",
+      "createdAt": "2026-09-01T14:10:28.412Z",
+      "updatedAt": "2026-10-21T08:41:11.192Z",
+      "imageGallery": [
+        {
+          "id": "lariel-custom-pattern-adire__primary",
+          "url": "/uploads/client_bridal_26_e0c2c511.jpg",
+          "position": 0,
+          "role": "primary",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        },
+        {
+          "id": "lariel-custom-pattern-adire__hover",
+          "url": "/uploads/client_bridal_27_3212c639.jpg",
+          "position": 1,
+          "role": "hover",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        },
+        {
+          "id": "lariel-custom-pattern-adire__gallery_2",
+          "url": "/uploads/1000863775_1792570090079_54d384.jpg",
+          "position": 2,
+          "role": "gallery",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        }
+      ]
+    },
+    {
+      "id": "short-length-patterned-adire",
+      "name": "Short Length Personalised/Patterned Adire",
+      "slug": "short-length-patterned-adire",
+      "subtitle": "Flirty knee-length Adire robe tailored for morning preparation, bridal suite toasts, or beach honeymoon",
+      "priceUSD": 40,
+      "category": "adire",
+      "style": "Custom",
+      "collectionName": "Rich African Heritage",
+      "description": "Chic, contemporary, and versatile. Cut to knee-length for comfortable morning mobility and warm weather destinations, with optional personalized monogramming.",
+      "details": [
+        "Tailored short knee-length silhouette (approx. 95cm)",
+        "Optional personalized chest pocket or back monogram",
+        "Lightweight and breezy artisanal hand-dyed textile"
+      ],
+      "materials": "Artisanal Adire Cotton-Silk blend",
+      "sizingInfo": "S (UK 6/8) through XXXL (UK 22/24).",
+      "productionTime": "7–14 business days.",
+      "shippingInfo": "Worldwide delivery.",
+      "careInstructions": "Cold hand wash or dry clean.",
+      "images": [
+        "/uploads/1000863775_1792570090079_54d384.jpg",
+        "/uploads/client_bridal_26_e0c2c511.jpg"
+      ],
+      "colors": [
+        {
+          "name": "Royal Indigo",
+          "hex": "#1C2951"
+        },
+        {
+          "name": "Warm Terracotta",
+          "hex": "#C25A27"
+        },
+        {
+          "name": "Emerald Forest",
+          "hex": "#1C4A38"
+        }
+      ],
+      "sizes": [
+        "S (UK 6/8)",
+        "M (UK 10/12)",
+        "L (UK 14/16)",
+        "XL (UK 18)",
+        "XXL (UK 20)",
+        "XXXL (UK 22/24)"
+      ],
+      "reviewsCount": 44,
+      "rating": 4.9,
+      "crossSellIds": [
+        "crack-customised-adire-neckline-combo",
+        "bridal-night-set"
+      ],
+      "badge": "Short Silhouette · ₦40,000",
+      "status": "published",
+      "stockQuantity": 25,
+      "stockStatus": "in_stock",
+      "sku": "LE-ADI-023",
+      "createdAt": "2026-09-02T14:10:28.412Z",
+      "updatedAt": "2026-10-21T08:41:11.192Z",
+      "imageGallery": [
+        {
+          "id": "short-length-patterned-adire__primary",
+          "url": "/uploads/1000863775_1792570090079_54d384.jpg",
+          "position": 0,
+          "role": "primary",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        },
+        {
+          "id": "short-length-patterned-adire__hover",
+          "url": "/uploads/client_bridal_26_e0c2c511.jpg",
+          "position": 1,
+          "role": "hover",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        }
+      ]
+    },
+    {
+      "id": "long-length-exaggerated-sleeves-adire",
+      "name": "Long Length Adire with Exaggerated Butterfly Sleeves",
+      "slug": "long-length-exaggerated-sleeves-adire",
+      "subtitle": "Floor-skimming couture Adire silhouette with dramatic oversized cape-like butterfly sleeves",
+      "priceUSD": 55,
+      "category": "adire",
+      "style": "Custom",
+      "collectionName": "Rich African Heritage",
+      "description": "The showstopper of African bridal loungewear. Sweeping floor length paired with dramatic, exaggerated butterfly sleeves that catch the wind and create regal portraits during your traditional wedding morning.",
+      "details": [
+        "Dramatic exaggerated butterfly wing sleeves",
+        "Floor-skimming hemline with reinforced hems",
+        "Premium artisanal Adire resist dye technique",
+        "Wide belt sash for dramatic waist silhouette"
+      ],
+      "materials": "Premium Nigerian Adire Cotton-Silk",
+      "sizingInfo": "Floor length in S (UK 6/8) through XXXL (UK 22/24).",
+      "productionTime": "7–14 business days.",
+      "shippingInfo": "DHL Express worldwide.",
+      "careInstructions": "Dry clean only.",
+      "images": [
+        "/uploads/client_bridal_26_e0c2c511.jpg",
+        "/uploads/client_bridal_27_3212c639.jpg"
+      ],
+      "colors": [
+        {
+          "name": "Regal Indigo & Gold",
+          "hex": "#1C2951"
+        },
+        {
+          "name": "Onyx & Cream Geometric",
+          "hex": "#262422"
+        }
+      ],
+      "sizes": [
+        "S (UK 6/8)",
+        "M (UK 10/12)",
+        "L (UK 14/16)",
+        "XL (UK 18)",
+        "XXL (UK 20)",
+        "XXXL (UK 22/24)"
+      ],
+      "reviewsCount": 62,
+      "rating": 5,
+      "isBestSeller": true,
+      "crossSellIds": [
+        "lariel-custom-pattern-long-sleeves-adire",
+        "amanda-3d-petals-robe"
+      ],
+      "badge": "Exaggerated Sleeves · ₦55,000",
+      "status": "published",
+      "stockQuantity": 25,
+      "stockStatus": "in_stock",
+      "sku": "LE-ADI-024",
+      "compareAtPriceUSD": 66,
+      "createdAt": "2026-09-03T14:10:28.412Z",
+      "updatedAt": "2026-10-21T08:41:11.192Z",
+      "imageGallery": [
+        {
+          "id": "long-length-exaggerated-sleeves-adire__primary",
+          "url": "/uploads/client_bridal_26_e0c2c511.jpg",
+          "position": 0,
+          "role": "primary",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        },
+        {
+          "id": "long-length-exaggerated-sleeves-adire__hover",
+          "url": "/uploads/client_bridal_27_3212c639.jpg",
+          "position": 1,
+          "role": "hover",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        }
+      ]
+    },
+    {
+      "id": "lariel-custom-pattern-long-sleeves-adire",
+      "name": "Lariel Custom Pattern Adire (Long + Exaggerated Sleeves)",
+      "slug": "lariel-custom-pattern-long-sleeves-adire",
+      "subtitle": "Exclusive proprietary Lariel motif combined with floor-length cut and dramatic sleeves",
+      "priceUSD": 50,
+      "category": "adire",
+      "style": "Custom",
+      "collectionName": "Rich African Heritage",
+      "description": "Combining proprietary Lariel floral geometric patterns with our viral exaggerated sleeve silhouette. A celebration of modern African bridal royalty.",
+      "details": [
+        "Proprietary Lariel geometric Eleko pattern",
+        "Dramatic elongated sleeves and floor-sweeping length",
+        "Contrast silk collar accents"
+      ],
+      "materials": "Hand-dyed Adire Cotton-Silk, pure silk trims",
+      "sizingInfo": "S (UK 6/8) through XXXL (UK 22/24).",
+      "productionTime": "7–14 business days.",
+      "shippingInfo": "Worldwide tracked courier.",
+      "careInstructions": "Dry clean recommended.",
+      "images": [
+        "/uploads/client_bridal_27_3212c639.jpg",
+        "/uploads/client_bridal_26_e0c2c511.jpg"
+      ],
+      "colors": [
+        {
+          "name": "Royal Indigo Motif",
+          "hex": "#1C2951"
+        },
+        {
+          "name": "Sunset Terracotta Motif",
+          "hex": "#C25A27"
+        }
+      ],
+      "sizes": [
+        "S (UK 6/8)",
+        "M (UK 10/12)",
+        "L (UK 14/16)",
+        "XL (UK 18)",
+        "XXL (UK 20)",
+        "XXXL (UK 22/24)"
+      ],
+      "reviewsCount": 50,
+      "rating": 5,
+      "crossSellIds": [
+        "long-length-exaggerated-sleeves-adire",
+        "crack-customised-adire-neckline-combo"
+      ],
+      "badge": "₦50,000",
+      "status": "published",
+      "stockQuantity": 25,
+      "stockStatus": "in_stock",
+      "sku": "LE-ADI-025",
+      "createdAt": "2026-09-04T14:10:28.412Z",
+      "updatedAt": "2026-10-21T08:41:11.192Z",
+      "imageGallery": [
+        {
+          "id": "lariel-custom-pattern-long-sleeves-adire__primary",
+          "url": "/uploads/client_bridal_27_3212c639.jpg",
+          "position": 0,
+          "role": "primary",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        },
+        {
+          "id": "lariel-custom-pattern-long-sleeves-adire__hover",
+          "url": "/uploads/client_bridal_26_e0c2c511.jpg",
+          "position": 1,
+          "role": "hover",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        }
+      ]
+    },
+    {
+      "id": "feather-detail-silk-pj",
+      "name": "Silk PJ with Ostrich Feathers",
+      "slug": "feather-detail-silk-pj",
+      "subtitle": "Detachable plush ostrich feather cuffs on tailored button-down shirt and straight-leg trousers",
+      "priceUSD": 80,
+      "category": "pyjamas",
+      "style": "Silk",
+      "collectionName": "Pyjamas",
+      "description": "The pinnacle of bridal loungewear glamor. Features whisper-soft detachable ostrich feather plumes at the wrists and ankles, allowing effortless cleaning while delivering unforgettable morning bridal photos.",
+      "details": [
+        "100% Grade 6A Mulberry silk with mother-of-pearl buttons",
+        "Detachable ostrich feather trims via invisible snap buttons",
+        "Comfortable elasticated back waistband with flat front drawstring",
+        "Contrasting luxury piping along notch collar and pocket"
+      ],
+      "materials": "100% Mulberry Silk, Ethical Ostrich Feathers",
+      "sizingInfo": "S (UK 6/8) through XXXL (UK 22/24).",
+      "productionTime": "Standard 3–4 business days (7–14 days custom).",
+      "shippingInfo": "Express worldwide shipping.",
+      "careInstructions": "Remove feathers before washing. Hand wash cold silk or dry clean.",
+      "images": [
+        "/uploads/client_bridal_26_e0c2c511.jpg",
+        "/uploads/client_bridal_28_f4989fcf.jpg"
+      ],
+      "colors": [
+        {
+          "name": "Ivory",
+          "hex": "#FAF5EE"
+        },
+        {
+          "name": "White",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Champagne Gold",
+          "hex": "#E2CFA7"
+        },
+        {
+          "name": "Blush Pink",
+          "hex": "#F0D2D2"
+        },
+        {
+          "name": "Chocolate Brown",
+          "hex": "#442A1D"
+        },
+        {
+          "name": "Emerald Green",
+          "hex": "#1C4A38"
+        },
+        {
+          "name": "Burgundy",
+          "hex": "#631B2A"
+        }
+      ],
+      "sizes": [
+        "S (UK 6/8)",
+        "M (UK 10/12)",
+        "L (UK 14/16)",
+        "XL (UK 18)",
+        "XXL (UK 20)",
+        "XXXL (UK 22/24)"
+      ],
+      "reviewsCount": 78,
+      "rating": 5,
+      "isBestSeller": true,
+      "crossSellIds": [
+        "bridal-night-set"
+      ],
+      "badge": "Ostrich Feathers · ₦80,000",
+      "status": "published",
+      "stockQuantity": 25,
+      "stockStatus": "in_stock",
+      "sku": "LE-PYJ-026",
+      "compareAtPriceUSD": 96,
+      "createdAt": "2026-09-05T14:10:28.412Z",
+      "updatedAt": "2026-10-21T08:41:11.192Z",
+      "imageGallery": [
+        {
+          "id": "feather-detail-silk-pj__primary",
+          "url": "/uploads/client_bridal_26_e0c2c511.jpg",
+          "position": 0,
+          "role": "primary",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        },
+        {
+          "id": "feather-detail-silk-pj__hover",
+          "url": "/uploads/client_bridal_28_f4989fcf.jpg",
+          "position": 1,
+          "role": "hover",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        }
+      ]
+    },
+    {
+      "id": "ruffle-detail-silk-pj",
+      "name": "Silk PJs with Ruffle Detail",
+      "slug": "ruffle-detail-silk-pj",
+      "subtitle": "Feminine cascading silk ruffle trims along the notched lapel and sleeve cuffs",
+      "priceUSD": 50,
+      "category": "pyjamas",
+      "style": "Silk",
+      "collectionName": "Pyjamas",
+      "description": "A romantic silhouette adorned with whisper-light silk ruffles that frame your face and hands for the most delicate morning portraits.",
+      "details": [
+        "Delicate micro-pleated ruffle cuffs",
+        "Elastic waist shorts or trousers option",
+        "Silky smooth breathable finish"
+      ],
+      "materials": "100% Pure Silk Satin",
+      "sizingInfo": "S (UK 6/8) through XXXL (UK 22/24).",
+      "productionTime": "Standard 3–4 business days.",
+      "shippingInfo": "Worldwide tracked shipping.",
+      "careInstructions": "Hand wash cold.",
+      "images": [
+        "/uploads/client_bridal_23_3749ee64.jpg",
+        "/uploads/client_bridal_25_3d2b033a.jpg"
+      ],
+      "colors": [
+        {
+          "name": "Ivory",
+          "hex": "#FAF5EE"
+        },
+        {
+          "name": "White",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Beige",
+          "hex": "#E2D8CA"
+        },
+        {
+          "name": "Nude",
+          "hex": "#E7D3C1"
+        },
+        {
+          "name": "Champagne Gold",
+          "hex": "#E2CFA7"
+        },
+        {
+          "name": "Blush Pink",
+          "hex": "#F0D2D2"
+        },
+        {
+          "name": "Lilac",
+          "hex": "#D8CEE3"
+        },
+        {
+          "name": "Soft Pink",
+          "hex": "#F7D8E2"
+        },
+        {
+          "name": "Sky Blue",
+          "hex": "#ABC4D8"
+        },
+        {
+          "name": "Soft Green",
+          "hex": "#C4D6C4"
+        },
+        {
+          "name": "Olive Green",
+          "hex": "#6F7A56"
+        },
+        {
+          "name": "Chocolate Brown",
+          "hex": "#442A1D"
+        },
+        {
+          "name": "Burnt Orange",
+          "hex": "#C25A27"
+        },
+        {
+          "name": "Nude Brown",
+          "hex": "#9A7864"
+        },
+        {
+          "name": "Emerald Green",
+          "hex": "#1C4A38"
+        },
+        {
+          "name": "Navy Blue",
+          "hex": "#1C2951"
+        },
+        {
+          "name": "Burgundy",
+          "hex": "#631B2A"
+        },
+        {
+          "name": "Red",
+          "hex": "#9E1A1A"
+        }
+      ],
+      "sizes": [
+        "S (UK 6/8)",
+        "M (UK 10/12)",
+        "L (UK 14/16)",
+        "XL (UK 18)",
+        "XXL (UK 20)",
+        "XXXL (UK 22/24)"
+      ],
+      "reviewsCount": 54,
+      "rating": 4.9,
+      "crossSellIds": [
+        "long-set-pjs",
+        "bridal-morning-shorts-pjs"
+      ],
+      "badge": "Ruffle Detail · ₦50,000",
+      "status": "published",
+      "stockQuantity": 25,
+      "stockStatus": "in_stock",
+      "sku": "LE-PYJ-027",
+      "createdAt": "2026-09-06T14:10:28.412Z",
+      "updatedAt": "2026-10-21T08:41:11.192Z",
+      "imageGallery": [
+        {
+          "id": "ruffle-detail-silk-pj__primary",
+          "url": "/uploads/client_bridal_23_3749ee64.jpg",
+          "position": 0,
+          "role": "primary",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        },
+        {
+          "id": "ruffle-detail-silk-pj__hover",
+          "url": "/uploads/client_bridal_25_3d2b033a.jpg",
+          "position": 1,
+          "role": "hover",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        }
+      ]
+    },
+    {
+      "id": "long-set-pjs",
+      "name": "Long Set PJs",
+      "slug": "long-set-pjs",
+      "subtitle": "Full-length luxury silk satin button-down pyjamas with contrast ivory piping",
+      "priceUSD": 35,
+      "category": "pyjamas",
+      "style": "Silk",
+      "collectionName": "Pyjamas",
+      "description": "Timeless luxury loungewear designed for quiet morning reflection, breakfast with bridesmaids, and honeymoon retreats. Features a fluid drape and soft elastic drawstring waist.",
+      "details": [
+        "Full-length sleeve and tailored straight-leg trousers",
+        "Contrast piped borders and chest pocket",
+        "Mother-of-pearl buttons",
+        "Fluid, breathable silk satin"
+      ],
+      "materials": "Grade 6A Mulberry Silk Satin",
+      "sizingInfo": "S (UK 6/8) through XXXL (UK 22/24).",
+      "productionTime": "Standard 3–4 business days.",
+      "shippingInfo": "Worldwide delivery.",
+      "careInstructions": "Dry clean or cold delicate hand wash.",
+      "images": [
+        "/uploads/client_bridal_31_5b03fb89.jpg",
+        "/uploads/client_bridal_29_330e5a9d.jpg"
+      ],
+      "colors": [
+        {
+          "name": "Ivory",
+          "hex": "#FAF5EE"
+        },
+        {
+          "name": "White",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Beige",
+          "hex": "#E2D8CA"
+        },
+        {
+          "name": "Nude",
+          "hex": "#E7D3C1"
+        },
+        {
+          "name": "Champagne Gold",
+          "hex": "#E2CFA7"
+        },
+        {
+          "name": "Blush Pink",
+          "hex": "#F0D2D2"
+        },
+        {
+          "name": "Lilac",
+          "hex": "#D8CEE3"
+        },
+        {
+          "name": "Soft Pink",
+          "hex": "#F7D8E2"
+        },
+        {
+          "name": "Sky Blue",
+          "hex": "#ABC4D8"
+        },
+        {
+          "name": "Soft Green",
+          "hex": "#C4D6C4"
+        },
+        {
+          "name": "Olive Green",
+          "hex": "#6F7A56"
+        },
+        {
+          "name": "Chocolate Brown",
+          "hex": "#442A1D"
+        },
+        {
+          "name": "Burnt Orange",
+          "hex": "#C25A27"
+        },
+        {
+          "name": "Nude Brown",
+          "hex": "#9A7864"
+        },
+        {
+          "name": "Emerald Green",
+          "hex": "#1C4A38"
+        },
+        {
+          "name": "Navy Blue",
+          "hex": "#1C2951"
+        },
+        {
+          "name": "Burgundy",
+          "hex": "#631B2A"
+        },
+        {
+          "name": "Red",
+          "hex": "#9E1A1A"
+        }
+      ],
+      "sizes": [
+        "S (UK 6/8)",
+        "M (UK 10/12)",
+        "L (UK 14/16)",
+        "XL (UK 18)",
+        "XXL (UK 20)",
+        "XXXL (UK 22/24)"
+      ],
+      "reviewsCount": 82,
+      "rating": 4.9,
+      "crossSellIds": [
+        "feather-detail-silk-pj",
+        "bridal-morning-shorts-pjs"
+      ],
+      "badge": "Long Sets · ₦35,000",
+      "status": "published",
+      "stockQuantity": 25,
+      "stockStatus": "in_stock",
+      "sku": "LE-PYJ-028",
+      "createdAt": "2026-09-07T14:10:28.412Z",
+      "updatedAt": "2026-10-21T08:41:11.192Z",
+      "imageGallery": [
+        {
+          "id": "long-set-pjs__primary",
+          "url": "/uploads/client_bridal_31_5b03fb89.jpg",
+          "position": 0,
+          "role": "primary",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        },
+        {
+          "id": "long-set-pjs__hover",
+          "url": "/uploads/client_bridal_29_330e5a9d.jpg",
+          "position": 1,
+          "role": "hover",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        }
+      ]
+    },
+    {
+      "id": "bridal-morning-shorts-pjs",
+      "name": "Bridal Morning Shorts PJs",
+      "slug": "bridal-morning-shorts-pjs",
+      "subtitle": "Short-sleeved button-front shirt and piped shorts with custom chest embroidery",
+      "priceUSD": 25,
+      "category": "pyjamas",
+      "style": "Silk",
+      "collectionName": "Pyjamas",
+      "description": "Chic, breezy, and universally flattering for summer weddings or warm tropical destinations. Includes personalized chest monogramming for the bride and her bridal party.",
+      "details": [
+        "Short sleeves and mid-rise shorts with curved tulip hem",
+        "Complimentary custom embroidery (Initials, \"The Bride\", or Name)",
+        "Breathable, thermo-regulating silk satin"
+      ],
+      "materials": "100% Pure Silk Satin",
+      "sizingInfo": "S (UK 6/8) through XXXL (UK 22/24).",
+      "productionTime": "Standard 3–4 business days.",
+      "shippingInfo": "Worldwide tracked shipping.",
+      "careInstructions": "Machine washable on delicate cycle with silk detergent.",
+      "images": [
+        "/uploads/client_bridal_30_d10b4dc0.jpg",
+        "/uploads/client_bridal_19_6ae35dbb.jpg",
+        "/uploads/client_bridal_20_b0286a7d.jpg"
+      ],
+      "colors": [
+        {
+          "name": "Ivory",
+          "hex": "#FAF5EE"
+        },
+        {
+          "name": "White",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Beige",
+          "hex": "#E2D8CA"
+        },
+        {
+          "name": "Nude",
+          "hex": "#E7D3C1"
+        },
+        {
+          "name": "Champagne Gold",
+          "hex": "#E2CFA7"
+        },
+        {
+          "name": "Blush Pink",
+          "hex": "#F0D2D2"
+        },
+        {
+          "name": "Lilac",
+          "hex": "#D8CEE3"
+        },
+        {
+          "name": "Soft Pink",
+          "hex": "#F7D8E2"
+        },
+        {
+          "name": "Sky Blue",
+          "hex": "#ABC4D8"
+        },
+        {
+          "name": "Soft Green",
+          "hex": "#C4D6C4"
+        },
+        {
+          "name": "Olive Green",
+          "hex": "#6F7A56"
+        },
+        {
+          "name": "Chocolate Brown",
+          "hex": "#442A1D"
+        },
+        {
+          "name": "Burnt Orange",
+          "hex": "#C25A27"
+        },
+        {
+          "name": "Nude Brown",
+          "hex": "#9A7864"
+        },
+        {
+          "name": "Emerald Green",
+          "hex": "#1C4A38"
+        },
+        {
+          "name": "Navy Blue",
+          "hex": "#1C2951"
+        },
+        {
+          "name": "Burgundy",
+          "hex": "#631B2A"
+        },
+        {
+          "name": "Red",
+          "hex": "#9E1A1A"
+        }
+      ],
+      "sizes": [
+        "S (UK 6/8)",
+        "M (UK 10/12)",
+        "L (UK 14/16)",
+        "XL (UK 18)",
+        "XXL (UK 20)",
+        "XXXL (UK 22/24)"
+      ],
+      "reviewsCount": 65,
+      "rating": 4.8,
+      "crossSellIds": [
+        "long-set-pjs",
+        "short-length-silk-pj-set"
+      ],
+      "badge": "Morning Shorts · ₦25,000",
+      "status": "published",
+      "stockQuantity": 25,
+      "stockStatus": "in_stock",
+      "sku": "LE-PYJ-029",
+      "createdAt": "2026-09-08T14:10:28.412Z",
+      "updatedAt": "2026-10-21T12:18:07.655Z",
+      "imageGallery": [
+        {
+          "id": "bridal-morning-shorts-pjs__primary",
+          "url": "/uploads/client_bridal_30_d10b4dc0.jpg",
+          "position": 0,
+          "role": "primary",
+          "updatedAt": "2026-10-21T12:18:07.655Z"
+        },
+        {
+          "id": "bridal-morning-shorts-pjs__hover",
+          "url": "/uploads/client_bridal_19_6ae35dbb.jpg",
+          "position": 1,
+          "role": "hover",
+          "updatedAt": "2026-10-21T12:18:07.655Z"
+        },
+        {
+          "id": "bridal-morning-shorts-pjs__gallery_2",
+          "url": "/uploads/client_bridal_20_b0286a7d.jpg",
+          "position": 2,
+          "role": "gallery",
+          "updatedAt": "2026-10-21T12:18:07.655Z"
+        }
+      ]
+    },
+    {
+      "id": "short-length-silk-pj-set",
+      "name": "Short Length Silk PJ Set",
+      "slug": "short-length-silk-pj-set",
+      "subtitle": "Classic silk camisole top paired with matching high-waist silk lounge shorts",
+      "priceUSD": 25,
+      "category": "pyjamas",
+      "style": "Silk",
+      "collectionName": "Pyjamas",
+      "description": "Minimalist luxury. Features adjustable delicate straps, flattering neckline, and comfortable elastic shorts that move effortlessly with you.",
+      "details": [
+        "Adjustable spaghetti shoulder straps",
+        "High-waist shorts with curved hemline",
+        "Buttery-soft silk satin finish"
+      ],
+      "materials": "100% Silk Satin",
+      "sizingInfo": "S (UK 6/8) through XXXL (UK 22/24).",
+      "productionTime": "Standard 3–4 business days.",
+      "shippingInfo": "Worldwide shipping.",
+      "careInstructions": "Delicate cold hand wash.",
+      "images": [
+        "/uploads/client_bridal_21_b71723f3.jpg",
+        "/uploads/client_bridal_30_d10b4dc0.jpg",
+        "/uploads/whatsapp_image_2026_09_17_at_06_57__1792585129123_9d8757.jpg"
+      ],
+      "colors": [
+        {
+          "name": "Ivory",
+          "hex": "#FAF5EE"
+        },
+        {
+          "name": "White",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Beige",
+          "hex": "#E2D8CA"
+        },
+        {
+          "name": "Nude",
+          "hex": "#E7D3C1"
+        },
+        {
+          "name": "Champagne Gold",
+          "hex": "#E2CFA7"
+        },
+        {
+          "name": "Blush Pink",
+          "hex": "#F0D2D2"
+        },
+        {
+          "name": "Lilac",
+          "hex": "#D8CEE3"
+        },
+        {
+          "name": "Soft Pink",
+          "hex": "#F7D8E2"
+        },
+        {
+          "name": "Sky Blue",
+          "hex": "#ABC4D8"
+        },
+        {
+          "name": "Soft Green",
+          "hex": "#C4D6C4"
+        },
+        {
+          "name": "Olive Green",
+          "hex": "#6F7A56"
+        },
+        {
+          "name": "Chocolate Brown",
+          "hex": "#442A1D"
+        },
+        {
+          "name": "Burnt Orange",
+          "hex": "#C25A27"
+        },
+        {
+          "name": "Nude Brown",
+          "hex": "#9A7864"
+        },
+        {
+          "name": "Emerald Green",
+          "hex": "#1C4A38"
+        },
+        {
+          "name": "Navy Blue",
+          "hex": "#1C2951"
+        },
+        {
+          "name": "Burgundy",
+          "hex": "#631B2A"
+        },
+        {
+          "name": "Red",
+          "hex": "#9E1A1A"
+        }
+      ],
+      "sizes": [
+        "S (UK 6/8)",
+        "M (UK 10/12)",
+        "L (UK 14/16)",
+        "XL (UK 18)",
+        "XXL (UK 20)",
+        "XXXL (UK 22/24)"
+      ],
+      "reviewsCount": 46,
+      "rating": 4.9,
+      "crossSellIds": [
+        "bridal-morning-shorts-pjs"
+      ],
+      "badge": "Short Set · ₦25,000",
+      "status": "published",
+      "stockQuantity": 25,
+      "stockStatus": "in_stock",
+      "sku": "LE-PYJ-030",
+      "createdAt": "2026-09-09T14:10:28.412Z",
+      "updatedAt": "2026-10-21T12:18:49.128Z",
+      "imageGallery": [
+        {
+          "id": "short-length-silk-pj-set__primary",
+          "url": "/uploads/client_bridal_21_b71723f3.jpg",
+          "position": 0,
+          "role": "primary",
+          "updatedAt": "2026-10-21T12:18:49.128Z"
+        },
+        {
+          "id": "short-length-silk-pj-set__hover",
+          "url": "/uploads/client_bridal_30_d10b4dc0.jpg",
+          "position": 1,
+          "role": "hover",
+          "updatedAt": "2026-10-21T12:18:49.128Z"
+        },
+        {
+          "id": "short-length-silk-pj-set__gallery_2",
+          "url": "/uploads/whatsapp_image_2026_09_17_at_06_57__1792585129123_9d8757.jpg",
+          "position": 2,
+          "role": "gallery",
+          "updatedAt": "2026-10-21T12:18:49.128Z"
+        }
+      ]
+    },
+    {
+      "id": "junior-bridesmaid-robe",
+      "name": "Junior Bridesmaids Silk & Lace Robe",
+      "slug": "junior-bridesmaid-robe",
+      "subtitle": "Matching silhouette with delicate lace hems crafted for teens and young bridesmaids",
+      "priceUSD": 25,
+      "category": "junior",
+      "style": "Lace",
+      "collectionName": "Junior / Kids",
+      "description": "Ensure the young ladies in your wedding party feel included and equally regal on the wedding morning. Tailored to coordinate seamlessly with adult bridesmaid robes.",
+      "details": [
+        "Age-appropriate coverage with internal security ties",
+        "Delicate eyelash floral lace at sleeves",
+        "Available in all matching bridal party colorways"
+      ],
+      "materials": "Soft luxury satin, floral lace",
+      "sizingInfo": "Ages 8 to 16 years.",
+      "productionTime": "Standard 3–4 days (2–3 weeks bulk).",
+      "shippingInfo": "Worldwide shipping.",
+      "careInstructions": "Machine wash delicate cold.",
+      "images": [
+        "/uploads/regenerated_image_1788965491439.jpg",
+        "/uploads/regenerated_image_1788965497255.jpg"
+      ],
+      "colors": [
+        {
+          "name": "Ivory",
+          "hex": "#FAF5EE"
+        },
+        {
+          "name": "White",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Beige",
+          "hex": "#E2D8CA"
+        },
+        {
+          "name": "Nude",
+          "hex": "#E7D3C1"
+        },
+        {
+          "name": "Champagne Gold",
+          "hex": "#E2CFA7"
+        },
+        {
+          "name": "Blush Pink",
+          "hex": "#F0D2D2"
+        },
+        {
+          "name": "Lilac",
+          "hex": "#D8CEE3"
+        },
+        {
+          "name": "Soft Pink",
+          "hex": "#F7D8E2"
+        },
+        {
+          "name": "Sky Blue",
+          "hex": "#ABC4D8"
+        },
+        {
+          "name": "Soft Green",
+          "hex": "#C4D6C4"
+        },
+        {
+          "name": "Olive Green",
+          "hex": "#6F7A56"
+        },
+        {
+          "name": "Chocolate Brown",
+          "hex": "#442A1D"
+        },
+        {
+          "name": "Burnt Orange",
+          "hex": "#C25A27"
+        },
+        {
+          "name": "Nude Brown",
+          "hex": "#9A7864"
+        },
+        {
+          "name": "Emerald Green",
+          "hex": "#1C4A38"
+        },
+        {
+          "name": "Navy Blue",
+          "hex": "#1C2951"
+        },
+        {
+          "name": "Burgundy",
+          "hex": "#631B2A"
+        },
+        {
+          "name": "Red",
+          "hex": "#9E1A1A"
+        }
+      ],
+      "sizes": [
+        "Age 8-10",
+        "Age 11-13",
+        "Age 14-16"
+      ],
+      "reviewsCount": 34,
+      "rating": 4.9,
+      "crossSellIds": [
+        "flower-girl-satin-robe",
+        "halo-bridesmaids-robe"
+      ],
+      "badge": "₦25,000",
+      "status": "published",
+      "stockQuantity": 25,
+      "stockStatus": "in_stock",
+      "sku": "LE-JUN-039",
+      "createdAt": "2026-09-18T14:10:28.412Z",
+      "updatedAt": "2026-10-21T08:41:11.192Z",
+      "imageGallery": [
+        {
+          "id": "junior-bridesmaid-robe__primary",
+          "url": "/uploads/regenerated_image_1788965491439.jpg",
+          "position": 0,
+          "role": "primary",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        },
+        {
+          "id": "junior-bridesmaid-robe__hover",
+          "url": "/uploads/regenerated_image_1788965497255.jpg",
+          "position": 1,
+          "role": "hover",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        }
+      ]
+    },
+    {
+      "id": "flower-girl-satin-robe",
+      "name": "Flower Girl Satin Bow Robe",
+      "slug": "flower-girl-satin-robe",
+      "subtitle": "Adorably crafted miniature silk robe with back satin bow and embroidered \"Flower Girl\"",
+      "priceUSD": 20,
+      "category": "junior",
+      "style": "Silk",
+      "collectionName": "Junior / Kids",
+      "description": "Every little princess deserves her moment of celebration. Featuring a charming oversized bow detail at the back and comfortable kimono wrap design.",
+      "details": [
+        "Pre-attached sewn-in belt so it never gets lost",
+        "Delicate gold foil or thread embroidery option",
+        "Ultra-soft hypoallergenic satin gentle on young skin"
+      ],
+      "materials": "Hypoallergenic Silk Satin",
+      "sizingInfo": "Ages 2 to 7 years.",
+      "productionTime": "Standard 3–4 days.",
+      "shippingInfo": "Worldwide shipping.",
+      "careInstructions": "Machine washable.",
+      "images": [
+        "/uploads/regenerated_image_1788965497255.jpg",
+        "/uploads/regenerated_image_1788965491439.jpg"
+      ],
+      "colors": [
+        {
+          "name": "Ivory",
+          "hex": "#FAF5EE"
+        },
+        {
+          "name": "White",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Blush Pink",
+          "hex": "#F0D2D2"
+        },
+        {
+          "name": "Butter Yellow",
+          "hex": "#FDF1BE"
+        }
+      ],
+      "sizes": [
+        "Age 2-3",
+        "Age 4-5",
+        "Age 6-7"
+      ],
+      "reviewsCount": 42,
+      "rating": 5,
+      "crossSellIds": [
+        "junior-bridesmaid-robe",
+        "amanda-3d-petals-robe"
+      ],
+      "badge": "₦20,000",
+      "status": "published",
+      "stockQuantity": 25,
+      "stockStatus": "in_stock",
+      "sku": "LE-JUN-040",
+      "createdAt": "2026-09-19T14:10:28.412Z",
+      "updatedAt": "2026-10-21T08:41:11.192Z",
+      "imageGallery": [
+        {
+          "id": "flower-girl-satin-robe__primary",
+          "url": "/uploads/regenerated_image_1788965497255.jpg",
+          "position": 0,
+          "role": "primary",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        },
+        {
+          "id": "flower-girl-satin-robe__hover",
+          "url": "/uploads/regenerated_image_1788965491439.jpg",
+          "position": 1,
+          "role": "hover",
+          "updatedAt": "2026-10-21T08:41:11.192Z"
+        }
+      ]
+    }
+  ],
+  "categories": [
+    {
+      "id": "bridal",
+      "name": "Bridal Robes",
+      "slug": "bridal",
+      "subtitle": "Made for the moment before the dress.",
+      "description": "Our signature bridal robes are handcrafted from 22-momme pure Mulberry silk, tiered French illusion tulle, and hand-appliquéd 3D floral petals.",
+      "heroImage": "/uploads/1000863672_1792569460768_005529.jpg",
+      "badge": "Signature Collection",
+      "isVisible": true,
+      "order": 1,
+      "updatedAt": "2026-10-21T08:41:11.192Z"
+    },
+    {
+      "id": "bridesmaids",
+      "name": "Bridesmaids Robes",
+      "slug": "bridesmaids",
+      "subtitle": "For your girls & coordinated morning suites.",
+      "description": "Featuring our HALO mesh-sleeve robes, Linda ruffle sets, Abiks pearl details, and classic liquid silk styles for your bride tribe.",
+      "heroImage": "/uploads/1000863952_1792570551063_d65956.jpg",
+      "badge": "Party Bundles",
+      "isVisible": true,
+      "order": 2,
+      "updatedAt": "2026-10-21T08:41:11.192Z"
+    },
+    {
+      "id": "sets",
+      "name": "Bridal Party Sets",
+      "slug": "sets",
+      "subtitle": "Every detail of the getting-ready ritual.",
+      "description": "Curated gift sets pairing luxury robes with Mulberry silk bonnets, scrunchies, satin pillowcases, memory-foam slippers, and handheld mini fans.",
+      "heroImage": "/uploads/client_bridal_27_3212c639.jpg",
+      "badge": "Bestselling Boxes",
+      "isVisible": true,
+      "order": 3,
+      "updatedAt": "2026-10-21T08:41:11.192Z"
+    },
+    {
+      "id": "adire",
+      "name": "Rich African Heritage",
+      "slug": "adire",
+      "subtitle": "Adire, reimagined for the modern bride.",
+      "description": "Centuries-old Yoruba resist-dyeing traditions meet liquid bridal silk. Handcrafted in Abeokuta and Lagos for unforgettable royal mornings.",
+      "heroImage": "/uploads/1000863775_1792570090079_54d384.jpg",
+      "badge": "Heritage Craft",
+      "isVisible": true,
+      "order": 4,
+      "updatedAt": "2026-10-21T08:41:11.192Z"
+    },
+    {
+      "id": "pyjamas",
+      "name": "Bridal Pyjamas",
+      "slug": "pyjamas",
+      "subtitle": "Feather trim long sets, piped shorts & eve loungewear.",
+      "description": "Slip into cloud-soft Mulberry silk pyjamas with detachable ostrich feathers and custom monogramming for the eve of your celebration.",
+      "heroImage": "/uploads/client_bridal_23_3749ee64.jpg",
+      "badge": "Eve Loungewear",
+      "isVisible": true,
+      "order": 5,
+      "updatedAt": "2026-10-21T08:41:11.192Z"
+    },
+    {
+      "id": "accessories",
+      "name": "Bridal Accessories",
+      "slug": "accessories",
+      "subtitle": "Bonnets, pillowcases, flip-flops & suite essentials.",
+      "description": "High-protection reversible silk bonnets, lash-setting mini fans, and cushioned flip-flops to ensure flawless ease in the bridal suite.",
+      "heroImage": "/uploads/client_bridal_29_330e5a9d.jpg",
+      "badge": "Finishing Touches",
+      "isVisible": true,
+      "order": 6
+    },
+    {
+      "id": "personalised",
+      "name": "Personalised Robes",
+      "slug": "personalised",
+      "subtitle": "Custom embroidered surnames, titles & dates.",
+      "description": "Cherish an eternal bridal heirloom with metallic thread monograms across the back or pocket in modern serif or romantic calligraphy.",
+      "heroImage": "/uploads/client_bridal_27_3212c639.jpg",
+      "badge": "Bespoke Monogram",
+      "isVisible": true,
+      "order": 7
+    },
+    {
+      "id": "junior",
+      "name": "Junior & Kids Robes",
+      "slug": "junior",
+      "subtitle": "For flower girls and junior bridesmaids.",
+      "description": "Delicate matching robes designed for the little princesses participating in your celebration.",
+      "heroImage": "/uploads/regenerated_image_1788965491439.jpg",
+      "badge": "Little Princesses",
+      "isVisible": true,
+      "order": 8
+    },
+    {
+      "id": "new",
+      "name": "New Arrivals",
+      "slug": "new",
+      "subtitle": "Fresh From Essentials.",
+      "description": "Discover fresh bridal silhouettes, newly released sunset hues, and artisan embellishments.",
+      "heroImage": "/uploads/client_bridal_09_2e0e485f.jpg",
+      "badge": "Just Released",
+      "isVisible": true,
+      "order": 9
+    }
+  ],
+  "orders": [
+    {
+      "orderId": "LE-94821",
+      "date": "Aug 14, 2024",
+      "status": "Delivered",
+      "customerName": "Chioma Adeyemi",
+      "customerEmail": "chioma.adeyemi@gmail.com",
+      "customerPhone": "+44 7911 123456",
+      "shippingAddress": {
+        "name": "Chioma Adeyemi",
+        "city": "Kensington, London",
+        "country": "United Kingdom",
+        "street": "42 Holland Park Gardens"
+      },
+      "items": [
+        {
+          "productName": "Amanda 3D Petals Robe",
+          "color": "Ivory",
+          "size": "M (UK 10-12)",
+          "quantity": 1,
+          "priceFormatted": "$150",
+          "priceUSD": 150
+        },
+        {
+          "productName": "Reversible Mulberry Silk Hair Bonnet",
+          "color": "Ivory / Champagne",
+          "size": "Universal",
+          "quantity": 1,
+          "priceFormatted": "$45",
+          "priceUSD": 45
+        }
+      ],
+      "totalFormatted": "$195",
+      "totalUSD": 195,
+      "trackingNumber": "DHL-EX-9928374182"
+    },
+    {
+      "orderId": "LE-94822",
+      "date": "Sep 02, 2024",
+      "status": "In Production",
+      "customerName": "Folashade Alakija",
+      "customerEmail": "fola.alakija@icloud.com",
+      "customerPhone": "+234 802 345 6789",
+      "shippingAddress": {
+        "name": "Folashade Alakija",
+        "city": "Victoria Island, Lagos",
+        "country": "Nigeria",
+        "street": "Plot 14 Akin Adesola St"
+      },
+      "items": [
+        {
+          "productName": "Sisi Yemi Halter Robe Dress",
+          "color": "Royal Gold",
+          "size": "L (UK 14/16)",
+          "quantity": 1,
+          "priceFormatted": "$300",
+          "priceUSD": 300
+        },
+        {
+          "productName": "Halo Bridesmaids Robe",
+          "color": "Champagne Gold",
+          "size": "M (UK 10-12)",
+          "quantity": 5,
+          "priceFormatted": "$150",
+          "priceUSD": 150
+        }
+      ],
+      "totalFormatted": "$450",
+      "totalUSD": 450,
+      "trackingNumber": "FEDEX-NG-88371902"
+    },
+    {
+      "orderId": "LE-94823",
+      "date": "Sep 18, 2024",
+      "status": "Processing",
+      "customerName": "Amara Okonkwo",
+      "customerEmail": "amara.okonkwo@outlook.com",
+      "customerPhone": "+1 416 555 0192",
+      "shippingAddress": {
+        "name": "Amara Okonkwo",
+        "city": "Toronto, ON",
+        "country": "Canada",
+        "street": "88 Bay Street, Suite 1204"
+      },
+      "items": [
+        {
+          "productName": "The Complete Beauty Set",
+          "color": "Ivory & Champagne",
+          "size": "M (UK 10-12)",
+          "quantity": 1,
+          "priceFormatted": "$285",
+          "priceUSD": 285
+        }
+      ],
+      "totalFormatted": "$285",
+      "totalUSD": 285,
+      "trackingNumber": "PENDING-DISPATCH"
+    }
+  ],
+  "admins": [
+    {
+      "id": "admin-1",
+      "name": "Laide",
+      "email": "admin@larielextravaganza.com",
+      "role": "Super Admin",
+      "avatar": "/uploads/laide_founder_portrait_1789650582034.jpg",
+      "token": "lariel_super_admin_sec_token_2026"
+    }
+  ],
+  "activityLogs": [
+    {
+      "id": "log-1792658868568",
+      "action": "Deleted image for [product:sunset-robe] -> updated code: data/db.json, src/data/products.ts, src/constants/imageDefaults.ts, src/data/categories.ts, src/data/siteSettings.ts, src/data/realBrides.ts",
+      "adminName": "Admin",
+      "timestamp": "2026-10-22T08:47:48.568Z"
+    },
+    {
+      "id": "log-1792598051388",
+      "action": "Uploaded media file [local]: test_quick_card_1792503148660_2f9819.jpg",
+      "adminName": "Admin",
+      "timestamp": "2026-10-21T15:54:11.388Z"
+    },
+    {
+      "id": "log-1792598051368",
+      "action": "Admin logged in: Laide (admin@larielextravaganza.com)",
+      "adminName": "Laide",
+      "timestamp": "2026-10-21T15:54:11.368Z"
+    },
+    {
+      "id": "log-1792597583820",
+      "action": "Uploaded media file [local]: test_quick_card_1792503148660_2f9819.jpg",
+      "adminName": "Admin",
+      "timestamp": "2026-10-21T15:46:23.820Z"
+    },
+    {
+      "id": "log-1792597583798",
+      "action": "Admin logged in: Laide (admin@larielextravaganza.com)",
+      "adminName": "Laide",
+      "timestamp": "2026-10-21T15:46:23.798Z"
+    },
+    {
+      "id": "log-1792597576546",
+      "action": "Admin logged in: Laide (admin@larielextravaganza.com)",
+      "adminName": "Laide",
+      "timestamp": "2026-10-21T15:46:16.546Z"
+    },
+    {
+      "id": "log-1792585129132",
+      "action": "Saved uploaded image [whatsapp_image_2026_09_17_at_06_57__1792585129123_9d8757.jpg] directly to code: data/db.json, src/data/products.ts, src/constants/imageDefaults.ts, src/data/categories.ts, src/data/siteSettings.ts, src/data/realBrides.ts",
+      "adminName": "Admin",
+      "timestamp": "2026-10-21T12:18:49.132Z"
+    },
+    {
+      "id": "log-1792585129124",
+      "action": "Uploaded media file [local]: whatsapp_image_2026_09_17_at_06_57__1792585129123_9d8757.jpg",
+      "adminName": "Admin",
+      "timestamp": "2026-10-21T12:18:49.124Z"
+    },
+    {
+      "id": "log-1792585087658",
+      "action": "Saved uploaded image [whatsapp_image_2026_09_17_at_06_57__1792585087648_f444fd.jpg] directly to code: data/db.json, src/data/products.ts, src/constants/imageDefaults.ts, src/data/categories.ts, src/data/siteSettings.ts, src/data/realBrides.ts",
+      "adminName": "Admin",
+      "timestamp": "2026-10-21T12:18:07.658Z"
+    },
+    {
+      "id": "log-1792585087649",
+      "action": "Uploaded media file [local]: whatsapp_image_2026_09_17_at_06_57__1792585087648_f444fd.jpg",
+      "adminName": "Admin",
+      "timestamp": "2026-10-21T12:18:07.649Z"
+    },
+    {
+      "id": "log-1792585016408",
+      "action": "Saved uploaded image [whatsapp_image_2026_09_17_at_06_14__1792585016400_dfa2f5.jpg] directly to code: data/db.json, src/data/products.ts, src/constants/imageDefaults.ts, src/data/categories.ts, src/data/siteSettings.ts, src/data/realBrides.ts",
+      "adminName": "Admin",
+      "timestamp": "2026-10-21T12:16:56.408Z"
+    },
+    {
+      "id": "log-1792585016401",
+      "action": "Uploaded media file [local]: whatsapp_image_2026_09_17_at_06_14__1792585016400_dfa2f5.jpg",
+      "adminName": "Admin",
+      "timestamp": "2026-10-21T12:16:56.401Z"
+    },
+    {
+      "id": "log-1792584969005",
+      "action": "Saved uploaded image [client_bridal_27_3212c639.jpg] directly to code: data/db.json, src/data/products.ts, src/constants/imageDefaults.ts, src/data/categories.ts, src/data/siteSettings.ts, src/data/realBrides.ts",
+      "adminName": "Admin",
+      "timestamp": "2026-10-21T12:16:09.005Z"
+    },
+    {
+      "id": "log-1792584968997",
+      "action": "Uploaded media file [local]: client_bridal_27_3212c639.jpg",
+      "adminName": "Admin",
+      "timestamp": "2026-10-21T12:16:08.997Z"
+    },
+    {
+      "id": "log-1792584938279",
+      "action": "Saved uploaded image [whatsapp_image_2026_09_17_at_06_07__1792584938270_8bdf5b.jpg] directly to code: data/db.json, src/data/products.ts, src/constants/imageDefaults.ts, src/data/categories.ts, src/data/siteSettings.ts, src/data/realBrides.ts",
+      "adminName": "Admin",
+      "timestamp": "2026-10-21T12:15:38.279Z"
+    },
+    {
+      "id": "log-1792584938271",
+      "action": "Uploaded media file [local]: whatsapp_image_2026_09_17_at_06_07__1792584938270_8bdf5b.jpg",
+      "adminName": "Admin",
+      "timestamp": "2026-10-21T12:15:38.271Z"
+    },
+    {
+      "id": "log-1792584912457",
+      "action": "Saved uploaded image [whatsapp_image_2026_09_17_at_06_07__1792584912446_5da9a5.jpg] directly to code: data/db.json, src/data/products.ts, src/constants/imageDefaults.ts, src/data/categories.ts, src/data/siteSettings.ts, src/data/realBrides.ts",
+      "adminName": "Admin",
+      "timestamp": "2026-10-21T12:15:12.457Z"
+    },
+    {
+      "id": "log-1792584912447",
+      "action": "Uploaded media file [local]: whatsapp_image_2026_09_17_at_06_07__1792584912446_5da9a5.jpg",
+      "adminName": "Admin",
+      "timestamp": "2026-10-21T12:15:12.447Z"
+    },
+    {
+      "id": "log-1792584881008",
+      "action": "Saved uploaded image [whatsapp_image_2026_09_14_at_15_08__1792584880997_362bfb.jpg] directly to code: data/db.json, src/data/products.ts, src/constants/imageDefaults.ts, src/data/categories.ts, src/data/siteSettings.ts, src/data/realBrides.ts",
+      "adminName": "Admin",
+      "timestamp": "2026-10-21T12:14:41.008Z"
+    },
+    {
+      "id": "log-1792584880999",
+      "action": "Uploaded media file [local]: whatsapp_image_2026_09_14_at_15_08__1792584880997_362bfb.jpg",
+      "adminName": "Admin",
+      "timestamp": "2026-10-21T12:14:40.999Z"
+    },
+    {
+      "id": "log-1792584858541",
+      "action": "Saved uploaded image [whatsapp_image_2026_09_14_at_15_08__1792584858532_c8d517.jpg] directly to code: data/db.json, src/data/products.ts, src/constants/imageDefaults.ts, src/data/categories.ts, src/data/siteSettings.ts, src/data/realBrides.ts",
+      "adminName": "Admin",
+      "timestamp": "2026-10-21T12:14:18.541Z"
+    },
+    {
+      "id": "log-1792584858533",
+      "action": "Uploaded media file [local]: whatsapp_image_2026_09_14_at_15_08__1792584858532_c8d517.jpg",
+      "adminName": "Admin",
+      "timestamp": "2026-10-21T12:14:18.533Z"
+    },
+    {
+      "id": "log-1792584829826",
+      "action": "Saved uploaded image [whatsapp_image_2026_09_13_at_14_44__1792584829818_1f503b.jpg] directly to code: data/db.json, src/data/products.ts, src/constants/imageDefaults.ts, src/data/categories.ts, src/data/siteSettings.ts, src/data/realBrides.ts",
+      "adminName": "Admin",
+      "timestamp": "2026-10-21T12:13:49.826Z"
+    },
+    {
+      "id": "log-1792584829819",
+      "action": "Uploaded media file [local]: whatsapp_image_2026_09_13_at_14_44__1792584829818_1f503b.jpg",
+      "adminName": "Admin",
+      "timestamp": "2026-10-21T12:13:49.819Z"
+    },
+    {
+      "id": "log-1792584758921",
+      "action": "Saved uploaded image [1000863798_1792569936882_cd6124.jpg] directly to code: data/db.json, src/data/products.ts, src/constants/imageDefaults.ts, src/data/categories.ts, src/data/siteSettings.ts, src/data/realBrides.ts",
+      "adminName": "Admin",
+      "timestamp": "2026-10-21T12:12:38.921Z"
+    },
+    {
+      "id": "log-1792584758913",
+      "action": "Uploaded media file [local]: 1000863798_1792569936882_cd6124.jpg",
+      "adminName": "Admin",
+      "timestamp": "2026-10-21T12:12:38.913Z"
+    },
+    {
+      "id": "log-1792584710687",
+      "action": "Saved uploaded image [laide_founder_portrait_1789650582034.jpg] directly to code: data/db.json, src/data/products.ts, src/constants/imageDefaults.ts, src/data/categories.ts, src/data/siteSettings.ts, src/data/realBrides.ts",
+      "adminName": "Admin",
+      "timestamp": "2026-10-21T12:11:50.687Z"
+    },
+    {
+      "id": "log-1792584710679",
+      "action": "Uploaded media file [local]: laide_founder_portrait_1789650582034.jpg",
+      "adminName": "Admin",
+      "timestamp": "2026-10-21T12:11:50.679Z"
+    },
+    {
+      "id": "log-1792584684887",
+      "action": "Saved uploaded image [laide_founder_portrait_1789650582034.jpg] directly to code: data/db.json, src/data/products.ts, src/constants/imageDefaults.ts, src/data/categories.ts, src/data/siteSettings.ts, src/data/realBrides.ts",
+      "adminName": "Admin",
+      "timestamp": "2026-10-21T12:11:24.887Z"
+    },
+    {
+      "id": "log-1792584684879",
+      "action": "Uploaded media file [local]: laide_founder_portrait_1789650582034.jpg",
+      "adminName": "Admin",
+      "timestamp": "2026-10-21T12:11:24.879Z"
+    },
+    {
+      "id": "log-1792584612574",
+      "action": "Admin logged in: Laide (admin@larielextravaganza.com)",
+      "adminName": "Laide",
+      "timestamp": "2026-10-21T12:10:12.574Z"
+    },
+    {
+      "id": "log-1792572071192",
+      "action": "Saved all uploaded product images and brand logo directly to code",
+      "timestamp": "2026-10-21T08:41:11.192Z"
+    },
+    {
+      "id": "log-1792503390694",
+      "action": "Uploaded media file [local]: test_sample_1792503363831_ae49f6.jpg",
+      "adminName": "Admin",
+      "timestamp": "2026-10-20T13:36:30.694Z"
+    },
+    {
+      "id": "log-1792503363832",
+      "action": "Uploaded media file [local]: test_sample_1792503363831_ae49f6.jpg",
+      "adminName": "Admin",
+      "timestamp": "2026-10-20T13:36:03.832Z"
+    },
+    {
+      "id": "log-1792503148676",
+      "action": "Saved uploaded image [test_quick_card_1792503148660_2f9819.jpg] directly to code: data/db.json, src/data/products.ts, src/constants/imageDefaults.ts, src/data/categories.ts, src/data/siteSettings.ts, src/data/realBrides.ts",
+      "adminName": "Admin",
+      "timestamp": "2026-10-20T13:32:28.676Z"
+    },
+    {
+      "id": "log-1792503148661",
+      "action": "Uploaded media file [local]: test_quick_card_1792503148660_2f9819.jpg",
+      "adminName": "Admin",
+      "timestamp": "2026-10-20T13:32:28.661Z"
+    },
+    {
+      "id": "log-1792503148629",
+      "action": "Admin logged in: Laide (admin@larielextravaganza.com)",
+      "adminName": "Laide",
+      "timestamp": "2026-10-20T13:32:28.629Z"
+    },
+    {
+      "id": "log-1792500411776",
+      "action": "Uploaded media file [local]: verify_code_save_1792499634459_1792499634468_9faefa.jpg",
+      "adminName": "Admin",
+      "timestamp": "2026-10-20T12:46:51.776Z"
+    },
+    {
+      "id": "log-1792500411741",
+      "action": "Admin logged in: Laide (admin@larielextravaganza.com)",
+      "adminName": "Laide",
+      "timestamp": "2026-10-20T12:46:51.741Z"
+    },
+    {
+      "id": "log-1792500017923",
+      "action": "Admin logged in: Laide (admin@larielextravaganza.com)",
+      "adminName": "Laide",
+      "timestamp": "2026-10-20T12:40:17.923Z"
+    },
+    {
+      "id": "log-1792499634478",
+      "action": "Saved uploaded image [verify_code_save_1792499634459_1792499634468_9faefa.jpg] directly to code: data/db.json, src/data/products.ts, src/constants/imageDefaults.ts, src/data/categories.ts, src/data/siteSettings.ts, src/data/realBrides.ts",
+      "adminName": "Admin",
+      "timestamp": "2026-10-20T12:33:54.478Z"
+    },
+    {
+      "id": "log-1792499634470",
+      "action": "Uploaded media file [local]: verify_code_save_1792499634459_1792499634468_9faefa.jpg",
+      "adminName": "Admin",
+      "timestamp": "2026-10-20T12:33:54.470Z"
+    },
+    {
+      "id": "log-1792499634445",
+      "action": "Admin logged in: Laide (admin@larielextravaganza.com)",
+      "adminName": "Laide",
+      "timestamp": "2026-10-20T12:33:54.445Z"
+    },
+    {
+      "id": "log-1792395712113",
+      "action": "Updated site settings and hero imagery",
+      "adminName": "Admin",
+      "timestamp": "2026-10-19T07:41:52.113Z"
+    },
+    {
+      "id": "log-1792395712089",
+      "action": "Admin logged in: Laide (admin@larielextravaganza.com)",
+      "adminName": "Laide",
+      "timestamp": "2026-10-19T07:41:52.089Z"
+    },
+    {
+      "id": "log-1792395704311",
+      "action": "Admin logged in: Laide (admin@larielextravaganza.com)",
+      "adminName": "Laide",
+      "timestamp": "2026-10-19T07:41:44.311Z"
+    }
+  ],
+  "settings": {
+    "homeHeroImage": "/uploads/bridal_couch_hero_1788951504284.jpg",
+    "homeHeroTitle": "The Morning Before Forever",
+    "homeHeroSubtitle": "Hand-appliquéd 3D florals, French chantilly laces & 100% pure Mulberry liquid silks for the discerning global bride.",
+    "announcement": "Complimentary worldwide express courier delivery on all bridal suite commissions.",
+    "laidePortraitImage": "/uploads/laide_founder_portrait_1789650582034.jpg",
+    "brandLogoImage": "/uploads/lariel_brand_logo_1788970256407.jpg",
+    "heroImage": "/uploads/bridal_couch_hero_1788951504284.jpg",
+    "canonicalOverrides": {
+      "HERO_MAIN": "/uploads/bridal_couch_hero_1788951504284.jpg",
+      "LOGO_EMBLEM": "/uploads/lariel_brand_logo_1788970256407.jpg",
+      "FOUNDER_PORTRAIT": "/uploads/laide_founder_portrait_1789650582034.jpg",
+      "ADMIN_AVATAR": "/uploads/test_avatar_1792675729496.jpg"
+    },
+    "adminAvatarImage": "/uploads/test_avatar_1792675729496.jpg"
+  },
+  "realBrides": [
+    {
+      "id": "bride-adesuwa",
+      "brideName": "Adesuwa & Her Bridal Tribe",
+      "location": "Lagos & London",
+      "weddingDate": "December 2024",
+      "category": "Bridal Party",
+      "robeWorn": "Amanda 3D Petals Robe (Bride) & HALO Robes in Warm Champagne (10 Bridesmaids)",
+      "image": "/uploads/1000863952_1792570551063_d65956.jpg",
+      "quote": "Putting on the Amanda 3D petals robe with all ten of my best friends in their champagne HALO robes was the most emotional half hour of my entire wedding day. Lariel set the tone for royalty before I even touched my wedding dress.",
+      "photographerCredit": "Featured on BellaNaija Weddings"
+    },
+    {
+      "id": "bride-kemi",
+      "brideName": "Dr. Kemi & Folake",
+      "location": "Abuja, Nigeria",
+      "weddingDate": "January 2025",
+      "category": "Adire",
+      "robeWorn": "Adire Royal Heritage Robe in Indigo & Pure Gold",
+      "image": "/uploads/1000863775_1792570090079_54d384.jpg",
+      "quote": "I wanted my traditional Yoruba wedding morning to feel deeply rooted yet effortlessly cosmopolitan. The silk Adire robe felt sacred. The weight of the silk and the handmade indigo motifs took everyone’s breath away.",
+      "photographerCredit": "Bespoke Essentials Collection"
+    },
+    {
+      "id": "bride-derin",
+      "brideName": "Derin Adeyemi",
+      "location": "Lagos, Nigeria",
+      "weddingDate": "October 2024",
+      "category": "Bride",
+      "robeWorn": "Evelyn Silk Robe with Sculpted Underbust Corset Band",
+      "image": "/uploads/client_bridal_22_832c3ce8.jpg",
+      "quote": "The sculpted underbust corset gave me the most regal silhouette with my emerald Gele. It was the perfect bridge between ancestral grandeur and contemporary haute couture.",
+      "photographerCredit": "Featured on BellaNaija Weddings"
+    },
+    {
+      "id": "bride-chidinma",
+      "brideName": "Chidinma N.",
+      "location": "Toronto, Canada",
+      "weddingDate": "September 2024",
+      "category": "Custom",
+      "robeWorn": "Bespoke Hand-Beaded Corset Robe with Sweeping Cape",
+      "image": "/uploads/1000865034_1792569774825_18c8d9.jpg",
+      "quote": "Working 1-on-1 with the Lariel team to incorporate custom seed pearls matching my mother’s vintage jewelry was an unforgettable experience. Truly world-class bridal couture.",
+      "photographerCredit": "Featured on BellaNaija Weddings"
+    },
+    {
+      "id": "bride-zainab",
+      "brideName": "Zainab & Her Girls",
+      "location": "Dubai, UAE",
+      "weddingDate": "February 2025",
+      "category": "Bridesmaids",
+      "robeWorn": "Sage Green Short Silk PJ Sets (Bridesmaids) & White Lace Robe (Bride)",
+      "image": "/uploads/client_bridal_21_b71723f3.jpg",
+      "quote": "The quality of the ruffle details and the matching inner slips were sensational. My girls danced for 2 hours before we even started hair and makeup. Unmatched energy.",
+      "photographerCredit": "BellaNaija Weddings Exclusive"
+    },
+    {
+      "id": "bride-sophia",
+      "brideName": "Sophia M.",
+      "location": "Atlanta, USA",
+      "weddingDate": "October 2024",
+      "category": "Bride",
+      "robeWorn": "Amanda 3D Petals Robe in Pure White",
+      "image": "/uploads/1000863672_1792569460768_005529.jpg",
+      "quote": "The 3D organza petals catch the morning light so ethereally. Everyone in my bridal suite gasped when I stepped out onto the balcony.",
+      "photographerCredit": "Southern Bride Magazine"
+    }
+  ],
+  "siteSettings": {
+    "homeHeroImage": "/uploads/bridal_couch_hero_1788951504284.jpg",
+    "homeHeroTitle": "The Morning Before Forever",
+    "homeHeroSubtitle": "Hand-appliquéd 3D florals, French chantilly laces & 100% pure Mulberry liquid silks for the discerning global bride.",
+    "announcement": "Complimentary worldwide express courier delivery on all bridal suite commissions.",
+    "laidePortraitImage": "/uploads/laide_founder_portrait_1789650582034.jpg",
+    "brandLogoImage": "/uploads/lariel_brand_logo_1788970256407.jpg",
+    "heroImage": "/uploads/bridal_couch_hero_1788951504284.jpg",
+    "canonicalOverrides": {
+      "HERO_MAIN": "/uploads/bridal_couch_hero_1788951504284.jpg",
+      "LOGO_EMBLEM": "/uploads/lariel_brand_logo_1788970256407.jpg",
+      "FOUNDER_PORTRAIT": "/uploads/laide_founder_portrait_1789650582034.jpg",
+      "ADMIN_AVATAR": "/uploads/test_avatar_1792675729496.jpg"
+    },
+    "adminAvatarImage": "/uploads/test_avatar_1792675729496.jpg"
+  },
+  "version": 40
+}
