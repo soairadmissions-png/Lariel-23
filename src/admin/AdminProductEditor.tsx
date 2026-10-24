@@ -63,25 +63,6 @@ export const AdminProductEditor: React.FC<AdminProductEditorProps> = ({
   const isEditing = Boolean(productId);
   const existingProduct = products.find((p) => p.id === productId || p.slug === productId);
 
-  // Synchronize formData with existingProduct on initial load or when productId changes
-  const initializedProductIdRef = useRef<string | null>(null);
-
-  useEffect(() => {
-    if (productId && products.length > 0) {
-      if (initializedProductIdRef.current !== productId) {
-        const match = products.find((p) => p.id === productId || p.slug === productId);
-        if (match) {
-          setFormData(match);
-          initializedProductIdRef.current = productId;
-        }
-      }
-    }
-  }, [productId, products]);
-
-  const [activeTab, setActiveTab] = useState<
-    'basic' | 'pricing' | 'media' | 'variants' | 'craft' | 'merchandising'
-  >('basic');
-
   // Form State
   const [formData, setFormData] = useState<Product>(() => {
     if (existingProduct) {
@@ -119,6 +100,33 @@ export const AdminProductEditor: React.FC<AdminProductEditorProps> = ({
       crossSellIds: [],
     };
   });
+
+  const [activeTab, setActiveTab] = useState<
+    'basic' | 'pricing' | 'media' | 'variants' | 'craft' | 'merchandising'
+  >('basic');
+
+  // Synchronize formData with existingProduct on initial load or when productId changes
+  const initializedProductIdRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (productId && products.length > 0) {
+      const match = products.find((p) => p.id === productId || p.slug === productId);
+      if (match) {
+        if (initializedProductIdRef.current !== productId) {
+          setFormData(match);
+          initializedProductIdRef.current = productId;
+        } else if (match.updatedAt && match.updatedAt !== formData.updatedAt) {
+          // Keep images synchronized if updated via direct upload or external studio
+          setFormData((prev) => ({
+            ...prev,
+            images: match.images || prev.images,
+            imageGallery: match.imageGallery || prev.imageGallery,
+            updatedAt: match.updatedAt,
+          }));
+        }
+      }
+    }
+  }, [productId, products, formData.updatedAt]);
 
   const [newImageUrl, setNewImageUrl] = useState('');
   const [newDetailText, setNewDetailText] = useState('');
@@ -248,8 +256,23 @@ export const AdminProductEditor: React.FC<AdminProductEditorProps> = ({
 
     setIsUploadingImage(true);
     try {
-      // Upload directly via binary stream / base64 to persistent disk storage
-      const res = await api.uploadFile(file);
+      // Upload directly via binary stream to persistent disk storage & sync directly to code
+      const targetId = existingProduct?.id || productId || undefined;
+      const targetImageRole = uploadAsPrimary ? 'primary' : 'gallery';
+      const targetImageId = targetId ? (uploadAsPrimary ? `${targetId}__primary` : `${targetId}__gallery_${formData.images?.length || 0}`) : undefined;
+      const res = await api.uploadFile(
+        file,
+        'products',
+        targetId
+          ? {
+              type: 'product',
+              targetId,
+              imageId: targetImageId,
+              imageRole: targetImageRole,
+              imageIndex: uploadAsPrimary ? 0 : (formData.images?.length || 0),
+            }
+          : undefined
+      );
       const persistentUrl = res.url; // Guaranteed durable server URL /uploads/...
 
       const currentImages = Array.isArray(formData.images) ? [...formData.images] : [];
@@ -261,10 +284,10 @@ export const AdminProductEditor: React.FC<AdminProductEditorProps> = ({
            currentImages[0].includes('placeholder')));
 
       let nextImages: string[];
-      if (isPlaceholderOnly || uploadAsPrimary) {
-        nextImages = isPlaceholderOnly
-          ? [persistentUrl]
-          : [persistentUrl, ...currentImages.filter((img) => img !== persistentUrl && !img.includes('bridal_couch_hero') && img !== CANONICAL_DEFAULTS.PRODUCT)];
+      if (isPlaceholderOnly) {
+        nextImages = [persistentUrl];
+      } else if (uploadAsPrimary) {
+        nextImages = [persistentUrl, ...currentImages.filter((img) => img !== persistentUrl)];
       } else {
         nextImages = [...currentImages.filter((img) => img !== persistentUrl), persistentUrl];
       }
@@ -278,20 +301,21 @@ export const AdminProductEditor: React.FC<AdminProductEditorProps> = ({
         images: nextImages,
       }));
 
-      // If editing an existing product, immediately persist to database so it survives page refresh
+      // If editing an existing product, immediately persist to database & code so it survives page refresh
       if (isEditing && (existingProduct?.id || productId)) {
-        const targetId = existingProduct?.id || productId!;
+        const pId = existingProduct?.id || productId!;
         try {
-          await api.updateProduct(targetId, { images: nextImages });
+          await api.updateProduct(pId, { images: nextImages });
           await refreshProducts();
-          triggerStoreSync();
-          showToast(uploadAsPrimary ? 'Uploaded, set as primary hero & saved permanently!' : 'Image uploaded & saved to product permanently!');
+          const gitNotice = res.github?.committed ? ' & committed to GitHub' : '';
+          showToast(uploadAsPrimary ? `Uploaded${gitNotice}, saved to catalog & set as primary hero!` : `Image uploaded${gitNotice} & saved to catalog!`);
         } catch (dbErr: any) {
           console.error('Auto-save to database failed:', dbErr);
           showToast(`Image uploaded to storage, but saving to product record failed: ${dbErr?.message || 'Server error'}`);
         }
       } else {
-        showToast(uploadAsPrimary ? 'Uploaded & set as primary hero image!' : 'Image uploaded & added to gallery!');
+        const gitNotice = res.github?.committed ? ' & committed to GitHub' : '';
+        showToast(uploadAsPrimary ? `Uploaded${gitNotice} & set as primary hero image!` : `Image uploaded${gitNotice} & added to gallery!`);
       }
     } catch (err: any) {
       console.error('File upload error:', err);
@@ -307,6 +331,7 @@ export const AdminProductEditor: React.FC<AdminProductEditorProps> = ({
       showToast('A product must have at least one image');
       return;
     }
+    const removedUrl = formData.images[index];
     const updatedImages = formData.images.filter((_, i) => i !== index);
     setFormData((prev) => ({
       ...prev,
@@ -317,9 +342,25 @@ export const AdminProductEditor: React.FC<AdminProductEditorProps> = ({
       const targetId = existingProduct?.id || productId!;
       try {
         await api.updateProduct(targetId, { images: updatedImages });
+        // Permanently delete removed media from storage so it does not linger anywhere
+        if (removedUrl && (removedUrl.startsWith('/uploads/') || removedUrl.includes('/uploads/'))) {
+          try {
+            await api.deleteMedia(removedUrl, true);
+          } catch {}
+        }
         await refreshProducts();
         triggerStoreSync();
-      } catch {}
+        showToast('Image removed and permanently purged from storage');
+      } catch (err: any) {
+        showToast(`Failed to update product: ${err?.message || 'Server error'}`);
+      }
+    } else {
+      if (removedUrl && (removedUrl.startsWith('/uploads/') || removedUrl.includes('/uploads/'))) {
+        try {
+          await api.deleteMedia(removedUrl, true);
+        } catch {}
+      }
+      showToast('Image removed and purged from storage');
     }
   };
 
@@ -383,7 +424,18 @@ export const AdminProductEditor: React.FC<AdminProductEditorProps> = ({
     const targetIdx = replacingImageIndex;
     setIsUploadingImage(true);
     try {
-      const res = await api.uploadFile(file);
+      const targetId = existingProduct?.id || productId || undefined;
+      const res = await api.uploadFile(
+        file,
+        'products',
+        targetId
+          ? {
+              type: 'product',
+              targetId,
+              imageIndex: targetIdx,
+            }
+          : undefined
+      );
       const persistentUrl = res.url;
 
       const copy = [...formData.images];
@@ -395,12 +447,12 @@ export const AdminProductEditor: React.FC<AdminProductEditorProps> = ({
       }));
 
       if (isEditing && (existingProduct?.id || productId)) {
-        const targetId = existingProduct?.id || productId!;
+        const pId = existingProduct?.id || productId!;
         try {
-          await api.updateProduct(targetId, { images: copy });
+          await api.updateProduct(pId, { images: copy });
           await refreshProducts();
           triggerStoreSync();
-          showToast('Image replaced and saved permanently!');
+          showToast('Image replaced and saved directly to code (src/data/products.ts)!');
         } catch (dbErr: any) {
           console.error('Failed to update product record with replaced image:', dbErr);
           showToast(`Image uploaded, but updating product record failed: ${dbErr?.message || 'Server error'}`);
@@ -1027,6 +1079,7 @@ export const AdminProductEditor: React.FC<AdminProductEditorProps> = ({
                     <img
                       src={imgUrl || CANONICAL_DEFAULTS.PRODUCT}
                       alt={`Product image ${index + 1}`}
+                      data-no-fallback="true"
                       onError={(e) => handleImageError(e, CANONICAL_DEFAULTS.PRODUCT)}
                       className="w-full h-44 object-cover"
                     />

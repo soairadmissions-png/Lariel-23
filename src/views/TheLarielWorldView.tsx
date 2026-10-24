@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { Heart, BookOpen, Newspaper, HelpCircle, ArrowRight, Star, ChevronDown, ChevronUp, Check, Globe, Sparkles, Award } from 'lucide-react';
+import { Heart, BookOpen, Newspaper, HelpCircle, ArrowRight, Star, ChevronDown, ChevronUp, Check, Globe, Award } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import { JOURNAL_ARTICLES } from '../data/journal';
 import { REAL_BRIDES } from '../data/realBrides';
 import { FAQS } from '../data/faqs';
 import { JournalArticle } from '../types';
-import laidePortraitImg from '../assets/images/laide_founder_portrait_1789650582034.jpg';
 import { CANONICAL_DEFAULTS, handleImageError } from '../constants/imageDefaults';
 
 export const TheLarielWorldView: React.FC = () => {
@@ -31,31 +30,6 @@ export const TheLarielWorldView: React.FC = () => {
 
   return (
     <div className="w-full bg-[#FAF8F5] text-[#111111]">
-      {/* Header Banner */}
-      <section className="relative w-full py-20 bg-[#161311] text-[#FAF8F5] text-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img
-            src="/uploads/bridal_couch_hero_1788951504284.jpg"
-            alt="The Lariel World"
-            onError={(e) => handleImageError(e, CANONICAL_DEFAULTS.HERO_MAIN)}
-            className="w-full h-full object-cover opacity-30"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#161311] via-[#161311]/60 to-transparent" />
-        </div>
-
-        <div className="relative z-10 max-w-4xl mx-auto px-6 space-y-3">
-          <span className="text-[11px] tracking-wide text-[#E2CFA7] font-semibold block font-sans">
-            The Global Bridal House
-          </span>
-          <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl tracking-wide font-normal">
-            The Lariel World
-          </h1>
-          <p className="font-serif italic text-lg sm:text-xl text-[#E5DDD0]">
-            “The art, the heritage, the sisterhood, and the real brides behind our house.”
-          </p>
-        </div>
-      </section>
-
       {/* Navigation Sub-Tabs */}
       <div className="border-b border-[#E8E1D7] bg-[#F7F2EB] sticky top-[73px] z-30 overflow-x-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center space-x-8 text-xs font-semibold py-3.5 whitespace-nowrap font-sans">
@@ -71,7 +45,7 @@ export const TheLarielWorldView: React.FC = () => {
               onClick={() => {
                 setSelectedWorldTab(tab.id as any);
                 setSelectedArticle(null);
-                window.scrollTo({ top: 220, behavior: 'smooth' });
+                window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
               className={`pb-1 transition-colors ${
                 selectedWorldTab === tab.id
@@ -111,9 +85,9 @@ export const TheLarielWorldView: React.FC = () => {
               {/* Portrait - side by side on all devices */}
               <div className="col-span-5 sm:col-span-5 md:col-span-5 flex justify-center">
                 <div className="relative w-full max-w-[340px]">
-                  <div className="rounded-xl sm:rounded-2xl overflow-hidden shadow-xl border border-[#E0D5C3] bg-white">
+                  <div className="rounded-xl sm:rounded-2xl overflow-hidden shadow-xl border border-[#E0D5C3] bg-white relative group">
                     <img
-                      src={siteSettings?.laidePortraitImage || laidePortraitImg || CANONICAL_DEFAULTS.FOUNDER_PORTRAIT}
+                      src={siteSettings?.laidePortraitImage || CANONICAL_DEFAULTS.FOUNDER_PORTRAIT}
                       alt="Laide, Founder of Lariel Essentials"
                       onError={(e) => handleImageError(e, CANONICAL_DEFAULTS.FOUNDER_PORTRAIT)}
                       referrerPolicy="no-referrer"
@@ -135,7 +109,6 @@ export const TheLarielWorldView: React.FC = () => {
               {/* The Letter */}
               <div className="col-span-7 sm:col-span-7 md:col-span-7 space-y-2.5 sm:space-y-5 text-xs sm:text-base text-[#4A433B] leading-relaxed font-sans font-light text-left">
                 <div className="inline-flex items-center space-x-1.5 sm:space-x-2 text-[9px] sm:text-[11px] uppercase tracking-widest text-[#A68962] font-semibold">
-                  <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                   <span>About Laide · Founder's Letter</span>
                 </div>
 
@@ -299,7 +272,7 @@ export const TheLarielWorldView: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredBrides.map((bride) => (
               <div key={bride.id} className="bg-[#FAF8F5] border border-[#E5DDD0] overflow-hidden flex flex-col">
-                <div className="aspect-[3/4] bg-[#EBE3D8] overflow-hidden relative">
+                <div className="aspect-[3/4] bg-[#EBE3D8] overflow-hidden relative group">
                   <img
                     src={bride.image || CANONICAL_DEFAULTS.PRODUCT}
                     alt={bride.brideName}
@@ -348,7 +321,7 @@ export const TheLarielWorldView: React.FC = () => {
                 ← Back to All Articles
               </button>
 
-              <div className="aspect-[16/9] bg-[#EBE3D8] overflow-hidden border border-[#E5DDD0]">
+              <div className="aspect-[16/9] bg-[#EBE3D8] overflow-hidden border border-[#E5DDD0] relative group">
                 <img
                   src={selectedArticle.image || CANONICAL_DEFAULTS.PRODUCT}
                   alt={selectedArticle.title}
@@ -421,7 +394,7 @@ export const TheLarielWorldView: React.FC = () => {
                     className="group cursor-pointer bg-[#FAF8F5] border border-[#E5DDD0] p-5 flex flex-col justify-between hover:border-[#C5A880] transition-colors"
                   >
                     <div>
-                      <div className="aspect-[16/10] bg-[#EBE3D8] overflow-hidden mb-4">
+                      <div className="aspect-[16/10] bg-[#EBE3D8] overflow-hidden mb-4 relative">
                         <img
                           src={article.image || CANONICAL_DEFAULTS.PRODUCT}
                           alt={article.title}

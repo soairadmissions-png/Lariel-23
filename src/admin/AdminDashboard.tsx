@@ -86,8 +86,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     try {
       const data = await api.getDashboardStats();
       setStats(data);
-    } catch (err) {
-      console.error('Failed to load dashboard stats:', err);
+    } catch (err: any) {
+      console.warn('Dashboard statistics notice:', err?.message || err);
     } finally {
       setIsLoading(false);
     }
@@ -139,15 +139,22 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
         <div className="flex flex-wrap items-center gap-3">
           <button
+            onClick={() => onNavigateTab('image-studio')}
+            className="px-4 py-2.5 bg-[#C5A880] hover:bg-[#D5B890] text-[#141210] text-xs font-semibold tracking-wider uppercase rounded-xl transition-all flex items-center space-x-2 shadow-sm cursor-pointer"
+          >
+            <Sparkles className="w-4 h-4 text-[#141210]" />
+            <span>Edit Images in Code</span>
+          </button>
+          <button
             onClick={() => onNavigateTab('new-product')}
-            className="px-4 py-2.5 bg-[#181614] hover:bg-[#C5A880] hover:text-[#181614] text-white text-xs font-medium tracking-wider uppercase rounded-xl transition-all flex items-center space-x-2 shadow-sm"
+            className="px-4 py-2.5 bg-[#181614] hover:bg-[#2C2723] text-white text-xs font-medium tracking-wider uppercase rounded-xl transition-all flex items-center space-x-2 shadow-sm cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>New Product</span>
           </button>
           <button
             onClick={() => onNavigateTab('categories')}
-            className="px-4 py-2.5 bg-white hover:bg-[#F2ECE4] border border-[#DCD1BF] text-neutral-800 text-xs font-medium tracking-wider uppercase rounded-xl transition-colors"
+            className="px-4 py-2.5 bg-white hover:bg-[#F2ECE4] border border-[#DCD1BF] text-neutral-800 text-xs font-medium tracking-wider uppercase rounded-xl transition-colors cursor-pointer"
           >
             Categories
           </button>
@@ -158,11 +165,35 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               showToast('Refreshed live catalog metrics');
             }}
             title="Refresh Metrics"
-            className="p-2.5 bg-white hover:bg-[#F2ECE4] border border-[#DCD1BF] text-neutral-700 rounded-xl transition-colors"
+            className="p-2.5 bg-white hover:bg-[#F2ECE4] border border-[#DCD1BF] text-neutral-700 rounded-xl transition-colors cursor-pointer"
           >
             <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
           </button>
         </div>
+      </div>
+
+      {/* Featured Direct-to-Code Image Studio Spotlight */}
+      <div className="bg-gradient-to-r from-[#181614] via-[#241E1A] to-[#181614] text-white p-5 sm:p-6 rounded-2xl border border-[#C5A880]/30 shadow-lg flex flex-col md:flex-row md:items-center md:justify-between gap-5 relative overflow-hidden">
+        <div className="absolute right-0 top-0 w-80 h-full bg-[#C5A880]/10 rounded-full blur-2xl pointer-events-none" />
+        <div className="relative z-10 space-y-1.5">
+          <div className="flex items-center space-x-2 text-[10px] tracking-widest uppercase font-bold text-[#C5A880]">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Direct-to-Code Image Studio</span>
+          </div>
+          <h3 className="font-serif text-lg sm:text-xl font-normal text-white">
+            Edit Every Photo Across the House & Save Directly to Code
+          </h3>
+          <p className="text-xs text-neutral-300 max-w-2xl font-sans leading-relaxed">
+            Replace or upload photos for products, category hero banners, brand crests, lookbooks, and journal stories. Updates are written directly into TypeScript source files (<code className="text-[#C5A880] bg-black/40 px-1 py-0.5 rounded">src/data/products.ts</code>, <code className="text-[#C5A880] bg-black/40 px-1 py-0.5 rounded">src/constants/imageDefaults.ts</code>, <code className="text-[#C5A880] bg-black/40 px-1 py-0.5 rounded">src/data/realBrides.ts</code>).
+          </p>
+        </div>
+        <button
+          onClick={() => onNavigateTab('image-studio')}
+          className="relative z-10 px-5 py-2.5 bg-[#C5A880] hover:bg-[#D5B890] text-[#141210] rounded-xl text-xs font-bold transition-all shadow-md flex items-center justify-center space-x-2 shrink-0 cursor-pointer"
+        >
+          <span>Launch Image Studio</span>
+          <ArrowRight className="w-4 h-4" />
+        </button>
       </div>
 
       {/* 2. Low Stock Alert Banner (if any) */}

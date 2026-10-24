@@ -4,28 +4,80 @@ import fs from 'fs';
 import apiRouter from './server/api.ts';
 import { getDatabase } from './server/db.ts';
 
+process.on('uncaughtException', (err: any) => {
+  if (err?.code === 'EADDRINUSE') {
+    console.error(`Dev server address in use warning: ${err.message}`);
+  } else {
+    console.warn('Dev server caught uncaughtException:', err?.message || err);
+  }
+});
+
+process.on('unhandledRejection', (reason: any) => {
+  console.warn('Dev server caught unhandledRejection:', reason?.message || reason);
+});
+
+function parseArg(name: string): string | undefined {
+  const index = process.argv.indexOf(name);
+  if (index !== -1 && process.argv[index + 1]) {
+    return process.argv[index + 1];
+  }
+  const prefix = `${name}=`;
+  const match = process.argv.find((a) => a.startsWith(prefix));
+  if (match) {
+    return match.slice(prefix.length);
+  }
+  return undefined;
+}
+
 async function startServer() {
   const app = express();
-  const PORT = Number(process.env.PORT || process.env.APP_PORT || process.env.DEFAULT_APP_PORT || 3000);
-  const distPath = path.join(process.cwd(), 'dist');
+  const cliPort = parseArg('--port') || parseArg('-p');
+  const cliHost = parseArg('--host') || parseArg('-h');
+
   const isProduction =
     process.env.NODE_ENV === 'production' ||
     process.env.npm_lifecycle_event === 'start';
 
-  // Static serving for public folder and user uploads
+  // In development, the AI Studio dev server runs on port 3000 unless explicitly overridden via CLI.
+  // In production, fallback to process.env.PORT || 3000.
+  const PORT = cliPort
+    ? Number(cliPort)
+    : !isProduction
+      ? 3000
+      : Number(process.env.PORT || process.env.APP_PORT || process.env.DEFAULT_APP_PORT || 3000);
+
+  const HOST = cliHost || '0.0.0.0';
+  const distPath = path.join(process.cwd(), 'dist');
+
+  // Static serving for public folder and canonical user uploads
   app.use(express.static(path.join(process.cwd(), 'public')));
   app.use('/fonts', express.static(path.join(process.cwd(), 'public', 'fonts')));
-  app.use('/uploads', express.static(path.join(process.cwd(), 'public', 'uploads')));
-  app.use('/uploads', express.static(path.join(process.cwd(), 'src', 'assets', 'images')));
-  app.use('/uploads', express.static(path.join(distPath, 'uploads')));
+  app.use('/uploads', express.static(path.join(process.cwd(), 'public', 'uploads'), {
+    etag: false,
+    maxAge: 0,
+    setHeaders: (res) => {
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
+    },
+  }));
+  app.use('/images/products', express.static(path.join(process.cwd(), 'public', 'uploads'), {
+    etag: false,
+    maxAge: 0,
+    setHeaders: (res) => {
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
+    },
+  }));
   app.use('/public/uploads', express.static(path.join(process.cwd(), 'public', 'uploads')));
-  // For /src/assets/images: Never intercept Vite module imports (?import)
+  // Legacy /src/assets/images static fallback (without intercepting Vite ?import)
   app.use('/src/assets/images', (req, res, next) => {
     if (req.originalUrl.includes('?import') || req.query.import !== undefined) {
       return next();
     }
-    express.static(path.join(process.cwd(), 'src', 'assets', 'images'))(req, res, () => {
-      express.static(path.join(process.cwd(), 'public', 'uploads'))(req, res, next);
+    express.static(path.join(process.cwd(), 'public', 'uploads'))(req, res, () => {
+      express.static(path.join(process.cwd(), 'src', 'assets', 'images'))(req, res, next);
     });
   });
   
@@ -41,6 +93,7 @@ async function startServer() {
   });
 
   // Body parsing with 50mb limit for large high-res photos
+  app.use(express.raw({ type: ['image/*', 'application/octet-stream'], limit: '50mb' }));
   app.use(express.json({ limit: '50mb' }));
   app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
@@ -74,7 +127,10 @@ async function startServer() {
   if (!isProduction) {
     const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
-      server: { middlewareMode: true },
+      server: {
+        middlewareMode: true,
+        hmr: false,
+      },
       appType: 'custom',
     });
     app.use(vite.middlewares);
@@ -141,8 +197,16 @@ async function startServer() {
     });
   }
 
-  app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Lariel Essentials Server running on http://localhost:${PORT}`);
+  const server = app.listen(PORT, HOST, () => {
+    console.log(`Lariel Essentials Server running on http://${HOST === '0.0.0.0' ? 'localhost' : HOST}:${PORT}`);
+  });
+
+  server.on('error', (err: any) => {
+    if (err?.code === 'EADDRINUSE') {
+      console.error(`Error: Port ${PORT} is already in use.`);
+    } else {
+      console.error('Server error:', err);
+    }
   });
 }
 

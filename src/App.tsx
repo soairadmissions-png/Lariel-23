@@ -8,7 +8,7 @@ import { SearchModal } from './components/SearchModal';
 import { QuickViewModal } from './components/QuickViewModal';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { ToastNotification } from './components/ToastNotification';
-import { ArrowLeft, Sparkles, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, Code2, ShieldCheck } from 'lucide-react';
 
 import { HomeView } from './views/HomeView';
 import { CollectionView } from './views/CollectionView';
@@ -44,13 +44,29 @@ const MainAppContent: React.FC = () => {
               · Signed in as {adminUser?.name || 'Administrator'}
             </span>
           </div>
-          <button
-            onClick={() => setActiveView('admin')}
-            className="px-3 py-1 bg-[#C5A880] hover:bg-[#d4b78e] text-[#141210] font-semibold text-xs rounded-lg transition-colors flex items-center space-x-1.5 cursor-pointer shadow-2xs"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Return to Admin CMS</span>
-          </button>
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={() => {
+                if (typeof window !== 'undefined') {
+                  window.history.pushState(null, '', '/admin/image-studio');
+                }
+                setActiveView('admin');
+              }}
+              className="px-3 py-1 bg-white/10 hover:bg-white/20 text-[#C5A880] border border-[#C5A880]/40 font-semibold text-xs rounded-lg transition-colors flex items-center space-x-1.5 cursor-pointer shadow-2xs"
+              title="Open Direct-to-Code Image Studio"
+            >
+              <Code2 className="w-3.5 h-3.5 text-[#C5A880]" />
+              <span className="hidden sm:inline">Edit Images in Code</span>
+              <span className="sm:hidden">Images</span>
+            </button>
+            <button
+              onClick={() => setActiveView('admin')}
+              className="px-3 py-1 bg-[#C5A880] hover:bg-[#d4b78e] text-[#141210] font-semibold text-xs rounded-lg transition-colors flex items-center space-x-1.5 cursor-pointer shadow-2xs"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Return to Admin CMS</span>
+            </button>
+          </div>
         </aside>
       )}
 

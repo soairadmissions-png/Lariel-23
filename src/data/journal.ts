@@ -9,7 +9,7 @@ export const JOURNAL_ARTICLES: JournalArticle[] = [
     readTime: '5 min read',
     date: 'Autumn Edition',
     category: 'Bridal Philosophy',
-    image: '/uploads/bridal_couch_hero_1788951504284.jpg',
+    image: '/uploads/client_bridal_06_d5b1c862.jpg',
     excerpt: 'Long before the cathedral doors open or the violins play your first note, there exists an unspoken sanctuary: the getting-ready suite. It is the birthplace of anticipation, sisterhood, and timeless femininity.',
     content: [
       'In traditional wedding narratives, all attention is placed upon the ceremony and the evening gala. But speak to any woman who has crossed into marriage, and she will tell you about the quiet tears shared with her mother at 8:00 AM, the laughter echoing over chilled champagne with her closest sisters, and that transformative first glance in the mirror.',
@@ -26,7 +26,7 @@ export const JOURNAL_ARTICLES: JournalArticle[] = [
     readTime: '6 min read',
     date: 'Couture Guide',
     category: 'Style & Sizing',
-    image: '/uploads/regenerated_image_1788954091974.jpg',
+    image: '/uploads/client_bridal_09_2e0e485f.jpg',
     excerpt: 'From architectural French tulle to sculpted boned corsets and liquid silk satin, explore how each silhouette translates under studio flash and morning natural light.',
     content: [
       'Your bridal robe is the second most photographed garment of your entire wedding celebration. Choosing it requires the same discerning eye you brought to your ceremony gown.',
@@ -43,7 +43,7 @@ export const JOURNAL_ARTICLES: JournalArticle[] = [
     readTime: '4 min read',
     date: 'Party Planning',
     category: 'Bridal Party',
-    image: '/uploads/regenerated_image_1788954098680.jpg',
+    image: '/uploads/1000863952_1792570551063_d65956.jpg',
     excerpt: 'The secret to iconic bridal suite photos is visual harmony that honours each woman’s individual beauty while keeping the bride unquestionably at center stage.',
     content: [
       'Coordinating 6, 10, or 14 women of different skin tones and heights can feel daunting. The mistake many brides make is forcing everyone into identical silhouettes that don’t flatter all body shapes.',
@@ -59,7 +59,7 @@ export const JOURNAL_ARTICLES: JournalArticle[] = [
     readTime: '4 min read',
     date: 'Insider Tips',
     category: 'Beauty & Prep',
-    image: '/uploads/regenerated_image_1788963975261.png',
+    image: '/uploads/client_bridal_29_330e5a9d.jpg',
     excerpt: 'Discover why top celebrity hair stylists and bridal makeup artists in Lagos, London, and New York insist on these specific getting-ready safeguards.',
     content: [
       'After spending hundreds of hours perfecting your bridal glam, the smallest morning friction can disrupt your mood. Here are the three tools professional makeup artists demand in the suite:',
@@ -76,7 +76,7 @@ export const JOURNAL_ARTICLES: JournalArticle[] = [
     readTime: '7 min read',
     date: 'Heritage',
     category: 'African Heritage',
-    image: '/uploads/regenerated_image_1788962690479.jpg',
+    image: '/uploads/client_bridal_26_e0c2c511.jpg',
     excerpt: 'Adire is not merely textile; it is visual poetry, royal ancestry, and feminist history written into fabric. How Lariel brought this centuries-old Nigerian craft to luxury bridal suites worldwide.',
     content: [
       'Originating among Yoruba women in southwestern Nigeria, Adire Eleko (starch resist dyeing) has carried tribal genealogies, proverbs, and celebrations of womanhood for generations.',
@@ -84,25 +84,4 @@ export const JOURNAL_ARTICLES: JournalArticle[] = [
       'The result is an extraordinary fusion: ancient ancestral symbolism meeting contemporary bridal silhouettes. When a bride in London, Toronto, or Abuja wraps herself in an Adire robe, she does not simply wear fashion—she wears the resilient genius of African heritage.',
     ],
   },
-  {
-    id: 'what-every-bride-should-pack',
-    slug: 'what-every-bride-should-pack',
-    title: 'What Every Bride Should Pack for Her Wedding Morning: The Master Checklist',
-    subtitle: 'A stress-free packing list curated by brides who planned luxury multi-day celebrations.',
-    readTime: '5 min read',
-    date: 'Checklist',
-    category: 'Planning',
-    image: '/uploads/regenerated_image_1788961847724.jpg',
-    excerpt: 'From emergency stain remover pens and phone power banks to your personalized vow booklets and steamer, here is your definitive checklist.',
-    content: [
-      'Pack your getting-ready suitcase 48 hours in advance so you can sleep peacefully on the eve of your wedding. Here is what should be inside:',
-      '• Your Lariel Bridal Robe + matching silk inner slip on a padded hanger',
-      '• Your Bridal Party Robes organized in labeled garment pouches by name',
-      '• Rechargeable mini fan and USB-C charging cable',
-      '• Travel garment handheld steamer and distilled water',
-      '• Double-sided fashion tape and silk safety pins',
-      '• Personalized vow books and your favorite signature fragrance',
-      '• Straws for your morning hydration so your lipstick stays flawless',
-    ],
-  },
-];
+  ];

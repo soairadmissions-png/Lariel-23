@@ -247,7 +247,7 @@ export const BridalPartyBuilderView: React.FC = () => {
             >
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 border-b border-[#EAE1D5] gap-2">
                 <div className="flex items-center space-x-3">
-                  <div className="w-10 h-12 bg-[#F2ECE4] border border-[#E0D7CC] shrink-0 overflow-hidden rounded-md">
+                  <div className="w-10 h-12 bg-[#F2ECE4] border border-[#E0D7CC] shrink-0 overflow-hidden rounded-md relative group">
                     <img
                       src={prod.images?.[0] || CANONICAL_DEFAULTS.PRODUCT}
                       alt={prod.name || 'Bridal Robe'}

@@ -12,7 +12,6 @@ import {
 import { useShop } from '../context/ShopContext';
 import { Currency } from '../types';
 import { CURRENCIES } from '../data/currencies';
-import larielLogoSvg from '../assets/images/lariel_logo.svg';
 import { CANONICAL_DEFAULTS, handleImageError } from '../constants/imageDefaults';
 
 export const Header: React.FC = () => {
@@ -84,13 +83,13 @@ export const Header: React.FC = () => {
           }`}
         >
           {/* Left: LARIEL Brand Logo Image */}
-          <div className="flex items-center shrink-0">
+          <div className="flex items-center shrink-0 relative group">
             <div
-              className="flex items-center cursor-pointer group select-none py-0.5 text-left"
+              className="flex items-center cursor-pointer select-none py-0.5 text-left"
               onClick={() => handleNavClick('home')}
             >
               <img
-                src={siteSettings?.brandLogoImage || larielLogoSvg || CANONICAL_DEFAULTS.LOGO_WORDMARK}
+                src={siteSettings?.brandWordmarkImage || siteSettings?.brandLogoImage || CANONICAL_DEFAULTS.LOGO_WORDMARK}
                 alt="Lariel Essentials Bridal"
                 onError={(e) => handleImageError(e, CANONICAL_DEFAULTS.LOGO_WORDMARK)}
                 className="h-7 xs:h-8 sm:h-10 md:h-12 w-auto object-contain group-hover:scale-[1.02] group-hover:opacity-95 transition-all duration-300"
@@ -99,12 +98,12 @@ export const Header: React.FC = () => {
             </div>
           </div>
 
-          {/* Center: Navigation Links (Shop, Meet Laide, New Arrivals, The World) - visible and responsive across all screens */}
-          <nav className="flex items-center space-x-1 xs:space-x-1.5 sm:space-x-3 md:space-x-4 lg:space-x-6 text-[10px] xs:text-[11px] sm:text-xs tracking-wide font-medium font-sans overflow-x-auto scrollbar-none py-0.5">
+          {/* Center: Navigation Links (Shop, Meet Laide) */}
+          <nav className="flex items-center space-x-1.5 xs:space-x-2 sm:space-x-4 md:space-x-6 text-[11px] xs:text-xs sm:text-sm tracking-wide font-medium font-sans py-0.5">
             {/* 1. Shop */}
             <button
               onClick={() => handleNavClick('home')}
-              className={`transition-colors hover:text-[#C5A880] px-2 xs:px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full whitespace-nowrap ${
+              className={`transition-colors hover:text-[#C5A880] px-2.5 xs:px-3 sm:px-4 py-1 sm:py-1.5 rounded-full whitespace-nowrap ${
                 activeView === 'home' || activeView === 'collection'
                   ? 'text-[#A68962] font-semibold bg-[#F2ECE4]/90'
                   : 'text-[#1E1B18]'
@@ -116,41 +115,13 @@ export const Header: React.FC = () => {
             {/* 2. Meet Laide / Our Story */}
             <button
               onClick={() => handleNavClick('the-lariel-world', undefined, 'story')}
-              className={`transition-colors hover:text-[#C5A880] px-2 xs:px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full whitespace-nowrap ${
+              className={`transition-colors hover:text-[#C5A880] px-2.5 xs:px-3 sm:px-4 py-1 sm:py-1.5 rounded-full whitespace-nowrap ${
                 activeView === 'the-lariel-world' && selectedWorldTab === 'story'
                   ? 'text-[#A68962] font-semibold bg-[#F2ECE4]/90'
                   : 'text-[#1E1B18] hover:bg-[#F2ECE4]/60'
               }`}
             >
               Meet Laide
-            </button>
-
-            {/* 3. New Arrivals */}
-            <button
-              onClick={() => {
-                if (activeView === 'home') {
-                  const el = document.getElementById('section-new-arrivals');
-                  if (el) el.scrollIntoView({ behavior: 'smooth' });
-                  else handleNavClick('collection', 'new');
-                } else {
-                  handleNavClick('collection', 'new');
-                }
-              }}
-              className="transition-colors hover:text-[#C5A880] px-2 xs:px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full whitespace-nowrap text-[#1E1B18] hover:bg-[#F2ECE4]/60"
-            >
-              New In
-            </button>
-
-            {/* 4. The Lariel World */}
-            <button
-              onClick={() => handleNavClick('the-lariel-world', undefined, 'real-brides')}
-              className={`transition-colors hover:text-[#C5A880] px-2 xs:px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full whitespace-nowrap ${
-                activeView === 'the-lariel-world' && selectedWorldTab !== 'story'
-                  ? 'text-[#A68962] font-semibold bg-[#F2ECE4]/90'
-                  : 'text-[#1E1B18] hover:bg-[#F2ECE4]/60'
-              }`}
-            >
-              The World
             </button>
           </nav>
 
@@ -268,23 +239,6 @@ export const Header: React.FC = () => {
                 <span className="text-[10px] uppercase font-bold tracking-widest bg-[#F2ECE4] text-[#A68962] px-2 py-0.5 rounded-full">New</span>
               </button>
               <button
-                onClick={() => handleNavClick('the-lariel-world', undefined, 'real-brides')}
-                className="block w-full text-left text-sm font-semibold tracking-wide py-2 text-[#181614] hover:text-[#C5A880] font-sans"
-              >
-                The Lariel World
-              </button>
-              <button
-                onClick={() => {
-                  handleNavClick('home');
-                  setTimeout(() => {
-                    document.getElementById('section-new-arrivals')?.scrollIntoView({ behavior: 'smooth' });
-                  }, 200);
-                }}
-                className="block w-full text-left text-sm font-semibold tracking-wide py-2 text-[#181614] hover:text-[#C5A880] font-sans"
-              >
-                New Arrivals
-              </button>
-              <button
                 onClick={() => handleNavClick('the-lariel-world', undefined, undefined, 'size-guide')}
                 className="block w-full text-left text-sm font-semibold tracking-wide py-2 text-[#181614] hover:text-[#C5A880] font-sans"
               >
@@ -319,7 +273,7 @@ export const Header: React.FC = () => {
                 <button onClick={() => handleNavClick('collection', 'junior')} className="text-left py-1 text-neutral-800 hover:text-[#A68962]">
                   Junior / Kids
                 </button>
-                <button onClick={() => handleNavClick('product', 'personalised-embroidered-robe')} className="text-left py-1 text-neutral-800 hover:text-[#A68962]">
+                <button onClick={() => handleNavClick('collection', 'personalised')} className="text-left py-1 text-neutral-800 hover:text-[#A68962]">
                   Personalised Robes
                 </button>
               </div>
